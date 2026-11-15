@@ -82,5 +82,6 @@ export const solarDate = (id: Body, lon: number, d: Date) => new Date(d.getTime(
 // HUD local time under the cursor (2156): LMST on Mars, UTC-offset clock on Earth, sun-relative clock on the Moon.
 // slo is the subsolar longitude from subsolar(body, sim).
 export const hudLocalTime = (body: Body, lon: number, sim: Date, slo: number) => body === 'mars' ? `LMST ${lmst(lon, sim)}` : body === 'earth' ? hms(sim.getUTCHours() + sim.getUTCMinutes() / 60 + lon / 15).slice(0, 5) : hms(12 + wrap180(lon - slo) / 15).slice(0, 5);
-// Status-bar sim clock (2172): "MM/DD HH:MM" in UTC.
-export const utcStamp = (now: Date) => `${now.toISOString().slice(5, 10).replace('-', '/')} ${now.toISOString().slice(11, 16)}`;
+export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// Status-bar sim clock (2172): "04 Oct 12:40" in UTC, the day before the month (10/04 reads as 10 April in Britain).
+export const utcStamp = (now: Date) => `${now.toISOString().slice(8, 10)} ${MONTHS[now.getUTCMonth()]} ${now.toISOString().slice(11, 16)}`;

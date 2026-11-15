@@ -18,7 +18,7 @@ const d = (o: object) => ({ k: 5, busy: false, done: Promise.resolve(), t0: 0, .
 describe('a featured site\'s doubles in words', () => {
   it('the three closest, each linked to its comparison: country, point, shape match, summary', () => {
     const h = fbDoubles('mars', jezero, d({ res })), l = res.results[0].location!;
-    expect(h).toContain('Closest doubles on Earth:');
+    expect(h).toContain('Closest Earth doubles:');
     expect(h.match(/<li>/g)).toHaveLength(3);
     expect(h).toContain(`<a href="#/mars/jezero/compare/@${l.lat!.toFixed(4)},${l.lon!.toFixed(4)}">United States of America</a>`);
     expect(h).toContain('34.6750° N, 105.0750° W');
@@ -28,7 +28,7 @@ describe('a featured site\'s doubles in words', () => {
   it('the IAU feature, the capability banner and the results\' notes once (spec §3.4, §5.2; caveats never hidden)', () => {
     const h = fbDoubles('mars', jezero, d({ res }));
     expect(h).toContain('Searched as the IAU feature Jezero · ');
-    expect(h).toContain('<p class="banner">For crater targets');
+    expect(h).toContain('<p class="banner">For crater sites');
     expect(h.match(/Terrain form only, matched at 200 m/g)).toHaveLength(1);   // the same caveat on all three, said once
     expect(h).toContain('Notes on all three: ');
   });
@@ -44,7 +44,7 @@ describe('a featured site\'s doubles in words', () => {
     const r = { ...res, results: [{ ...r0, location: { ...r0.location!, country: evil }, explanation: { ...r0.explanation,
       summary: `No close analog in this region; best available. ${r0.explanation.summary}`, gaps: ['relief', 'slope'] } }] };
     const h = fbDoubles('mars', jezero, d({ res: r }));
-    expect(h).toContain('No close analog in this region; best available:'); expect(h).toContain('Differs: relief, slope.');
+    expect(h).toContain('No close analog in this region. The closest available:'); expect(h).toContain('Differs: relief, slope.');
     expect(h).not.toContain('<img src=x');
   });
   it('no elevation data: the site\'s established analog sites, linked, unscored', () => {
@@ -59,7 +59,7 @@ describe('a featured site\'s doubles in words', () => {
     expect(line(d({ busy: true }), arcadia)).toContain('Reading Mars terrain…');
     expect(line(d({ err: new EngineError(503, 'warming_up') }))).toContain('Search engine starting up…');
     expect(line(d({ err: new EngineError(0, 'network') }))).toContain('The search engine didn’t answer. Reload the page to try again.');
-    expect(line(d({ res: { ...res, results: [] } }))).toContain('No Earth sites match this search.');
+    expect(line(d({ res: { ...res, results: [] } }))).toContain('No Earth doubles match this search.');
   });
   it('a failed search still lists the site\'s established analog sites (static: they need no engine), unscored', () => {
     const h = fbDoubles('moon', malapert, d({ err: new EngineError(0, 'network') }));

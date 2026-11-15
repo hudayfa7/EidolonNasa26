@@ -12,7 +12,7 @@ import { EARTH_BY, SITES, type Site } from '../data/sites';
 import { esc, setHTML } from '../dom';
 import { RM } from '../motion';
 import { parseHash, routeOf, type Route } from '../routes';
-import { banner, brief, conf, failHead, fractions, noAnalog, placeTag, purposeLabel, strs, targetNote, TESTED, text } from './results';
+import { banner, brief, conf, failHead, fractions, noAnalog, placeTag, purposeLabel, SAMPLE, strs, targetNote, TESTED, text } from './results';
 
 const TOP = 3, WORLDS: Body[] = ['moon', 'mars'];   // Moon bases first, as the intro has it
 const href = (r: Partial<Route>) => `#/${routeOf(r)}`;
@@ -34,14 +34,14 @@ export function fbDoubles(id: Body, s: Site, e?: Doubles) {
   if (res && list.length) {
     const cav = list.map(({ r }) => [...new Set(strs(r.explanation?.caveats))]), shared = cav[0].filter(c => cav.every(x => x.includes(c)));
     const notes = (xs: string[]) => xs.map(n => text(fractions(n))).join(' ');
-    return `${targetNote(res.target, s.name)}${banner(res.target)}<p>${noAnalog(res) ? 'No close analog in this region; best available:' : 'Closest doubles on Earth:'}</p><ol>${list.map(({ r, id: d }, i) => {
+    return `${targetNote(res.target, s.name)}${banner(res.target)}<p>${noAnalog(res) ? 'No close analog in this region. The closest available:' : 'Closest Earth doubles:'}</p><ol>${list.map(({ r, id: d }, i) => {
       const l = r.location!, gaps = strs(r.explanation?.gaps), own = cav[i].filter(c => !shared.includes(c));
       return `<li><a href="${to(d)}">${text(l.country ?? 'Unnamed area')}</a><span class="c">${fmtLL(l.lat!, l.lon!, 'earth', 4)}</span>${placeTag(l.lat!, l.lon!)}
         <br>Shape match ${conf(r.fidelity?.confidence).toLowerCase()}. ${brief(r.explanation?.summary)}${gaps.length ? ` Differs: ${gaps.map(text).join(', ')}.` : ''}${own.length ? ` Note: ${notes(own)}` : ''}</li>`;
     }).join('')}</ol>${shared.length ? `<p class="fine">${['Notes', 'Notes on both', 'Notes on all three'][list.length - 1]}: ${notes(shared)}</p>` : ''}`;
   }
   const state = !e ? 'Waiting its turn: searches by coordinates run one at a time.'
-    : res ? 'No Earth sites match this search.'
+    : res ? 'No Earth doubles match this search.'
     : e.busy ? s.iau ? 'Searching Earth…' : `Reading ${BODIES[id].name} terrain…`
     : e.err?.code === 'warming_up' ? 'Search engine starting up…' : null;
   if (state) return `<p>${state}</p>`;
@@ -67,7 +67,7 @@ export function showFallback(msg = 'This view needs WebGL. Turn on hardware acce
     <div class="meta-row" aria-hidden="true"><span>NASA Space Apps Challenge 2026</span><span>Earth, low orbit</span><span>Scroll for featured sites</span></div></div>
   <section class="fb" aria-labelledby="fb-h"><h2 class="title" id="fb-h" tabindex="-1">Featured sites</h2>
     <p class="lede">Each site on the Moon and Mars with its closest doubles on Earth, from the site’s own search. Every name links to its view in Eidolon, which opens wherever WebGL runs.</p>
-    <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}. ${TESTED}${MOCK ? ' Sample results until the search engine is connected.' : ''}</p>
+    <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}. ${TESTED}${MOCK ? SAMPLE : ''}</p>
     <div class="fb-cols">${WORLDS.map(id => `<div><h3>${BODIES[id].name}</h3><ul>${SITES[id].map(s => entry(id, s)).join('')}</ul></div>`).join('')}</div>
     <p class="fine">The poster is Eidolon’s title view, drawn from NASA’s Blue Marble and Black Marble maps of Earth, the Blue Marble clouds, NOAA’s ETOPO1 relief and the MODIS water mask.</p></section>`;
   // shortcut: the default purpose only, no picker here; add one if this page is ever used to plan.

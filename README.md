@@ -1,9 +1,15 @@
 # Eidolon
 
+![Eidolon reads terrain form at 200 m and finds the places on Earth that come closest.](web/public/og.jpg)
+
 NASA Space Apps Challenge 2026: *Identify Earth locations that analog the permanent Moon base locations and Mars.*
 
 Pick a site on the Moon or Mars and Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, shows the
 two side by side in 3D, and helps plan a test campaign at one.
+
+**Live site: [eidolon-nasa26.vercel.app](https://eidolon-nasa26.vercel.app).** It shows sample results replayed from
+the search engine's saved example answers, not live searches; the real model runs on your own computer
+([Run it with the real model](#run-it-with-the-real-model)).
 
 ## Architecture
 
@@ -38,6 +44,8 @@ two side by side in 3D, and helps plan a test campaign at one.
 
 ## Setup
 
+### The frontend on sample data
+
 The frontend alone, on the mock (no engine needed):
 
 ```sh
@@ -46,6 +54,8 @@ npm ci                              # Node 26
 npm run dev                         # http://localhost:5173/
 npx playwright install chromium     # only for npm run capture, a11y, perf and poster
 ```
+
+### Run it with the real model
 
 On the live search engine:
 

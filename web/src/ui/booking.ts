@@ -54,7 +54,7 @@ function listed(c: Ctx) {
 /** The purpose select's options (ui/panel.ts fills them again when the purposes land). */
 export const purposeOptions = () => { const p = planNow(ctx()); return offered(p).map(k => `<option value="${esc(k)}"${k === p.purpose ? ' selected' : ''}>${esc(purposeName(k))}</option>`).join(''); };
 
-const steps = (now: Step) => `<ol class="bsteps" aria-label="Booking steps">${STEPS.map((x, i) =>
+const steps = (now: Step) => `<ol class="bsteps" aria-label="Campaign steps">${STEPS.map((x, i) =>
   `<li${x === now ? ' aria-current="step"' : i < STEPS.indexOf(now) ? ' class="done"' : ''}>${STEP_NAME[x]}</li>`).join('')}</ol>`;
 const head = (step: Step, title: string) => { const up = UP[step]; return `${backBtn(up ? STEP_NAME[up] : 'Comparison', at(up))}${steps(step)}<h2 class="title" tabindex="-1">${title}</h2>`; };
 const btn = (to: string, label: string, primary = false) => `<button class="btn${primary ? ' primary' : ''}" data-go="${to}">${label}</button>`;
@@ -69,7 +69,7 @@ export const span = (p: Pick<Plan, 'start' | 'end'>) => `${fmtDay(p.start, true)
 // when it has none), or the sample listing's with its season note (HTML: the note is escaped); none while they load.
 const season = (L: SiteListing, p: Plan) => !offSeason(L, p) ? ''
   : bestMonths(placeOf(L), p.purpose) ? L.practical.best_months!.length ? `Outside the best months for ${purposeIn(p.purpose)} (${months(L)}).` : noMonths(purposeIn(p.purpose))
-  : `Outside the site’s best months (${months(L)}).${L.practical.season_note ? ` ${text(L.practical.season_note)}` : ''}`;
+  : `Outside the field site’s best months (${months(L)}).${L.practical.season_note ? ` ${text(L.practical.season_note)}` : ''}`;
 
 // The mission fit for the campaign's purpose (ui/results.ts bookingFit): terrain and climate from the search result when the double is one,
 // the workable months and the shadow fit from the site's weather and both windows. A warning, never a block.
@@ -83,7 +83,7 @@ function listingHTML(c: Ctx, L: SiteListing) {
   return `${head('listing', esc(c.d.name))}<p class="coords">${ic('site')}${fmtLL(L.lat, L.lon, 'earth', 4)}</p>
     ${listingLede(L.name === c.d.name ? c.d.place ?? L.name : L.name, L, c.s.name)}
     ${fitHTML(c, L, planNow(c).purpose)}
-    <div class="actions">${btn(at('plan'), 'Plan a campaign here', true)}</div>
+    <div class="actions">${btn(at('plan'), 'Plan a test campaign here', true)}</div>
     ${st.html}${st.credit ? `<p class="fine credit">${st.credit}</p>` : ''}
     ${listingBody(L, srcOf(c).location, hitClimate(c, L)?.environment, !!c.hit, `Best months for ${purposeIn(planNow(c).purpose)}`, wxAt(placeOf(L)).cl.busy)}`;
 }
@@ -132,7 +132,7 @@ function planHTML(c: Ctx, L: SiteListing) {
         `<label class="ck"><input type="checkbox" name="gear" value="${k}"${p.gear.includes(k) ? ' checked' : ''}>${v}</label>`).join('')}</fieldset>
       <label class="fl" for="b-notes">${ic('notes')}Notes</label>
       <textarea id="b-notes" rows="4" maxlength="${NOTES_MAX}"${inv('notes')}${desc('notes', 'b-notes-h')}>${esc(p.notes)}</textarea>
-      <p class="fine" id="b-notes-h">Optional: objectives, access needs, anything the site should know.</p>${msg('notes')}
+      <p class="fine" id="b-notes-h">Optional: objectives, access needs, anything the field site should know.</p>${msg('notes')}
       <div class="actions"><button class="btn primary" type="submit">Review the request</button></div>
     </form>
     <p class="fine">A mock-up: nothing is sent.</p>`;
@@ -144,7 +144,7 @@ function reviewHTML(c: Ctx, L: SiteListing) {
     'The plan needs a test purpose, its days on the weather window and a team size.', `<div class="actions">${btn(at('plan'), 'Plan a campaign', true)}</div>`)}`;
   const n = days(p), team = +p.team, [lo, hi] = cost(L, p), out = season(L, p);
   return `${head('review', 'Review the request')}<p class="lede">A test campaign for ${c.s.name}, ${BODIES[c.id].name}, at one of its Earth doubles.</p>
-    <dl class="facts" data-wx>${fact('Site', `${esc(c.d.name)}<span class="sub n">${fmtLL(L.lat, L.lon, 'earth', 4)}</span>`, 'wide w')}
+    <dl class="facts" data-wx>${fact('Field site', `${esc(c.d.name)}<span class="sub n">${fmtLL(L.lat, L.lon, 'earth', 4)}</span>`, 'wide w')}
       ${fact('Test purpose', esc(purposeName(p.purpose)), 'wide w')}
       ${fact('Dates', `${span(p)}<span class="sub">${plural(n, 'day', 'days')}${under(L, p)}</span>${out ? `<span class="sub">${out}</span>` : ''}`, 'wide w')}
       ${fact('Team size', plural(team, 'person', 'people'), 'w')}${fact('Days on site', plural(n, 'day', 'days'), 'w')}
@@ -152,7 +152,7 @@ function reviewHTML(c: Ctx, L: SiteListing) {
       ${fact('Notes', p.notes.trim() ? esc(p.notes.trim()) : 'None', 'wide w pre')}</dl>
     ${fitHTML(c, L, p.purpose)}
     <h3 class="sec">${ic('cost')}Indicative cost</h3><dl class="facts">${fact('Field costs on site', `US$&nbsp;${usd(lo)}–${usd(hi)}`, 'wide')}</dl>
-    <p class="fine">The site’s day rate for ${plural(team, 'person', 'people')} over ${plural(n, 'day', 'days')}. Flights and equipment shipping not included; not a quote.</p>
+    <p class="fine">The field site’s day rate for ${plural(team, 'person', 'people')} over ${plural(n, 'day', 'days')}. Flights and equipment shipping not included; not a quote.</p>
     <h3 class="sec">${ic('permits')}Permits</h3>${permits(srcOf(c).location, L)}
     <div class="actions">${btn(at('plan'), 'Edit the plan')}<button class="btn primary" data-request>Request the campaign</button></div>
     <p class="fine">A mock-up: requesting sends nothing and contacts no one. It ends with a sample reference number.</p>`;
@@ -161,7 +161,7 @@ function reviewHTML(c: Ctx, L: SiteListing) {
 // From the request alone (its names as made): My campaigns opens it in a later session, its double's search not in yet.
 function doneHTML(c: Ctx) {
   const q = requestOf(c.key);
-  if (!q) return `${head('done', 'Campaign requested')}${box('No campaign requested here yet', '', 'Plan a campaign at this site, review it, then request it.',
+  if (!q) return `${head('done', 'Campaign requested')}${box('No campaign requested here yet', '', 'Plan a campaign at this field site, review it, then request it.',
     `<div class="actions">${btn(at('plan'), 'Plan a campaign', true)}</div>`)}`;
   const p = q.plan, team = +p.team;
   return `${head('done', 'Campaign requested')}<p class="ref"><span>Reference</span>${esc(q.ref)}</p>
