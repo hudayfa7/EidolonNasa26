@@ -9,18 +9,18 @@ import type { MatchResult } from './types.gen';
 const env = (t: number, ai: number) => ({ t_mean_c: t, precip_mm: 100, aridity_index: ai, source: 'x' }) as MatchResult['environment'];
 
 describe('climateFit', () => {
-  it('cold and hyper-arid is Close, with a match on each row', () => {
+  it('cold and hyperarid is a Match, with a match on each row', () => {
     const f = climateFit(env(-18, .01))!;
     expect(f.rows.map(r => [r.key, r.status])).toEqual([['temperature', 'match'], ['dryness', 'match']]);
-    expect(f.verdict).toBe('Close');
+    expect(f.verdict).toBe('Match');
   });
   it('the band edges: at the cold limit is a match, over it partial, over the cool limit a gap; the same for aridity', () => {
     const row = (t: number, ai: number, k: 0 | 1) => climateFit(env(t, ai))!.rows[k].status;
     expect([row(COLD_C, 0, 0), row(COLD_C + .1, 0, 0), row(COOL_C, 0, 0), row(COOL_C + .1, 0, 0)]).toEqual(['match', 'partial', 'partial', 'gap']);
     expect([row(0, ARID - .01, 1), row(0, ARID, 1), row(0, SEMI_ARID - .01, 1), row(0, SEMI_ARID, 1)]).toEqual(['match', 'partial', 'partial', 'gap']);
   });
-  it('a warm, humid site is Weak; one cold but wet or one dry but warm is Partial', () => {
-    expect(climateFit(env(24, 1.2))!.verdict).toBe('Weak');
+  it('a warm, humid site is a Gap; one cold but wet or one dry but warm is Partial', () => {
+    expect(climateFit(env(24, 1.2))!.verdict).toBe('Gap');
     expect(climateFit(env(-5, 1.2))!.verdict).toBe('Partial');
     expect(climateFit(env(30, .02))!.verdict).toBe('Partial');
   });

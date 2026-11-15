@@ -151,7 +151,7 @@ export function twins(r: MatchResult, target: string, shade: string, engine: boo
   // slider, and a light tint on its hillshade (panel.css), so the ghost tells the two reliefs apart.
   const fig = (at: string, name: string) => `<figure${ov ? ` style="--c:var(--${at.split('|')[0] || 'earth'})"` : ''}>${at ? `<span class="th"><img alt="Hillshade of the ${name} window" data-shade="${esc(at)}"></span>` : NO_SHADE}<figcaption>${ov ? '<i></i>' : ''}${name}</figcaption></figure>`;
   const note = engine ? 'Hillshades of the two 18.8 km windows the search compared, drawn from the engine’s elevation, lit from the north-west, each at its own contrast.'
-    : `Hillshades of the two 18.8 km windows, lit from the north-west, each at its own contrast. Drawn from ${real ? 'the elevation models the engine reads' : 'sample terrain'} until the search engine is connected.`;
+    : `Hillshades of the two 18.8 km windows, lit from the north-west, each at its own contrast. Drawn from ${real ? 'the elevation models the engine reads' : 'sample terrain'}.`;
   return `<h3 class="sec">Terrain twins</h3><div class="imgs twins${ov ? ' ov' : ''}">${fig(shade, esc(target))}${fig(earth, text(l?.country ?? 'Unnamed area'))}</div>
     <p class="fine">${note}${ov ? '<span class="ov"> Overlaid: the overlay slider sets how much of each shows.</span>' : ''}</p>`;
 }
@@ -170,7 +170,7 @@ export const mixText = (v: number, target: string, earth: string) => v <= 0 ? `$
 /** A twin without its hillshade: no URL, or the engine's 404 no_image (spec §6: a placeholder). */
 export const NO_SHADE = '<span class="ph">No hillshade for this window</span>';
 
-export const aridity = (ai: number) => ai < .05 ? 'Hyper-arid' : ai < .2 ? 'Arid' : ai < .5 ? 'Semi-arid' : ai < .65 ? 'Dry sub-humid' : 'Humid';
+export const aridity = (ai: number) => ai < .05 ? 'Hyperarid' : ai < .2 ? 'Arid' : ai < .5 ? 'Semi-arid' : ai < .65 ? 'Dry sub-humid' : 'Humid';
 // The judge's probability as 0–5 segments: it is calibrated only roughly (spec §4), so it is never printed.
 export const rough = (p: number) => Math.min(5, Math.max(0, Math.round(p * 5)));
 export const ACCESS = { partner: 'Artemis Accords signatory', non_partner: 'Not an Accords signatory', antarctic_treaty: 'Antarctic Treaty', unknown: 'Unknown' };
@@ -194,7 +194,7 @@ const COVERS: [string, string, string][] = [
   ['not_measurable', 'Biology and habitability', 'Not assessed'],
 ];
 const covers = `<h3 class="sec">What this match covers</h3><ul class="props">${COVERS.map(([s, k, v]) => `<li class="s-${s}"><i class="mk mk-${s}" aria-hidden="true"></i><span class="pl">${k}</span><span class="ps">${v}</span></li>`).join('')}</ul>
-    <p class="fine">Matched on measured terrain form at 200 m, not on how the two places look. Rock type, caves and biology are not scored; where NASA catalogues exist, the target’s own caves and rock properties are under Measured at the target.</p>`;
+    <p class="fine">Matched on measured terrain form at 200 m, not on how the two places look. Rock type, caves and biology are not scored; where NASA catalogues exist, the site’s own caves and rock properties are under Measured at the site.</p>`;
 
 // The nearest of the established analog sites (data/sites.ts: 14 of them), so a double reads as a known analog, near
 // one, or away from every one Eidolon lists. Great-circle distance between the site centres.
@@ -239,30 +239,31 @@ export function skinBlock(skin: { busy: boolean; v?: Skin } | undefined, body: u
 }
 
 const sup = (b: string, e: string) => `${b}<sup>${e}</sup>`;
+const TI = `J m${sup('', '−2')} K${sup('', '−1')} s${sup('', '−½')}`;   // thermal inertia's unit
 /** What NASA's orbiters measured at the featured site nearest the target, when one is within 40 km (data/surface.gen.json). */
 export function measuredBlock(t: Pick<TargetSummary, 'body' | 'lat' | 'lon'> | undefined) {
   if (t?.body !== 'moon' && t?.body !== 'mars') return '';
-  const head = '<h3 class="sec">Measured at the target</h3>', m = measuredAt(t.body, t.lat, t.lon);
-  if (!m) return `${head}<p class="fine">No NASA surface value was read for this target. Eidolon reads the featured sites the engine can match, and takes a value only within 40 km of a site’s centre.</p>`;
+  const head = '<h3 class="sec">Measured at the site</h3>', m = measuredAt(t.body, t.lat, t.lon);
+  if (!m) return `${head}<p class="fine">No NASA surface value was read for this site. Values exist only for featured sites, within 40 km of a site’s centre.</p>`;
   const name = SITES[m.body].find(s => s.id === m.id)?.name ?? m.id, src = SOURCES[m.body];
   const range = (r: (number | null)[] | undefined, u: string) => ok(r?.[0]) && ok(r?.[1]) ? ` <span class="n">${r[0]} to ${r[1]} ${u} in the window</span>` : '';
   const rows = m.body === 'moon'
     ? [ok(m.tbol_midnight_k) ? fact('Surface temperature at local midnight', `${m.tbol_midnight_k.toFixed(1)} K (${signed(m.tbol_midnight_k - 273.15, 1)} °C)${range(m.tbol_midnight_range_k, 'K')}`, 'wide w') : '',
       ok(m.treg_midnight_k) ? fact('Regolith temperature at local midnight', `${m.treg_midnight_k.toFixed(1)} K (${signed(m.treg_midnight_k - 273.15, 1)} °C)`, 'wide w') : '',
       ok(m.rock_abundance) ? fact('Rock abundance', `${m.rock_abundance.toFixed(3)} <span class="n">fraction of the ground covered by rocks</span>`, 'wide w') : '']
-    : [ok(m.thermal_inertia) ? fact('Thermal inertia', `${m.thermal_inertia} <span class="n">J m${sup('', '−2')} K${sup('', '−1')} s${sup('', '−½')}</span>${range(m.thermal_inertia_range, '')} <span class="n">lower is dust or fine sand, higher is rock</span>`, 'wide w') : ''];
+    : [ok(m.thermal_inertia) ? fact('Thermal inertia', `${m.thermal_inertia} <span class="n">${TI}</span>${range(m.thermal_inertia_range, TI)} <span class="n">lower is dust or fine sand, higher is rock</span>`, 'wide w') : ''];
   const px = m.of_px ? `${m.valid_px} of ${m.of_px} pixels were valid` : `${m.valid_px} valid pixels`, c = m.caves, cs = CAVE_SOURCES[m.body];
   // Subsurface: a catalogued entry is a candidate or a mapped pit, never a confirmed cave; none nearby is a fact about the catalogue.
   const cave = c ? fact(m.body === 'mars' ? 'Cave entrance candidates' : 'Lunar pits',
     `${c.within_100_km ? `${c.within_100_km} within 100 km; nearest ` : 'None within 100 km; nearest '}${esc(c.nearest_label)}, ${c.nearest_km.toLocaleString('en-GB')} km away <span class="n">of ${c.total.toLocaleString('en-GB')} in the catalogue</span>`, 'wide w') : '';
   // Mars rock chemistry and water: the Odyssey GRS's regional values (a 5° bin, about 300 km across at the equator), never scored.
   const el = m.elements, wt = (v: number | null | undefined, d: number) => ok(v) ? `${v.toFixed(d)} weight percent` : '—';
-  const chem = el ? fact('Water in the top metre', `${wt(el.h2o_wt, 1)} <span class="n">${ok(el.h2o_sigma) ? `± ${el.h2o_sigma.toFixed(1)}, ` : ''}as hydrogen read as water: ice and water bound in minerals</span>`, 'wide w')
+  const chem = el ? fact('Water in the top metre', `${wt(el.h2o_wt, 1)} <span class="n">${ok(el.h2o_sigma) ? `± ${el.h2o_sigma.toFixed(1)}, ` : ''}measured as hydrogen, read as water: ice or water bound in minerals</span>`, 'wide w')
     + fact('Iron', wt(el.fe_wt, 1), 'w') + fact('Silicon', wt(el.si_wt, 1), 'w') + fact('Potassium', wt(el.k_wt, 2), 'w') + fact('Chlorine', wt(el.cl_wt, 2), 'w')
     + fact('Thorium', ok(el.th_ppm) ? `${el.th_ppm.toFixed(1)} parts per million` : '—', 'w') : '';
   const val = rows.join('');
   return `${head}${val ? `<dl class="facts">${val}${cave}${chem}</dl>` : `<p class="fine">${m.note ?? 'No value here.'}</p>${cave || chem ? `<dl class="facts">${cave}${chem}</dl>` : ''}`}
-    <p class="fine">Read at ${esc(name)}, ${Math.round(m.km)} km from this target: the median over a window of about ${m.window_km} km (${px}), ${FETCHED}. ${src.dataset}; ${src.provider}.${c ? ` Caves: ${cs.dataset}; ${cs.provider}. A candidate is not a confirmed cave.` : ''}${el ? ` Water and elements: ${ELEMENT_SOURCE.dataset}; ${ELEMENT_SOURCE.provider}. A 5° bin is about 300 km across at the equator, so these are regional.` : ''} These describe the target. Earth has no like-for-like value, so they are not part of the climate fit.</p>`;
+    <p class="fine">Read at ${esc(name)}, ${Math.round(m.km)} km from this site: the median over a window of about ${m.window_km} km (${px}), ${FETCHED}. ${src.dataset}; ${src.provider}.${c ? ` Caves: ${cs.dataset}; ${cs.provider}. A candidate is not a confirmed cave.` : ''}${el ? ` Water and elements: ${ELEMENT_SOURCE.dataset}; ${ELEMENT_SOURCE.provider}. A 5° bin is about 300 km across at the equator, so these are regional.` : ''} These describe the site. Earth has no like-for-like value, so they are not part of the climate fit.</p>`;
 }
 
 // What an Earth double cannot stand for. Gravity, pressure and temperature come from data/bodies.ts, so one screen never
@@ -311,29 +312,28 @@ export interface Ops { months?: number[]; busy: boolean; shadow?: ShadowResult |
 export function missionBlock(r: MatchResult, ops?: Ops) {
   const cf = climateFit(r.environment), ts = terrainScore(r.fidelity?.score), months = ops?.months;
   const sw = shadowWeight(r.purpose), sh = ops?.shadow, fit = missionFit(r.purpose, { terrain: ts, climate: climateScore(cf?.verdict), ops: operationsScore(r.purpose, months, sh?.fit) });
-  const share = (a: number[]) => a.map(v => v.toFixed(2)).join(', ');
   const opsMonths = months ? `${months.length} of 12 months sit under this mission’s weather limits (NASA POWER climatology). Planning limits, a judgment.` : ops?.busy ? 'Loading the site’s climatology…'
     : sh ? 'The site’s climatology is not available.' : 'Not assessed: the site’s climatology is not available.';
   // The shadow fit counts only for the missions that move over the ground (data/mission.ts SHADOW_W): the share of each window in shadow.
-  const opsShadow = sw <= 0 ? '' : sh ? ` Shadow fit ${sh.fit} of 100, counting for ${Math.round(sw * 100)} of this factor’s 100: the share of each window in shadow at sun heights ${SUN_HEIGHTS.slice(0, -1).join('°, ')}° and ${SUN_HEIGHTS[SUN_HEIGHTS.length - 1]}° (eight directions) is ${share(sh.target)} on the target and ${share(sh.earth)} on the Earth site. A judgment score.`
+  const opsShadow = sw <= 0 ? '' : sh ? ` Shadow fit ${sh.fit} of 100: how closely the two windows’ shadows match with the sun ${SUN_HEIGHTS.slice(0, -1).join('°, ')}° and ${SUN_HEIGHTS[SUN_HEIGHTS.length - 1]}° up. It carries ${Math.round(sw * 100)} of this factor’s 100 weight.`
     : ' Shadow fit not available: it needs both windows as real elevation.';
   const why: Record<Factor, string> = {
     terrain: ts === null ? 'Not assessed: the engine gave no terrain score' : `The engine’s terrain score, ${num(r.fidelity?.score, 2)}, measured at 200 m. Rock type is not in it.`,
     climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: cold and dry against the target. A judgment band.` : 'Not assessed: the engine gave no climate for this site',
     astro: 'Not assessed: Eidolon holds no biology or biosignature data',
     ops: `${opsMonths}${opsShadow}`,
-    fidelity: 'N/A for a field site: gravity, pressure and radiation are the same at every site on Earth. Facilities give them: see Existing analogs above the results.',
-    human: 'N/A for a field site: crew size, duration and confinement belong to a habitat or facility. See Existing analogs above the results.',
+    fidelity: 'Doesn’t apply to a field site: gravity, pressure and radiation are the same at every site on Earth. Facilities give them: see Known analogs on the site view.',
+    human: 'Doesn’t apply to a field site: crew size, duration and confinement belong to a habitat or facility. See Known analogs on the site view.',
     infra: 'Not assessed: Eidolon holds no real logistics, power or cost data',
   };
   const st = (s: number | null, na: boolean) => na || s === null ? 'not_measurable' : s >= 70 ? 'match' : s >= 40 ? 'partial' : 'gap';
   const tierless = fit.applicable < MIN_APPLICABLE ? `a field site reaches only ${fit.applicable} of this mission’s 100 weight: it needs a habitat or facility too` : 'too little of what a field site can be judged on is assessed';
   const head = fit.tier ? `<span class="tier" aria-hidden="true">${fit.tier}</span><span class="sm">Provisional tier <b>${fit.tier}</b>, ${TIER_WORD[fit.tier].toLowerCase()} <span class="n2">score ${fit.score} of 100</span></span>`
     : `<span class="tier" aria-hidden="true">–</span><span class="sm"><b>No tier</b>: ${tierless}${fit.score === null ? '' : ` <span class="n2">score ${fit.score} of 100 on what is assessed</span>`}</span>`;
-  return `<div class="mfit" data-wx><h3 class="sec">Mission fit of this Earth site: ${text(purposeLabel(String(r.purpose ?? 'rover_mobility')))}</h3>
+  return `<div class="mfit" data-wx><h3 class="sec">Mission fit of this Earth double: ${text(purposeLabel(String(r.purpose ?? 'rover_mobility')))}</h3>
     <div class="rhead">${head}</div>
     <ul class="props">${fit.rows.map(x => `<li class="s-${st(x.score, x.na)}"><i class="mk mk-${st(x.score, x.na)}" aria-hidden="true"></i><span class="pl">${FACTOR_LABEL[x.key]}</span><span class="ps">${x.na ? 'N/A' : x.score === null ? 'Not assessed' : `${Math.round(x.score)} of 100`} · weight ${x.weight}</span><span class="pnote">${why[x.key]}</span></li>`).join('')}</ul>
-    <p class="fine">A field site can be judged on ${fit.applicable} of this mission’s 100 weight, and ${fit.assessed} of it is assessed. N/A and unassessed factors drop out and never count as zero. The weights are Eidolon’s judgment, reasoned with sources in the project’s analog-weights document; safety and permitting are not assessed, so a tier is provisional. This does not change the terrain match or the order of the results.</p></div>`;
+    <p class="fine">A field site can be judged on ${fit.applicable} of this mission’s 100 weight, and ${fit.assessed} of it is assessed. N/A and unassessed factors drop out and never count as zero. The weights are Eidolon’s judgment; no published source gives numeric weights. Safety and permitting are not assessed, so a tier is provisional. This does not change the terrain match or the order of the results.</p></div>`;
 }
 
 export interface BookingFit { r?: Pick<MatchResult, 'fidelity' | 'environment'>; purpose: string; label: string; body: unknown; months?: number[]; busy: boolean; shadow?: ShadowResult | null }
@@ -395,21 +395,21 @@ export function detail(r: MatchResult, res: SearchResponse, skin?: { busy: boole
     ${l.surface === 'rugged_extension' ? '<p class="fine">Terrain form matches; the surface is likely vegetated.</p>' : ''}
     ${missionBlock(r, ops)}
     <div class="vcard">${verdict(r, res)}</div>
-    ${group('Terrain: Earth site against the target', `${covers}
+    ${group('Terrain: Earth double against the site', `${covers}
     <h3 class="sec">Terrain properties</h3>
     <ul class="props">${(r.properties ?? []).map(p => `<li class="s-${status(p)}">${mark(p)}<span class="pl">${label(p)}</span><span class="ps">${STATUS[status(p)] ?? '—'}</span><span class="pv">${num(p.score, 2)}</span>${p.note ? `<span class="pnote">${prose(p.note)}</span>` : ''}</li>`).join('')}</ul>
     <p class="fine">Matches: ${names(ex.strengths)} · Differs: ${names(ex.gaps)}</p>
     <h3 class="sec">Notes</h3><ul class="notes">${strs(ex.caveats).map(c => `<li>${prose(c)}</li>`).join('') || '<li>None.</li>'}</ul>`, true)}
-    ${group('Climate: Earth site against the target', `<h3 class="sec">Earth site climate</h3>${climate(r.environment)}
+    ${group('Climate: Earth double against the site', `<h3 class="sec">Earth double’s climate</h3>${climate(r.environment)}
     <h3 class="sec">Climate fit</h3>${climateFitBlock(r.environment, res.target?.body)}
     ${skinBlock(skin, res.target?.body, res.target?.lat, res.target?.lon)}`)}
-    ${world ? group(`Target: measured on ${world}`, measuredBlock(res.target)) : ''}
-    ${group('Earth site: location and access', `<h3 class="sec">Location</h3><dl class="facts">
+    ${world ? group(`Site: measured on ${world}`, measuredBlock(res.target)) : ''}
+    ${group('Earth double: location and access', `<h3 class="sec">Location</h3><dl class="facts">
       ${fact('Coordinates', ok(l.lat) && ok(l.lon) ? fmtLL(l.lat, l.lon, 'earth', 4) : '—', 'wide')}${fact('Elevation', ok(l.elevation_m) ? `${fmtM(l.elevation_m)} a.s.l.` : '—')}${fact('Surface', surf || '—', 'w')}
       ${fact('Country', text(l.country), 'w')}${fact('Sovereign state', text(l.sovereign), 'w')}${fact('Access', word(ACCESS, l.access), 'wide w')}
       ${k ? fact('Established analog site', `Inside ${k.name}, ${k.place}`, 'wide w') : nearFact(l)}</dl>`)}
     ${limits(res.target?.body)}
-    <details class="drawer"><summary><span class="chev" aria-hidden="true"></span>Engine values</summary>
+    <details class="drawer"><summary><span class="chev" aria-hidden="true"></span>Raw engine values</summary>
       ${raw([['fidelity.score', f.score], ['fidelity.percentile_earth', f.percentile_earth], ['fidelity.matcher', f.matcher],
         // The judge's likelihood only as the rough bar above (spec §4), never as its number.
         ...Object.entries(r.raw ?? {}).filter(([key]) => key !== 'judge_p_good').map(([key, v]): [string, unknown] => [`raw.${key}`, v]),
@@ -466,7 +466,7 @@ export function matchLine(d: Doubles, body: string, remote: boolean) {
   if (c === 'no_dem') return 'No elevation data';
   if (c === 'warming_up') return 'Engine starting up';
   if (!d.res) return d.busy ? remote ? `Reading ${body} terrain` : 'Searching Earth' : 'Search failed';
-  return noAnalog(d.res) ? 'No close analog' : 'Earth sites';
+  return noAnalog(d.res) ? 'No close analog' : 'Earth doubles';
 }
 /** The site's search for screen readers (index.html #live-s, said by ui/chrome.ts as it changes): what it's doing, what
  *  it found or why it can't. Plain text. `remote`: searched by coordinates. A warm-up's retries (`up` carried over,
@@ -478,7 +478,7 @@ export function searchSay(d: Doubles, body: string, remote: boolean) {
   if (d.busy) return d.res ? 'Loading more doubles…' : remote ? `Reading ${body} terrain… A search by coordinates takes 5 to 10 seconds.` : 'Searching Earth…';
   if (c === 'aborted') return '';   // a newer pin's search replaced it
   if (c) return `${failHead(c)}.`;
-  if (!r) return d.res ? 'No Earth sites match this search.' : '';
-  return `${noAnalog(d.res) ? 'No close analog in this region; best available. ' : ''}${rs.length} Earth double${rs.length > 1 ? 's' : ''} found. The closest: ${
+  if (!r) return d.res ? 'No Earth doubles match this search.' : '';
+  return `${noAnalog(d.res) ? 'No close analog in this region. ' : ''}${rs.length} Earth double${rs.length > 1 ? 's' : ''} found. The closest: ${
     r.location?.country ?? 'Unnamed area'}, shape match ${conf(r.fidelity?.confidence).toLowerCase()}.`;
 }

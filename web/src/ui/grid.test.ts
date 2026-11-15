@@ -22,7 +22,7 @@ const EVIL = '<img src=x onerror="alert(1)">';
 describe('a card\'s doubles', () => {
   it('the three closest, each to its comparison, as a result card\'s head: rank, notes, country, point, shape match', () => {
     const h = gridDoubles('mars', jezero, d({ res }));
-    expect(h).toContain('Closest doubles on Earth');
+    expect(h).toContain('Closest Earth doubles');
     expect(h.match(/<li>/g)).toHaveLength(3);
     const l = res.results[0].location!;
     expect(h).toContain(`data-go="mars/jezero/compare/@${l.lat!.toFixed(4)},${l.lon!.toFixed(4)}"`);
@@ -51,7 +51,7 @@ describe('a card\'s doubles', () => {
   });
   it('the engine\'s no-match wording above them, prominently (spec §5.3)', () => {
     const r = { ...res, results: res.results.map(x => ({ ...x, explanation: { ...x.explanation, summary: `No close analog in this region; best available. ${x.explanation.summary}` } })) };
-    expect(gridDoubles('mars', jezero, d({ res: r }))).toContain('<p class="lede">No close analog in this region; best available.</p>');
+    expect(gridDoubles('mars', jezero, d({ res: r }))).toContain('<p class="lede">No close analog in this region. These are the closest available.</p>');
   });
   it('no elevation data: the site\'s established analog sites, unscored, drawn from Eidolon\'s own terrain', () => {
     const h = gridDoubles('moon', malapert, d({ err: new EngineError(422, 'no_dem') }));
@@ -69,9 +69,9 @@ describe('a card\'s doubles', () => {
     expect(line(d({ err: new EngineError(0, 'bad_response') }))).toContain('The answer couldn’t be read. Open the site to try again.');
     for (const e of [undefined, d({ busy: true }), d({ err: new EngineError(503, 'warming_up') })]) expect(line(e)).toContain('gd skel');
     expect(line(d({ err: new EngineError(0, 'network') }))).not.toContain('skel');   // nothing is coming
-    expect(line(d({ res: { ...res, results: [] } }))).toContain('No Earth sites match this search.');
+    expect(line(d({ res: { ...res, results: [] } }))).toContain('No Earth doubles match this search.');
     query.filters = { exclude_polar: true };
-    expect(line(d({ res: { ...res, results: [] } }))).toContain('No Earth sites match these filters.');
+    expect(line(d({ res: { ...res, results: [] } }))).toContain('No Earth doubles match these filters.');
     query.filters = {};
   });
 });

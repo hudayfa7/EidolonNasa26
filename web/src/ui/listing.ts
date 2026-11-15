@@ -66,5 +66,5 @@ export function listingBody(L: SiteListing, l: Loc, env: MatchResult['environmen
     ${P.season_note ? `<p class="fine">${text(P.season_note)}</p>` : ''}</div>
     <h3 class="sec">${ic('cost')}Indicative cost</h3><dl class="facts">${fact('Field costs on site, per person-day', `US$&nbsp;${usd(lo)}–${usd(hi)}`, 'wide')}</dl>
     <p class="fine">Lodging, vehicles and local support, estimated from how remote the site is. Flights not included; not a quote.</p>
-    <p class="fine">Sample listing: practical values are seeded until access, permit and land-use data are connected.</p>`;
+    <p class="fine">Sample site facts: practical values are planning estimates, not survey data.</p>`;
 }

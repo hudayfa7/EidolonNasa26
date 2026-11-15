@@ -11,7 +11,7 @@ import { daysAt, isoDay, over } from './weather';
 /** The flow's steps, each a route under the compare's (`…/book`, `…/book/plan`, …), and their names. */
 export const STEPS = ['listing', 'plan', 'review', 'done'] as const;
 export type Step = typeof STEPS[number];
-export const STEP_NAME: Record<Step, string> = { listing: 'Site listing', plan: 'Campaign plan', review: 'Review', done: 'Requested' };
+export const STEP_NAME: Record<Step, string> = { listing: 'Site facts', plan: 'Campaign plan', review: 'Review', done: 'Requested' };
 /** One level up from each step (Escape and the back button): the listing goes back to the comparison. */
 export const UP: Record<Step, Step | null> = { listing: null, plan: 'listing', review: 'plan', done: 'listing' };
 

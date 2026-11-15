@@ -53,7 +53,7 @@ function listed(c: Ctx) {
 /** The purpose select's options (ui/panel.ts fills them again when the purposes land). */
 export const purposeOptions = () => { const p = planNow(ctx()); return offered(p).map(k => `<option value="${esc(k)}"${k === p.purpose ? ' selected' : ''}>${esc(purposeName(k))}</option>`).join(''); };
 
-const steps = (now: Step) => `<ol class="bsteps" aria-label="Booking steps">${STEPS.map((x, i) =>
+const steps = (now: Step) => `<ol class="bsteps" aria-label="Campaign steps">${STEPS.map((x, i) =>
   `<li${x === now ? ' aria-current="step"' : i < STEPS.indexOf(now) ? ' class="done"' : ''}>${STEP_NAME[x]}</li>`).join('')}</ol>`;
 const head = (step: Step, title: string) => { const up = UP[step]; return `${backBtn(up ? STEP_NAME[up] : 'Comparison', at(up))}${steps(step)}<h2 class="title" tabindex="-1">${title}</h2>`; };
 const btn = (to: string, label: string, primary = false) => `<button class="btn${primary ? ' primary' : ''}" data-go="${to}">${label}</button>`;
@@ -80,7 +80,7 @@ function listingHTML(c: Ctx, L: SiteListing) {
   return `${head('listing', esc(c.d.name))}<p class="coords">${ic('site')}${fmtLL(L.lat, L.lon, 'earth', 4)}</p>
     ${listingLede(L.name === c.d.name ? c.d.place ?? L.name : L.name, L, c.s.name)}
     ${fitHTML(c, L, planNow(c).purpose)}
-    <div class="actions">${btn(at('plan'), 'Plan a campaign here', true)}</div>
+    <div class="actions">${btn(at('plan'), 'Plan a test campaign here', true)}</div>
     ${st.html}${st.credit ? `<p class="fine credit">${st.credit}</p>` : ''}
     ${listingBody(L, srcOf(c).location, c.hit?.environment, !!c.hit, `Best months for ${purposeIn(planNow(c).purpose)}`, wxAt(placeOf(L)).cl.busy)}`;
 }
