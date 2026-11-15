@@ -80,7 +80,7 @@ export function drawMap(cv: HTMLCanvasElement, bodyId: Body, site: Site, win = f
   const cx = S / 2; g.beginPath(); g.arc(cx, cx, 7 * u, 0, Math.PI * 2); g.moveTo(cx - 14 * u, cx); g.lineTo(cx - 4 * u, cx); g.moveTo(cx + 4 * u, cx); g.lineTo(cx + 14 * u, cx); g.moveTo(cx, cx - 14 * u); g.lineTo(cx, cx - 4 * u); g.moveTo(cx, cx + 4 * u); g.lineTo(cx, cx + 14 * u); g.stroke();
   const barKm = [1, 2, 5, 10, 20, 25, 50].find(x => x >= T.ext / 5) || 50, bw = barKm / T.ext * S;
   g.fillStyle = 'rgba(6,7,10,.7)'; g.fillRect(10 * u, S - 30 * u, bw + 50 * u, 20 * u);
-  g.fillStyle = '#fff'; g.fillRect(16 * u, S - 18 * u, bw, 2.5 * u); g.font = `${10 * u}px "Geist Mono", ui-monospace, monospace`; g.textBaseline = 'middle'; g.fillText(`${barKm} km`, 22 * u + bw, S - 17 * u);
+  g.fillStyle = '#fff'; g.fillRect(16 * u, S - 18 * u, bw, 2.5 * u); g.font = `${10 * u}px Geist, system-ui, sans-serif`; g.textBaseline = 'middle'; g.fillText(`${barKm} km`, 22 * u + bw, S - 17 * u);
   g.textAlign = 'center'; g.fillText('N', S - 16 * u, 18 * u); g.beginPath(); g.moveTo(S - 16 * u, 26 * u); g.lineTo(S - 20 * u, 36 * u); g.lineTo(S - 12 * u, 36 * u); g.closePath(); g.fill(); g.textAlign = 'left';
   g.fillStyle = 'rgba(6,7,10,.7)'; g.fillRect(10 * u, 10 * u, 112 * u, 20 * u); g.fillStyle = '#fff'; g.fillText(`${T.ext} × ${T.ext} km`, 16 * u, 20 * u);
   // Edge coordinates: the midpoint of each edge, half the extent from the centre along its own bearing.
@@ -88,7 +88,7 @@ export function drawMap(cv: HTMLCanvasElement, bodyId: Body, site: Site, win = f
   // What the map's labels cover (x, y, w, h): the extent, the scale bar, north and each chip, for the line's length to clear.
   const boxes = [[10 * u, 10 * u, 112 * u, 20 * u], [10 * u, S - 30 * u, bw + 50 * u, 20 * u], [S - 24 * u, 8 * u, 16 * u, 30 * u]];
   const chip = (txt: string, x: number, y: number, al: 'c' | 'l' | 'r') => {
-    g.font = `${9.5 * u}px "Geist Mono", ui-monospace, monospace`; const w = g.measureText(txt).width + 10 * u, h = 17 * u;
+    g.font = `${9.5 * u}px Geist, system-ui, sans-serif`; const w = g.measureText(txt).width + 10 * u, h = 17 * u;
     const x0 = al === 'c' ? x - w / 2 : al === 'r' ? x - w : x; boxes.push([x0, y - h / 2, w, h]); g.fillStyle = 'rgba(6,7,10,.72)'; g.fillRect(x0, y - h / 2, w, h);
     g.fillStyle = 'rgba(255,255,255,.9)'; g.textAlign = 'left'; g.fillText(txt, x0 + 5 * u, y + .5 * u);
   };
@@ -100,7 +100,7 @@ export function drawMap(cv: HTMLCanvasElement, bodyId: Body, site: Site, win = f
   const pts = Array.from({ length: 49 }, (_, i) => { const [x, y] = llToLocal(BODIES[bodyId].R, c.lat, c.lon, ...gcAt(a, b ?? a, i / 48)); return [(x / T.ext + .5) * S, (.5 - y / T.ext) * S]; });
   const coral = token('--coral'), dark = 'rgba(6,7,10,.75)'; g.lineCap = g.lineJoin = 'round';
   if (b) for (const [w, col] of [[5 * u, dark], [2 * u, haz ? '#FFE3D2' : coral]] as const) { g.lineWidth = w; g.strokeStyle = col; g.beginPath(); for (const [x, y] of pts) g.lineTo(x, y); g.stroke(); }
-  g.font = `600 ${9 * u}px "Geist Mono", ui-monospace, monospace`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = `600 ${9 * u}px Geist, system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
   for (const [[x, y], t] of b ? [[pts[0], 'A'], [pts[48], 'B']] as const : [[pts[0], 'A']] as const) {
     g.beginPath(); g.arc(x, y, 7 * u, 0, Math.PI * 2); g.fillStyle = coral; g.fill(); g.lineWidth = 1.5 * u; g.strokeStyle = dark; g.stroke();
     g.fillStyle = '#0B0C0E'; g.fillText(t, x, y + .5 * u);
@@ -108,7 +108,7 @@ export function drawMap(cv: HTMLCanvasElement, bodyId: Body, site: Site, win = f
   g.textAlign = 'left'; if (!b) return;
   // Beside B away from A, over or under it away from A, then the other two (over the line's end): the first spot inside
   // the map and clear of its labels.
-  const t = fmtDist(gcKm(BODIES[bodyId].R, a, b)), [ax, ay] = pts[0], [bx, by] = pts[48], d = 11 * u, h = 17 * u; g.font = `${9.5 * u}px "Geist Mono", ui-monospace, monospace`;
+  const t = fmtDist(gcKm(BODIES[bodyId].R, a, b)), [ax, ay] = pts[0], [bx, by] = pts[48], d = 11 * u, h = 17 * u; g.font = `${9.5 * u}px Geist, system-ui, sans-serif`;
   const w = g.measureText(t).width + 10 * u, R = [bx + d, by - h / 2], L = [bx - d - w, by - h / 2], U = [bx - w / 2, by - d - h], D = [bx - w / 2, by + d];
   const spots = [ax <= bx ? R : L, ay >= by ? U : D, ay >= by ? D : U, ax <= bx ? L : R];
   const m = 3 * u, clear = ([x, y]: number[]) => x >= m && y >= m && x + w <= S - m && y + h <= S - m && !boxes.some(([X, Y, W, H]) => x < X + W + m && X < x + w + m && y < Y + H + m && Y < y + h + m);

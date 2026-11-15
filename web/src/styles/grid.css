@@ -17,9 +17,9 @@
 .gt{ display:grid; grid-template-columns:92px 1fr; grid-template-rows:auto 1fr auto; gap:4px 12px; width:calc(100% + 8px); margin:0 -4px; padding:4px; border:0; border-radius:10px; background:none; text-align:left; cursor:pointer; }
 .gt:hover{ background:var(--surface-2); }
 .gt .th{ grid-row:1 / 4; width:92px; height:92px; border-radius:8px; overflow:hidden; background:var(--surface-2); }
-.gt .nm{ font:400 19px/1.2 var(--serif); }
+.gt .nm{ font:400 19px/1.2 var(--sans); }
 .gt .kd{ font-size:12.5px; line-height:1.45; color:var(--text-2); }
-.gt .ll{ font:11px/1.3 var(--mono); color:var(--text-3); font-variant-numeric:tabular-nums; }
+.gt .ll{ font:11px/1.3 var(--sans); color:var(--text-3); }
 .gt .ll span{ white-space:nowrap; }   /* too narrow for both: the longitude wraps whole */
 .gc .sec{ margin:14px 0 6px; }
 .gc .fine{ margin:0 0 8px; }

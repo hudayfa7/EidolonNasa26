@@ -4,14 +4,14 @@
   background:radial-gradient(42% 70% at 0% 50%, rgba(120,170,255,.55), transparent 70%),radial-gradient(30% 60% at 100% 50%, rgba(80,140,240,.42), transparent 70%),linear-gradient(90deg,#2B5CC4 0%,#0B1736 22%,#050A1A 55%,#0A1A40 85%,#2A5AB8 100%); }
 #beyond .fx{ position:fixed; inset:0; pointer-events:none; }
 #galaxy,#gpath,#gorb{ position:absolute; inset:0; width:100%; height:100%; }   /* drawn once, revealed on the compositor (views/beyond.ts) */
-.gl{ position:absolute; font:11px/1.5 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:rgba(230,240,255,.88); white-space:nowrap; opacity:0; }
+.gl{ position:absolute; font:11px/1.5 var(--sans); letter-spacing:.07em; text-transform:uppercase; color:rgba(230,240,255,.88); white-space:nowrap; opacity:0; }
 .gl b{ display:block; font-weight:400; color:rgba(230,240,255,.5); }
 .gl1{ left:3%; top:calc(38% + 24px); } .gl2{ left:calc(66% + 18px); top:calc(38% + 16px); }
 /* Where a card can reach them (views/beyond.ts fitLabels); hidden, not gone, so they keep the box it measures */
 #beyond.nogl .gl{ visibility:hidden; }
 .bhero{ max-width:560px; text-shadow:0 1px 18px rgba(4,9,24,.55); }
 #beyond .bin{ position:relative; min-height:100%; display:flex; flex-direction:column; justify-content:space-between; gap:20px; padding:calc(var(--top) + 36px) clamp(18px,4vw,56px) 26px; }
-#beyond h2{ margin:0; font:300 clamp(32px,3.6vw,48px)/1.05 var(--serif); letter-spacing:-.015em; }
+#beyond h2{ margin:0; font:300 clamp(32px,3.6vw,48px)/1.05 var(--sans); letter-spacing:-.015em; }
 #beyond .lead{ margin:16px 0 0; max-width:54ch; font-size:15px; line-height:1.6; color:rgba(214,228,240,.78); }
 .cards{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
 .card{ border:1px solid rgba(169,210,242,.2); border-radius:14px; background:rgba(4,10,26,.74); padding:12px 12px 14px; }
@@ -23,10 +23,10 @@
 .card figcaption{ display:flex; justify-content:space-between; gap:8px; margin-top:6px; font-size:11.5px; line-height:1.3; color:rgba(214,228,240,.56); }
 .card figcaption a{ flex:none; color:inherit; text-underline-offset:2px; } .card figcaption a:hover{ color:rgba(214,228,240,.86); }
 .card figcaption span{ text-align:right; }
-.card .w{ font:11px/1 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:#A9D2F2; }
-.card h3{ margin:6px 0 6px; font:400 19px/1.2 var(--serif); }
+.card .w{ font:11px/1 var(--sans); letter-spacing:.07em; text-transform:uppercase; color:#A9D2F2; }
+.card h3{ margin:6px 0 6px; font:400 19px/1.2 var(--sans); }
 .card p{ margin:0; font-size:12.5px; line-height:1.5; color:rgba(214,228,240,.74); }
-.card .st{ display:inline-block; margin-top:10px; padding:3px 9px; border-radius:999px; font:11px/1.4 var(--mono); color:#0B1730; background:#A9D2F2; }
+.card .st{ display:inline-block; margin-top:10px; padding:3px 9px; border-radius:999px; font:11px/1.4 var(--sans); color:#0B1730; background:#A9D2F2; }
 #beyond .actions{ margin-top:18px; }
 @media (max-width:760px), (max-height:620px){ .cards{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:6px; } .card{ flex:0 0 78%; scroll-snap-align:start; } .gl{ display:none; } }
 /* Four narrow columns: Titan's credit wraps below ~1070–1150 px wide (by font rendering), so every caption keeps two lines and the headings stay in a row */

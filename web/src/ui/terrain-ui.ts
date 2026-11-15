@@ -70,7 +70,7 @@ export function buildTUI() {
     const dr = !i && dc ? '<button class="drape" type="button" data-drape aria-pressed="false">Orbital image</button>' : '';
     // The slope hazard's key (ui/slope.ts): the block greyed, so its ramp goes, as under the image.
     const sk = hazard.on;
-    el.innerHTML = `<div class="north" title="North"><svg viewBox="0 0 14 20"><path d="M7 1 L12 15 L7 12 L2 15 Z" fill="#E7E9EC"/><text x="7" y="20" font-size="5" text-anchor="middle" fill="#A0A6AE" font-family="sans-serif">N</text></svg></div>${dr}
+    el.innerHTML = `<div class="north" title="North"><svg viewBox="0 0 14 20"><path d="M7 1 L12 15 L7 12 L2 15 Z" fill="#E7E9EC"/><text x="7" y="20" font-size="5" text-anchor="middle" fill="#A0A6AE">N</text></svg></div>${dr}
       ${ov ? '' : terrScenes[i].marks.map(m => `<span class="cl" aria-hidden="true">${fmtM(m.lv)}</span>`).join('')}
       <div class="legend">Elevation${both.map(bar).join('')}${sk ? `<div class="sk"><i></i>Slopes over ${STEEP}°</div>` : ''}
       <div class="ct" style="margin-top:6px">Contours every ${contours}. Vertical exaggeration ${exag}×.</div></div>
@@ -137,7 +137,7 @@ export function placeTUI(R: Rect[]) {
     const T = terrScenes[i].T, c = T ? T.N >> 1 : 0, ell = T && state.view === 'site' && landing.on && ringed(missionOf(state.body!), T.ext);
     if (ell) proj(_a.set(0, (T.z[c * T.N + c] - T.min) * TERR_S / (T.ext * 1000) * terrScenes[i].exag, 0), cam, r, P2);
     labels[i].forEach((el, n) => { const m = terrScenes[i].marks[n]; if (!m) return; proj(_a.copy(m.p), cam, r, P);
-      const x = P.x - r.x, y = P.y - r.y, hw = el.textContent!.length * 3.2 + 2, hh = 7;   // mono 10 px: ~6.3 px a character
+      const x = P.x - r.x, y = P.y - r.y, hw = el.textContent!.length * 3.2 + 2, hh = 7;   // Geist 10 px: at most ~6.1 px a character
       const fits = x > hw && x < r.w - hw && y > hh && y < r.h - hh && !boxes[i].some(b => x + hw > b.l && x - hw < b.r && y + hh > b.t && y - hh < b.b)
         && !(ell && Math.abs(x - P2.x + r.x) < hw + 16 && Math.abs(y - P2.y + r.y) < hh + 16);
       setStyle(el, 'visibility', fits ? 'inherit' : 'hidden');

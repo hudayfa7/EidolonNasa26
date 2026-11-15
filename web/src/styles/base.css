@@ -1,6 +1,7 @@
 /* Page base, focus, screen-reader text, the no-WebGL message */
 html{ height:100%; scroll-padding-top:env(safe-area-inset-top,0px); }
-*,*::before,*::after{ box-sizing:inherit; }
+/* Tabular figures everywhere, so readouts hold still in the one face; !important because every font shorthand resets it */
+*,*::before,*::after{ box-sizing:inherit; font-variant-numeric:tabular-nums !important; }
 body{ margin:0; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font:400 14px/1.5 var(--sans); -webkit-font-smoothing:antialiased; }
 button{ font:inherit; color:inherit; }
 :focus-visible{ outline:1.5px solid #fff; outline-offset:2px; }
@@ -24,13 +25,13 @@ button{ font:inherit; color:inherit; }
 #fb-h{ scroll-margin-top:40px; }   /* Featured sites lands clear of the top */
 .fb > .lede{ max-width:62ch; } .fb > .fine{ max-width:90ch; }
 .fb-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:0 48px; }
-.fb h3{ margin:36px 0 10px; font:400 22px/1.2 var(--serif); color:var(--text); }
+.fb h3{ margin:36px 0 10px; font:400 22px/1.2 var(--sans); color:var(--text); }
 .fb ul{ list-style:none; margin:0; padding:0; }
 .fb li[id]{ padding:14px 0; border-top:1px solid var(--line); outline:none; }
 .fb li.on{ margin:0 -12px; padding:14px 12px; border-radius:10px; border-top-color:transparent; background:var(--surface-3); scroll-margin-top:24px; }   /* the deep link's site */
-.fb h4{ display:inline; margin:0; font:400 19px/1.3 var(--serif); }
+.fb h4{ display:inline; margin:0; font:400 19px/1.3 var(--sans); }
 .fb a{ color:var(--text); text-decoration-color:var(--line-2); text-underline-offset:3px; } .fb a:hover{ text-decoration-color:currentColor; }
-.fb .c{ margin-left:10px; font:12px/1.3 var(--mono); color:var(--text-3); font-variant-numeric:tabular-nums; }
+.fb .c{ margin-left:10px; font:12px/1.3 var(--sans); color:var(--text-3); }
 .fb li p{ margin:4px 0 0; }
 .fb li .fine,.fb li .banner{ margin:8px 0 0; }
 .fb ol,.fb li ul{ margin:6px 0 0; padding-left:20px; font-size:13px; } .fb li ul{ list-style:disc; }
