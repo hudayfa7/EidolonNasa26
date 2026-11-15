@@ -137,7 +137,7 @@ for ISRU on the Moon and Haughton for rover mobility on Mars.
 - [S7] Canadian Space Agency, Aquarius Underwater Laboratory. https://www.asc-csa.gc.ca/eng/missions/neemo/aquarius.asp
 - [S8] Frontiers in Physiology, conference abstract (2018), NASA, ESA and DLR analog campaigns.
   https://www.frontiersin.org/10.3389%2Fconf.fphys.2018.26.00044/event_abstract
-- [S9] HI-SEAS, About. https://www.hi-seas.org/about-hi-seas
+- [S9] HI-SEAS, About (archived; the site is now password-protected). https://web.archive.org/web/20260514053129/https://www.hi-seas.org/about-hi-seas
 - [S10] National Geographic, Exploring Mars in Utah. https://www.nationalgeographic.com/science/article/exploring-mars-utah-mock-mission-simulation-space-science
 - [S11] ESA, Spaceship Concordia. https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/Concordia/Spaceship_Concordia
 - [S12] Mars Institute, Haughton-Mars Project. https://www.marsinstitute.no/hmp

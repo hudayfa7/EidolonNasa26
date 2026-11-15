@@ -17,7 +17,7 @@ export const SOURCES: Record<string, Source> = {
   neemo: { title: 'NASA, NEEMO studies', url: 'https://www.nasa.gov/missions/analog-field-testing/neemo/nasa-extreme-environment-mission-operations-neemo-studies' },
   aquarius: { title: 'Canadian Space Agency, Aquarius Underwater Laboratory', url: 'https://www.asc-csa.gc.ca/eng/missions/neemo/aquarius.asp' },
   envihab: { title: 'Frontiers in Physiology, conference abstract (2018) on NASA, ESA and DLR analog campaigns', url: 'https://www.frontiersin.org/10.3389%2Fconf.fphys.2018.26.00044/event_abstract' },
-  hiseas: { title: 'HI-SEAS, About', url: 'https://www.hi-seas.org/about-hi-seas' },
+  hiseas: { title: 'HI-SEAS, About (archived)', url: 'https://web.archive.org/web/20260514053129/https://www.hi-seas.org/about-hi-seas' },
   mdrs: { title: 'National Geographic, Exploring Mars in Utah (MDRS)', url: 'https://www.nationalgeographic.com/science/article/exploring-mars-utah-mock-mission-simulation-space-science' },
   concordia: { title: 'ESA, Spaceship Concordia', url: 'https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/Concordia/Spaceship_Concordia' },
   hmp: { title: 'Mars Institute, Haughton-Mars Project', url: 'https://www.marsinstitute.no/hmp' },
