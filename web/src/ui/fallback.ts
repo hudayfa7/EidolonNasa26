@@ -34,14 +34,14 @@ export function fbDoubles(id: Body, s: Site, e?: Doubles) {
   if (res && list.length) {
     const cav = list.map(({ r }) => [...new Set(strs(r.explanation?.caveats))]), shared = cav[0].filter(c => cav.every(x => x.includes(c)));
     const notes = (xs: string[]) => xs.map(n => text(fractions(n))).join(' ');
-    return `${targetNote(res.target, s.name)}${banner(res.target)}<p>${noAnalog(res) ? 'No close analog in this region; best available:' : 'Closest doubles on Earth:'}</p><ol>${list.map(({ r, id: d }, i) => {
+    return `${targetNote(res.target, s.name)}${banner(res.target)}<p>${noAnalog(res) ? 'No close analog in this region. The closest available:' : 'Closest Earth doubles:'}</p><ol>${list.map(({ r, id: d }, i) => {
       const l = r.location!, gaps = strs(r.explanation?.gaps), own = cav[i].filter(c => !shared.includes(c));
       return `<li><a href="${to(d)}">${text(l.country ?? 'Unnamed area')}</a><span class="c">${fmtLL(l.lat!, l.lon!, 'earth', 4)}</span>${placeTag(l.lat!, l.lon!)}
         <br>Shape match ${conf(r.fidelity?.confidence).toLowerCase()}. ${brief(r.explanation?.summary)}${gaps.length ? ` Differs: ${gaps.map(text).join(', ')}.` : ''}${own.length ? ` Note: ${notes(own)}` : ''}</li>`;
     }).join('')}</ol>${shared.length ? `<p class="fine">${['Notes', 'Notes on both', 'Notes on all three'][list.length - 1]}: ${notes(shared)}</p>` : ''}`;
   }
   const state = !e ? 'Waiting its turn: searches by coordinates run one at a time.'
-    : res ? 'No Earth sites match this search.'
+    : res ? 'No Earth doubles match this search.'
     : e.busy ? s.iau ? 'Searching Earth…' : `Reading ${BODIES[id].name} terrain…`
     : e.err?.code === 'warming_up' ? 'Search engine starting up…' : null;
   if (state) return `<p>${state}</p>`;

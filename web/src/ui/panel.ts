@@ -11,7 +11,7 @@ import { EngineError } from '../data/api';
 import { bestMonths, daysAt, onWeather, over, skinAt, todayAt, wxAt } from '../data/weather';
 import { $, $$, copyText, esc, setHTML } from '../dom';
 import { CAPTURE, fillBar, RM, simNow, TOUCH, wallNow } from '../motion';
-import { FACTOR_ORDER, profileOf, type Factor } from '../data/mission';
+import { FACTOR_LABEL, FACTOR_ORDER, profileOf } from '../data/mission';
 import { buildScenes, go, routeOf, state, type Route } from '../router';
 import { focusPanel } from '../scene/frame';
 import { earthInView, keyed } from '../scene/input';
@@ -145,15 +145,15 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
   const head = sel ? `<h3 class="sec">Doubles for ${s.name}</h3>` : `<h3 class="dh" id="doubles">${known.length ? 'Established analog sites on Earth' : 'Earth doubles'}${
     known.length || e.err?.code === 'no_dem' || !best ? '' : `<span class="nf">best known analog: ${esc(best)}</span>`}</h3>`;
   const to = (dbl: string) => routeOf({ body: id, site: s.id, dbl });
-  const compare = (dbl: string) => sel ? '' : `<div class="actions"><button class="btn primary" data-go="${to(dbl)}">Compare with Earth doubles</button></div>`;
-  if (e.err?.code === 'no_dem') return `${known.length ? compare(known[0]) : ''}${head}${noData(!!s.custom, known.length > 0, creditName(genTerrain(id, s).src))}
+  const compare = (dbl: string, what = 'the closest double') => sel ? '' : `<div class="actions"><button class="btn primary" data-go="${to(dbl)}">Compare with ${what}</button></div>`;
+  if (e.err?.code === 'no_dem') return `${known.length ? compare(known[0], 'an analog site') : ''}${head}${noData(!!s.custom, known.length > 0, creditName(genTerrain(id, s).src))}
     ${known.length ? `<ul class="rows">${known.map(did => { const d = EARTH_BY[did];
       return row({ go: to(did), name: d.name, sub: d.place, color: BODIES.earth.color, sel: did === sel }); }).join('')}</ul>` : ''}`;
   const nf = Object.keys(query.filters).length;
   if (e.err && !e.res) return `${head}${failed(id, s, e)}`;
   if (!e.res) return `${head}${s.iau ? skeleton(!nf) : reading(e, BODIES[id].name)}`;
   const tn = targetNote(e.res.target, s.name);
-  if (!list.length) return `${head}${tn}${banner(e.res.target)}<p class="fine">No Earth sites match ${nf ? 'these filters' : 'this search'}.</p>${nf ? btn('data-filters-clear', 'Clear filters') : ''}`;
+  if (!list.length) return `${head}${tn}${banner(e.res.target)}<p class="fine">No Earth doubles match ${nf ? 'these filters' : 'this search'}.</p>${nf ? btn('data-filters-clear', 'Clear filters') : ''}`;
   // A compare whose Earth pin a new purpose or filter left out (only the query it was opened under asks for the 20).
   const away = !!sel && !e.busy && !!siteOf('earth', sel)?.custom && !list.some(x => x.id === sel);
   // "Show more" while the search may have more to give (it returned all it was asked for), up to 20. When it fails, the
@@ -163,7 +163,7 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
   // Order: the heading, the known analogs (one collapsed line), the capability banner (spec §5.2: above the results), the cards; then
   // what explains them (the marks' legend, the count away from listed analogs, the IAU note) and the compare button.
   return `${head}${away ? '<p class="fine">The compared Earth pin isn’t among this search’s results.</p>' : ''}<div class="slim">${banner(e.res.target)}</div>
-    ${noAnalog(e.res) ? `<p class="lede">No close analog in this region; best available.</p>${nf
+    ${noAnalog(e.res) ? `<p class="lede">No close analog in this region. These are the closest available.</p>${nf
       ? `<p class="fine">Filters narrow where on Earth the search looks. Without them it may find closer terrain.</p>${btn('data-filters-clear', 'Clear filters')}` : ''}` : ''}
     <ul class="results">${list.map(({ r, id: did }) => card(r, to(did), did === sel)).join('')}</ul>${more}
     ${sel ? '' : existingBlock(query.purpose, id, kept.has('analogs'))}
@@ -318,16 +318,15 @@ const askBox = (id: Body, s: Site) => `<div class="ask" data-ask tabindex="-1"${
 // The mission's weights (data/mission.ts PROFILES; docs/analog-weights.md) as one bar of shares out of 100: a thin one in the Filters
 // and purpose header, always in view, and a labelled one inside it. All seven segments are always there (zero-width when unweighted),
 // so a new purpose slides the shares from the old ones (asked).
-const WSHORT: Record<Factor, string> = { terrain: 'Terrain', climate: 'Climate', astro: 'Astrobiology', ops: 'Operations', fidelity: 'Gravity, pressure, radiation', human: 'Crew', infra: 'Infrastructure' };
 const wbar = (cls: string) => { const P = profileOf(query.purpose);
   return `<span class="wbar ${cls}" aria-hidden="true">${FACTOR_ORDER.map(k => `<i class="wf-${k}" style="flex-grow:${P[k]}"></i>`).join('')}</span>`; };
 // All seven legend items are always there, the unweighted ones collapsed (`off`), so a purpose that gains or drops a factor opens or
 // closes its item instead of re-flowing the list.
 function weights() {
   const P = profileOf(query.purpose);
-  return `<p class="fl">How ${esc(purposeLabel(query.purpose).toLowerCase())} weighs an analog, out of 100</p>${wbar('full')}
-    <ul class="wleg">${FACTOR_ORDER.map(k => `<li class="${P[k] ? '' : 'off'}"><i class="wf-${k}" aria-hidden="true"></i>${WSHORT[k]} <b>${P[k]}</b></li>`).join('')}</ul>
-    <p class="fine">Eidolon’s judgment for this mission, reasoned with sources in the project’s analog-weights document. It sets each result’s mission fit; it does not change the terrain match or the order of the results.</p>`;
+  return `<p class="fl">How ${esc(lc(purposeLabel(query.purpose)))} weighs an analog, out of 100</p>${wbar('full')}
+    <ul class="wleg">${FACTOR_ORDER.map(k => `<li class="${P[k] ? '' : 'off'}"><i class="wf-${k}" aria-hidden="true"></i>${FACTOR_LABEL[k]} <b>${P[k]}</b></li>`).join('')}</ul>
+    <p class="fine">Eidolon’s judgment for this mission; no published source gives numeric weights. It sets each result’s mission fit; it does not change the terrain match or the order of the results.</p>`;
 }
 // Asked anew: the form shows the new query (the focus stays on its control), the doubles the new search.
 function asked() {
@@ -439,7 +438,7 @@ function terrHTML(id: Body, s: Site, d: Site) {
       ${r2('Relief', fmtM(A.relief), fmtM(B.relief))}${r2('Mean slope', `${A.meanSlope.toFixed(1)}°`, `${B.meanSlope.toFixed(1)}°`)}
       ${r2('Slopes over 15°', area(A), area(B))}${r2('Area shown', `${A.ext}&nbsp;×&nbsp;${A.ext}&nbsp;km`, `${B.ext}&nbsp;×&nbsp;${B.ext}&nbsp;km`)}
     </tbody></table>
-    ${(A.engine || A.src) && (B.engine || B.src) ? '' : '<p class="fine">Where a side’s terrain is illustrative, so are its values here, until the search engine’s elevation is connected.</p>'}
+    ${(A.engine || A.src) && (B.engine || B.src) ? '' : '<p class="fine">Where a side’s terrain is illustrative, so are its values here.</p>'}
     ${terr.length ? `<p class="fine credit">Terrain: ${terr.map(esc).join('. ')}.</p>` : ''}`;
 }
 function compareTop(id: Body, s: Site, d: Site) {

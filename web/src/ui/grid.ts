@@ -26,13 +26,13 @@ export function gridDoubles(id: Body, s: Site, e?: Doubles) {
   const to = (dbl: string) => routeOf({ body: id, site: s.id, dbl }), kn = e ? knownOf(s, e) : [];
   if (kn.length) return `<p class="sec">Established analog sites</p><ul class="gd">${kn.slice(0, TOP).map(d => known(to(d), d)).join('')}</ul>
     <p class="fine">No elevation data here for the search, so these known analogs are unscored.</p>`;
-  const res = e?.res, head = `${res ? targetNote(res.target, s.name) : ''}<p class="sec">Closest doubles on Earth</p>${res ? banner(res.target) : ''}`;
+  const res = e?.res, head = `${res ? targetNote(res.target, s.name) : ''}<p class="sec">Closest Earth doubles</p>${res ? banner(res.target) : ''}`;
   const list = res ? cellsOf(res).slice(0, TOP) : [];
-  if (list.length) return `${head}${noAnalog(res) ? '<p class="lede">No close analog in this region; best available.</p>' : ''}<ul class="gd">${
+  if (list.length) return `${head}${noAnalog(res) ? '<p class="lede">No close analog in this region. These are the closest available.</p>' : ''}<ul class="gd">${
     list.map(({ r, id: did }) => `<li><button data-go="${to(did)}">${thumb(r)}${cardHead(r)}</button></li>`).join('')}</ul>`;
   const nf = Object.keys(query.filters).length;
   const line = !e ? 'Waiting its turn: searches by coordinates run one at a time.'
-    : res ? `No Earth sites match ${nf ? 'these filters' : 'this search'}.`
+    : res ? `No Earth doubles match ${nf ? 'these filters' : 'this search'}.`
     : e.busy ? s.iau ? 'Searching Earth…' : `Reading ${BODIES[id].name} terrain…<span class="pbar"><i data-t0="${e.t0.toFixed(3)}" data-s="10"></i></span>`
     : e.err?.code === 'warming_up' ? 'Search engine starting up…' : `${failHead(e.err?.code ?? '')}. Open the site to try again.`;
   return `${head}<p class="fine">${line}</p>${!e || e.busy || e.err?.code === 'warming_up' ? SKEL : ''}`;   // rows to come, not after a failure
@@ -61,13 +61,13 @@ export function gridCard(id: Body, s: Site) {
 export function gridHTML(id: Body) {
   const b = BODIES[id], nf = Object.keys(query.filters).length;
   const src = [...id === 'mars' ? ['blend'] : ['sldem', 'lolaPole'], 'glo30'].map(credit).filter(Boolean);
-  const shade = AS_ENGINE ? `the search engine’s${id === 'moon' ? ', and where it has no elevation, Eidolon’s own' : ''}`
-    : 'from the elevation models the search engine reads where Eidolon has them, elsewhere illustrative, until the search engine is connected';
+  const shade = AS_ENGINE ? `the search engine’s elevation${id === 'moon' ? ' and, where it has none, Eidolon’s own' : ''}`
+    : 'the elevation models the search engine reads where Eidolon has them; elsewhere illustrative';
   return `<div class="gh"><div>${backBtn(b.name, id)}<h2 class="title" tabindex="-1">Featured sites</h2></div>
       <div class="tabs" role="group" aria-label="World">${PICKABLE.map(w => `<button data-go="${w}/sites" aria-pressed="${w === id}"><i style="--c:${BODIES[w].color}"></i>${BODIES[w].name}</button>`).join('')}</div></div>
     <p class="lede">Each site’s 18.8&nbsp;km window beside its closest doubles on Earth. Open a site, or compare it with a double.${id === 'moon' ? ' Matching reaches 60° from the equator, so the south-pole regions list their established analog sites, unscored.' : ''}</p>
     <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}${nf ? `, with ${nf} filter${nf > 1 ? 's' : ''} on` : ''}. Change it on any site.</p>
     <div data-gfail tabindex="-1" aria-live="polite"></div><div class="gcards">${SITES[id].map(s => gridCard(id, s)).join('')}</div>
-    <p class="fine">${TESTED}${MOCK ? SAMPLE : ''} Hillshades of each 18.8&nbsp;km window, lit from the north-west, each at its own contrast: ${shade}.</p>
+    <p class="fine">${TESTED}${MOCK ? SAMPLE : ''} Hillshades of each 18.8&nbsp;km window, lit from the north-west, each at its own contrast, drawn from ${shade}.</p>
     ${src.length ? `<p class="fine credit">Elevation: ${src.map(esc).join('. ')}.</p>` : ''}`;
 }

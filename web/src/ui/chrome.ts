@@ -110,7 +110,7 @@ function hint() {
   // A touch screen's hints leave Esc out, unless a keyboard drives the 3D view.
   const s = state, kb = keyed() && keyView(), escK = !TOUCH || kb, up = s.book && escK ? ' Esc goes back a step.' : '', zoom = TOUCH ? 'Pinch to zoom.' : 'Scroll to zoom.';
   const out = !escK ? '' : up || ` Esc returns to the ${s.view === 'site' && s.fromGrid ? 'featured sites' : 'globe'}.`, pick = PICKABLE.includes(s.body!);
-  stR.textContent = s.view === 'overview' ? 'Select a world'
+  stR.textContent = s.view === 'overview' ? 'Choose a world'
     : kb ? onTerrain() ? `Arrow keys orbit. + and − zoom.${out}` : s.view === 'compare' ? `Arrow keys turn Earth. + and − zoom it.${up}`
       : `Arrow keys turn the globe. + and − zoom.${pick ? holding() ? ' Enter searches the centre instead.' : ' Enter pins the centre.' : ''}${up}`
     : holding() ? `Drag to rotate. ${TOUCH ? 'Tap' : 'Click'} the surface to search another point instead.`
@@ -121,7 +121,7 @@ gl.addEventListener('focus', hint); gl.addEventListener('blur', hint);
 
 function updateStatus() {
   const id = state.body;
-  let t = `Targets: Moon and Mars. ${SITES.earth.length} established analog sites on Earth`;
+  let t = `Sites on the Moon and Mars. ${SITES.earth.length} established analog sites on Earth`;
   const s = (state.view === 'site' || state.view === 'compare') && siteOf(id, state.site ?? undefined);
   const km = state.view === 'compare' ? WINDOW_KM : s && s.t.ext;
   const c = s && state.view === 'compare' ? centreOf(id!, s) : s;   // compare: the window the engine compared

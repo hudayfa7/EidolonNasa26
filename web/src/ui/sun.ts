@@ -37,7 +37,7 @@ function inner(id: Body, s: Site) {
   // On the Moon the date picks a whole lunar day (29.5 days), not that day.
   return `${ck}<label class="fl" for="sun-h">Time of day (local solar)</label>
     <div class="srange"><input type="range" id="sun-h" min="0" max="23.75" step="0.25" value="${sunSet.h}" aria-valuetext="${r.say}"><output for="sun-h">${hm(sunSet.h)}</output></div>
-    <label class="fl" for="sun-d">${id === 'moon' ? 'Lunar day holding' : 'Date'}</label><div class="cfield"><input type="date" id="sun-d" value="${sunSet.date}" required></div>
+    <label class="fl" for="sun-d">${id === 'moon' ? 'Date in the lunar day' : 'Date'}</label><div class="cfield"><input type="date" id="sun-d" value="${sunSet.date}" required></div>
     <p class="ferr" id="sun-de" hidden></p>
     <div data-sunr>${r.html}</div>`;
 }

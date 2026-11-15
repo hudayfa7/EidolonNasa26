@@ -30,11 +30,11 @@ export interface Analog { id: string; name: string; track: Track; place: string;
 export const ANALOGS: Analog[] = [
   // Facilities: judged on target fidelity, human factors and infrastructure.
   { id: 'hera', name: 'HERA', track: 'facility', place: 'NASA Johnson Space Center, Houston', bodies: ['moon', 'mars'], refs: ['hera'],
-    fact: 'A 650 square foot habitat for isolation and confinement studies; crews of four for 45 days.', serves: { human: .75, infra: 1 } },
+    fact: 'A 60 m² habitat for isolation and confinement studies; crews of four for 45 days.', serves: { human: .75, infra: 1 } },
   { id: 'chapea', name: 'CHAPEA', track: 'facility', place: 'NASA Johnson Space Center, Houston', bodies: ['mars'], refs: ['chapea'],
-    fact: 'Mars Dune Alpha, a 1,700 square foot 3D-printed habitat; the first crew of four stayed 378 days with a communication delay of up to 22 minutes.', serves: { human: 1, infra: 1 } },
+    fact: 'Mars Dune Alpha, a 160 m² 3D-printed habitat; the first crew of four stayed 378 days with a communication delay of up to 22 minutes.', serves: { human: 1, infra: 1 } },
   { id: 'nbl', name: 'Neutral Buoyancy Laboratory', track: 'facility', place: 'NASA Johnson Space Center, Houston', bodies: ['moon', 'mars'], refs: ['nbl'],
-    fact: 'A pool 202 by 102 by 40 feet holding 6.2 million gallons, used for spacewalk training.', serves: { fidelity: .5, infra: 1 } },
+    fact: 'A pool 62 by 31 by 12 m holding 23 million litres, used for spacewalk training.', serves: { fidelity: .5, infra: 1 } },
   { id: 'argos', name: 'ARGOS', track: 'facility', place: 'NASA Johnson Space Center, Houston', bodies: ['moon', 'mars'], refs: ['argos'],
     fact: 'An active gravity offload system that simulates reduced gravity, lunar and Martian included.', serves: { fidelity: .5, infra: 1 } },
   { id: 'nsrl', name: 'NASA Space Radiation Laboratory', track: 'facility', place: 'Brookhaven National Laboratory, New York', bodies: ['moon', 'mars'], refs: ['nsrl'],
@@ -44,7 +44,7 @@ export const ANALOGS: Analog[] = [
   { id: 'envihab', name: ':envihab', track: 'facility', place: 'DLR, Cologne', bodies: ['moon', 'mars'], refs: ['envihab'],
     fact: 'DLR’s facility for bed-rest studies, used with NASA and ESA (a 60-day artificial-gravity bed-rest campaign was planned there).', serves: { fidelity: .25, human: .5, infra: .5 } },
   // Hybrids: a habitat on a field site, judged on both sets.
-  { id: 'hiseas', name: 'HI-SEAS', track: 'hybrid', place: 'Mauna Loa, Hawaiʻi, about 8,200 ft', bodies: ['moon', 'mars'], refs: ['hiseas'],
+  { id: 'hiseas', name: 'HI-SEAS', track: 'hybrid', place: 'Mauna Loa, Hawaiʻi, about 2,500 m', bodies: ['moon', 'mars'], refs: ['hiseas'],
     fact: 'A habitat on an isolated Mars- and Moon-like volcanic site; missions have run from four months to a year.', serves: { terrain: .5, climate: .25, ops: .5, human: 1, infra: .5 } },
   { id: 'mdrs', name: 'Mars Desert Research Station', track: 'hybrid', place: 'Near Hanksville, Utah', bodies: ['mars'], refs: ['mdrs'],
     fact: 'The Mars Society’s station in the Utah desert; crews typically stay about two weeks.', serves: { terrain: .75, climate: .5, ops: .5, human: .5, infra: .25 } },

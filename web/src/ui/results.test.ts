@@ -127,28 +127,27 @@ describe('detail', () => {
   it('the mission fit: the mission\'s weighted factors with score, weight and evidence, a provisional tier, and what is not assessed never a zero', () => {
     const blk = (h: string) => h.split('<div class="mfit" data-wx>')[1].split('<div class="vcard">')[0];
     const none = blk(detail(r0, res)), nine = blk(detail(r0, res, undefined, { months: [1, 2, 3, 4, 5, 9, 10, 11, 12], busy: false }));
-    for (const s of ['Mission fit of this Earth site: Rover mobility', 'Provisional tier <b>A</b>, strong', 'score 84 of 100', 'Geology and terrain</span><span class="ps">91 of 100 · weight 45',
-      'Environment and climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the site’s climatology is not available',
-      'Target fidelity: gravity, pressure, radiation</span><span class="ps">N/A · weight 10', 'N/A for a field site: gravity, pressure and radiation are the same at every site on Earth',
-      'Infrastructure, data and cost</span><span class="ps">Not assessed · weight 15', 'A field site can be judged on 90 of this mission’s 100 weight, and 55 of it is assessed', 'never count as zero',
+    for (const s of ['Mission fit of this Earth double: Rover mobility', 'Provisional tier <b>A</b>, strong', 'score 84 of 100', 'Terrain form</span><span class="ps">91 of 100 · weight 45',
+      'Climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the site’s climatology is not available',
+      'Gravity, pressure and radiation</span><span class="ps">N/A · weight 10', 'Doesn’t apply to a field site: gravity, pressure and radiation are the same at every site on Earth', 'see Known analogs on the site view',
+      'Infrastructure</span><span class="ps">Not assessed · weight 15', 'A field site can be judged on 90 of this mission’s 100 weight, and 55 of it is assessed', 'never count as zero',
       'does not change the terrain match or the order of the results']) expect(none).toContain(s);
     for (const s of ['score 81 of 100', 'Operations</span><span class="ps">75 of 100', '9 of 12 months sit under this mission’s weather limits', 'and 75 of it is assessed']) expect(nine).toContain(s);
     expect(blk(detail(r0, res, undefined, { busy: true }))).toContain('Loading the site’s climatology');
     const hab = blk(detail({ ...r0, purpose: 'habitat_ops' } as MatchResult, res));
-    for (const s of ['Mission fit of this Earth site: Habitat operations', '<b>No tier</b>: a field site reaches only 40 of this mission’s 100 weight: it needs a habitat or facility too', 'Human factors</span><span class="ps">N/A · weight 45']) expect(hab).toContain(s);
+    for (const s of ['Mission fit of this Earth double: Habitat operations', '<b>No tier</b>: a field site reaches only 40 of this mission’s 100 weight: it needs a habitat or facility too', 'Crew</span><span class="ps">N/A · weight 45']) expect(hab).toContain(s);
     expect(hab).not.toContain('Provisional tier');
     expect(none + nine + hab).not.toContain('%');
     const html = detail(r0, res);
     expect(html.indexOf('class="mfit"')).toBeLessThan(html.indexOf('class="vcard"'));
-    for (const g of ['Terrain: Earth site against the target', 'Climate: Earth site against the target', 'Target: measured on Mars', 'Earth site: location and access', 'Earth site climate']) expect(html).toContain(g);
-    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).not.toContain('Target: measured on');
+    for (const g of ['Terrain: Earth double against the site', 'Climate: Earth double against the site', 'Site: measured on Mars', 'Earth double: location and access', 'Earth double’s climate']) expect(html).toContain(g);
+    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).not.toContain('Site: measured on');
   });
-  it('the shadow fit inside Operations for the missions that move over the ground: the score, its weight and the shares behind it; not for the rest', () => {
+  it('the shadow fit inside Operations for the missions that move over the ground: the score and its weight; not for the rest', () => {
     const blk = (h: string) => h.split('<div class="mfit" data-wx>')[1].split('<div class="vcard">')[0];
     const shadow = { fit: 82, target: [.14, .06, .01], earth: [.12, .05, 0] }, all = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const rover = blk(detail(r0, res, undefined, { months: all, busy: false, shadow }));
-    for (const s of ['Operations</span><span class="ps">93 of 100', 'Shadow fit 82 of 100, counting for 40 of this factor’s 100', 'sun heights 1°, 2° and 4° (eight directions)',
-      '0.14, 0.06, 0.01 on the target and 0.12, 0.05, 0.00 on the Earth site', 'A judgment score']) expect(rover).toContain(s);
+    for (const s of ['Operations</span><span class="ps">93 of 100', 'Shadow fit 82 of 100: how closely the two windows’ shadows match with the sun 1°, 2° and 4° up', 'It carries 40 of this factor’s 100 weight']) expect(rover).toContain(s);
     expect(blk(detail(r0, res, undefined, { months: all, busy: false, shadow: null }))).toContain('Shadow fit not available: it needs both windows as real elevation');
     expect(blk(detail(r0, res, undefined, { months: all, busy: false }))).toContain('Operations</span><span class="ps">100 of 100');   // none given: the months alone
     const edu = blk(detail({ ...r0, purpose: 'education' } as MatchResult, res, undefined, { months: all, busy: false, shadow }));
@@ -160,7 +159,7 @@ describe('detail', () => {
   it('the booking flow\'s mission fit: a compact tier for the campaign\'s purpose; a warning, never a block, when marginal or worse; a facility to pair when the mission needs one', () => {
     const all = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], base = { body: 'mars', busy: false } as const;
     const good = bookingFit({ ...base, r: r0, purpose: 'rover_mobility', label: 'Rover mobility', months: all });
-    for (const s of ['Mission fit for rover mobility', 'Provisional tier <b>S</b>, excellent', 'score 88 of 100', 'Scored on terrain 91, climate partial, operations 100', 'never blocks a request', 'data-wx']) expect(good).toContain(s);
+    for (const s of ['Mission fit for rover mobility', 'Provisional tier <b>A</b>, strong', 'score 88 of 100', 'Scored on terrain 91, climate partial, operations 100', 'never blocks a request', 'data-wx']) expect(good).toContain(s);
     expect(good).not.toContain('class="banner"');
     const weak = bookingFit({ ...base, r: { fidelity: { score: .3 } } as MatchResult, purpose: 'rover_mobility', label: 'Rover mobility', months: [] });
     for (const s of ['Provisional tier <b>F</b>, unsuitable', 'Rated unsuitable for rover mobility: tier F, score 21 of 100. You can still request this campaign']) expect(weak).toContain(s);
@@ -231,7 +230,7 @@ describe('detail', () => {
   it('the NASA values read at the target: Mars thermal inertia, the Moon\'s midnight temperature and rock abundance, with how they were read', () => {
     const at = (body: 'mars' | 'moon', lat: number, lon: number) => detail(r0, { ...res, target: { ...res.target, body, lat, lon } });
     const jezero = at('mars', 18.4082, 77.6873);
-    for (const s of ['Measured at the target', 'Thermal inertia</dt><dd>321', 's<sup>−½</sup>', '255 to 403', 'Read at Jezero Crater, 6 km from this target', '441 of 441 pixels were valid',
+    for (const s of ['Measured at the site', 'Thermal inertia</dt><dd>321', 's<sup>−½</sup>', '255 to 403 J m<sup>−2</sup> K<sup>−1</sup> s<sup>−½</sup> in the window', 'Read at Jezero Crater, 6 km from this site', '441 of 441 pixels were valid',
       'THEMIS-derived global thermal inertia mosaic', 'Fergason', 'not part of the climate fit']) expect(jezero).toContain(s);
     const taurus = at('moon', 20.0702, 30.7867);
     for (const s of ['Surface temperature at local midnight</dt><dd>104.5 K (−168.7 °C)', 'Regolith temperature at local midnight</dt><dd>101.1 K', 'Rock abundance</dt><dd>0.009', 'Read at Taurus–Littrow', 'Diviner', 'Geosciences Node'])
@@ -250,7 +249,7 @@ describe('detail', () => {
   it('Mars rock chemistry and water from the Odyssey GRS, regional, in weight percent and never as a percent sign; none for the Moon', () => {
     const at = (body: 'mars' | 'moon', lat: number, lon: number) => detail(r0, { ...res, target: { ...res.target, body, lat, lon } });
     const jezero = at('mars', 18.4082, 77.6873);
-    for (const s of ['Water in the top metre</dt><dd>3.5 weight percent', '± 0.4, as hydrogen read as water: ice and water bound in minerals', 'Iron</dt><dd>16.6 weight percent', 'Silicon</dt><dd>20.6 weight percent',
+    for (const s of ['Water in the top metre</dt><dd>3.5 weight percent', '± 0.4, measured as hydrogen, read as water: ice or water bound in minerals', 'Iron</dt><dd>16.6 weight percent', 'Silicon</dt><dd>20.6 weight percent',
       'Potassium</dt><dd>0.32 weight percent', 'Chlorine</dt><dd>0.39 weight percent', 'Thorium</dt><dd>0.6 parts per million', 'Odyssey GRS element concentrations', 'Boynton et al. 2007', 'about 300 km across at the equator',
       'Read at the target, not scored</dt><dd>Thermal inertia, water and elements, the nearest cave candidate']) expect(jezero).toContain(s);
     expect(jezero).not.toContain('%');
@@ -268,11 +267,11 @@ describe('detail', () => {
   });
   it('no NASA value for a target away from the featured sites, or a site with no valid pixels, or the Moon\'s south pole; never invented', () => {
     const at = (body: 'mars' | 'moon', lat: number, lon: number) => detail(r0, { ...res, target: { ...res.target, body, lat, lon } });
-    expect(at('mars', 10, 10)).toContain('No NASA surface value was read for this target');
-    expect(at('moon', -86, 0)).toContain('No NASA surface value was read for this target');
+    expect(at('mars', 10, 10)).toContain('No NASA surface value was read for this site. Values exist only for featured sites');
+    expect(at('moon', -86, 0)).toContain('No NASA surface value was read for this site');
     const utopia = at('mars', 46.7, 117.5);
     expect(utopia).toContain('too few valid pixels'); expect(utopia).not.toContain('Thermal inertia</dt>');
-    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).not.toContain('<h3 class="sec">Measured at the target</h3>');
+    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).not.toContain('<h3 class="sec">Measured at the site</h3>');
   });
   it('the judge\'s likelihood only as the rough bar, never as its number', () => {
     const html = detail(r0, res);
@@ -317,9 +316,9 @@ describe('twins', () => {
   });
   it('says whose elevation they are drawn from: the engine\'s, or sample terrain', () => {
     expect(twins(r0, 'X', 'mars|x', true)).toContain('drawn from the engine’s elevation, lit from the north-west, each at its own contrast.');
-    expect(twins(r0, 'X', 'mars|x', false)).toMatch(/each at its own contrast\. Drawn from sample terrain until the search engine is connected\.<span/);
+    expect(twins(r0, 'X', 'mars|x', false)).toMatch(/each at its own contrast\. Drawn from sample terrain\.<span/);
     expect(twins(r0, 'X', 'mars|x', false)).not.toContain('engine’s');
-    expect(twins(r0, 'X', 'mars|x', false, true)).toMatch(/Drawn from the elevation models the engine reads until the search engine is connected\.<span/);
+    expect(twins(r0, 'X', 'mars|x', false, true)).toMatch(/Drawn from the elevation models the engine reads\.<span/);
   });
   it('escapes every engine string', () => {
     const html = twins(evil(r0), EVIL, `mars|${EVIL}`, true);
@@ -359,7 +358,7 @@ describe('mixText', () => {
 
 describe('formats', () => {
   it('aridity bands (spec §4, then the UNEP classes)', () => {
-    expect([.01, .05, .1861, .2, .49, .5, .7].map(aridity)).toEqual(['Hyper-arid', 'Arid', 'Arid', 'Semi-arid', 'Semi-arid', 'Dry sub-humid', 'Humid']);
+    expect([.01, .05, .1861, .2, .49, .5, .7].map(aridity)).toEqual(['Hyperarid', 'Arid', 'Arid', 'Semi-arid', 'Semi-arid', 'Dry sub-humid', 'Humid']);
   });
   it('the judge as 0–5 segments', () => expect([0, .09, .1, .5, .9321, 1, 1.4].map(rough)).toEqual([0, 0, 1, 3, 5, 5, 5]));
   it('percentages as the fractions they stand for', () => {
@@ -424,7 +423,7 @@ describe('search states', () => {
   });
   it('the detection frame\'s Matching line', () => {
     expect([matchLine(d({ busy: true }), 'Mars', true), matchLine(d({ busy: true }), 'Mars', false)]).toEqual(['Reading Mars terrain', 'Searching Earth']);
-    expect(matchLine(d({ res }), 'Mars', true)).toBe('Earth sites');
+    expect(matchLine(d({ res }), 'Mars', true)).toBe('Earth doubles');
     expect(matchLine(d({ res: empty }), 'Mars', true)).toBe('No close analog');
     expect(noAnalog(empty)).toBe(true); expect(noAnalog(res)).toBe(false); expect(noAnalog(undefined)).toBe(false);
     const err = (code: string) => d({ err: new EngineError(0, code as never) });
@@ -434,8 +433,8 @@ describe('search states', () => {
     expect([searchSay(d({ busy: true }), 'Mars', false), searchSay(d({ busy: true }), 'Mars', true), searchSay(d({ busy: true, res }), 'Mars', false)])
       .toEqual(['Searching Earth…', 'Reading Mars terrain… A search by coordinates takes 5 to 10 seconds.', 'Loading more doubles…']);
     expect(searchSay(d({ res }), 'Mars', false)).toBe('5 Earth doubles found. The closest: United States of America, shape match high.');
-    expect(searchSay(d({ res: empty }), 'Mars', false)).toMatch(/^No close analog in this region; best available\. 5 Earth doubles found\./);
-    expect(searchSay(d({ res: { ...res, results: [] } }), 'Mars', false)).toBe('No Earth sites match this search.');
+    expect(searchSay(d({ res: empty }), 'Mars', false)).toMatch(/^No close analog in this region\. 5 Earth doubles found\./);
+    expect(searchSay(d({ res: { ...res, results: [] } }), 'Mars', false)).toBe('No Earth doubles match this search.');
     const err = (code: string, o = {}) => d({ err: new EngineError(0, code as never), ...o });
     expect(searchSay(err('network'), 'Mars', false)).toBe('The search engine didn’t answer.');
     expect(searchSay(err('network', { res }), 'Mars', false)).toBe('The search engine didn’t answer.');   // Show more failed: the cards stand

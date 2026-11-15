@@ -10,7 +10,7 @@ import surface from './surface.gen.json';
 import type { MatchResult } from './types.gen';
 
 export type Fit = 'match' | 'partial' | 'gap';
-export type Verdict = 'Close' | 'Partial' | 'Weak';
+export type Verdict = 'Match' | 'Partial' | 'Gap';
 export interface ClimateRow { key: 'temperature' | 'dryness'; status: Fit; earth: string }
 
 /** Mean annual air temperature (°C) at or below which an Earth site is cold like the targets, and below which it is cool. */
@@ -30,7 +30,7 @@ export function climateFit(e: MatchResult['environment'] | undefined): { rows: C
     { key: 'dryness', status: ai < ARID ? 'match' : ai < SEMI_ARID ? 'partial' : 'gap', earth: `aridity index ${ai.toFixed(2)}` },
   ];
   const pts = rows.reduce((n, r) => n + (r.status === 'match' ? 2 : r.status === 'partial' ? 1 : 0), 0);
-  return { rows, verdict: pts >= 4 ? 'Close' : pts >= 2 ? 'Partial' : 'Weak' };
+  return { rows, verdict: pts >= 4 ? 'Match' : pts >= 2 ? 'Partial' : 'Gap' };
 }
 
 const D2R = Math.PI / 180;

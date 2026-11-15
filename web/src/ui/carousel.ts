@@ -16,7 +16,7 @@ import { ALB, type GMap } from '../terrain/sample';
 
 const dith = $<HTMLCanvasElement>('#dither'), dg = dith.getContext('2d')!, dotsC = $<HTMLCanvasElement>('#dots'), foot = $('#tfoot'), capN = $('#ac-n'), capS = $('#ac-s');
 export const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + .5) / 16);
-const CAPS = [['Eidolon', 'The Moon and Mars, on Earth'], ['Earth', `${SITES.earth.length} established analog sites`], ['Solar system', 'Pick a target'], ['Mars to Earth', 'Jezero Crater to Lake Salda']];
+const CAPS = [['Eidolon', 'The Moon and Mars, on Earth'], ['Earth', `${SITES.earth.length} established analog sites`], ['Solar system', 'Pick a site'], ['Mars to Earth', 'Jezero Crater to Lake Salda']];
 const STEPS = MOTION.footer, TOTAL = STEPS.reduce((a, s) => a + s, 0), XF = MOTION.dissolve;
 let PITCH = 3, CW = 0, CH = 0, artT = 0, artCap = -1;
 
