@@ -45,7 +45,7 @@ export function showScan(body: Body, s: Site) {
 // and its answer flashes the line as it lands. An Earth site has no search: what it rehearses.
 export function scanLine(body: Body, s: Site) {
   const el = $('#sc3h'); $('.pbar', el)?.remove();
-  if (body === 'earth') { el.firstChild!.nodeValue = 'Rehearses'; setReading($('#sc3'), `${rehearsesFor(s.id).length} target sites`); return; }
+  if (body === 'earth') { el.firstChild!.nodeValue = 'Rehearses'; const n = rehearsesFor(s.id).length; setReading($('#sc3'), `${n} site${n === 1 ? '' : 's'}`); return; }
   const e = doublesOf(body, s), wait = e.busy && !e.res && !s.iau;
   el.firstChild!.nodeValue = 'Matching'; setReading($('#sc3'), matchLine(e, BODIES[body].name, !s.iau));
   if (wait) { el.insertAdjacentHTML('beforeend', '<span class="pbar"><i></i></span>'); fillBar($('.pbar i', el), e.t0, 10); }

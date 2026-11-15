@@ -28,7 +28,7 @@ import { buildMarkers } from './markers';
 import { buildTUI, redoCaptions } from './terrain-ui';
 import { bookHTML, bookKey, purposeOptions } from './booking';
 import { monthsText } from './listing';
-import { backBtn, banner, card, detail, fact, failure, legend, noAnalog, noData, NO_SHADE, placeTag, purposeLabel, purposeText, reading, skeleton, targetNote, TESTED, twins, unlistedNote, warming, existingBlock } from './results';
+import { backBtn, banner, card, detail, fact, failure, legend, noAnalog, noData, NO_SHADE, placeTag, purposeLabel, purposeText, reading, SAMPLE, skeleton, targetNote, TESTED, twins, unlistedNote, warming, existingBlock } from './results';
 import { powerClimate } from '../data/climate';
 import { targetSearchHTML } from './target-search';
 import { peeked, setSnap } from './sheet';
@@ -169,7 +169,7 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
     <ul class="results">${list.map(({ r, id: did }) => card(r, to(did), did === sel)).join('')}</ul>${more}
     ${sel ? '' : existingBlock(query.purpose, id, kept.has('analogs'))}
     ${legend}${unlistedNote(list.map(x => x.r))}${tn}${compare(list[0].id)}
-    <p class="fine">${TESTED}${!sel && MOCK ? ' These are sample results.' : ''}</p>`;
+    <p class="fine">${TESTED}${!sel && MOCK ? SAMPLE : ''}</p>`;
 }
 const doublesBox = (id: Body, s: Site, sel?: string) => { const e = doublesOf(id, s);
   // Not a live region: the search's state is said in a few words (ui/chrome.ts, #live-s), not its five cards read out.

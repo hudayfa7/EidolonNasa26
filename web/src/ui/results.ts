@@ -46,6 +46,8 @@ export const backBtn = (label: string, to: string) => `<button class="back" data
 
 /** The engine's tested accuracy line (spec §2), verbatim: under the results and in the info sheet. */
 export const TESTED = 'Typically 2 of 3 searches find a good terrain analog in the first five results.';
+/** Said after TESTED in a mock build (the hosted site): its results are samples, and where to get the real model. */
+export const SAMPLE = ' These are sample results. <a href="https://github.com/hudayfa7/EidolonNasa26#run-it-with-the-real-model" target="_blank" rel="noopener">Run Eidolon with the real model</a> on your own computer.';
 
 // The purposes in Eidolon's words, by the engine's keys (spec §3.2): a purpose picks the land searched, never the
 // scoring, so none says it weights the match. A key not here keeps the engine's own label and description.
@@ -55,7 +57,7 @@ const PURPOSES: Record<string, [label: string, description: string]> = {
   eva_training: ['EVA training', 'Field training for crews in suits or suit mock-ups.'],
   habitat_ops: ['Habitat operations', 'Habitat set-up and long-duration operations.'],
   astrobiology: ['Astrobiology', 'Field science in barren, extreme environments.'],
-  thermal: ['Thermal testing', 'Equipment trials; each result’s climate panel gives the site’s mean temperature.'],
+  thermal: ['Thermal testing', 'Equipment trials; each result’s climate panel gives its mean temperature.'],
   education: ['Education and outreach', 'Look-alike landforms anywhere on land, vegetated ground included.'],
 };
 const own = (k: string) => Object.hasOwn(PURPOSES, k) ? PURPOSES[k] : undefined;
@@ -87,7 +89,7 @@ export const legend = `<p class="marks" aria-hidden="true">${['match', 'partial'
 export function banner(t?: TargetSummary) {
   const c = t?.capability;
   if (!c || (c.tier !== 'fair' && c.tier !== 'weak') || !ok(c.p_target_top3) || !ok(c.n_targets)) return '';
-  const cls = c.landform_class ? `${text(c.landform_class)} targets` : 'targets of this kind';
+  const cls = c.landform_class ? `${text(c.landform_class)} sites` : 'sites of this kind';
   return `<p class="banner">For ${cls}, our blind tests found a good Earth analog in the top 3 for ${Math.round(c.p_target_top3 * c.n_targets)} of the ${c.n_targets} tested. These are the best available terrain matches.</p>`;
 }
 
@@ -175,16 +177,16 @@ const signed = (x: number, d: number) => `${x < 0 ? '−' : ''}${Math.abs(x).toF
 const raw = (rows: [string, unknown][]) => `<dl class="raw">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${text(v)}</dd></div>`).join('')}</dl>`;
 
 export function climate(e: MatchResult['environment']) {
-  if (!e) return '<p class="fine">No climate data for this site.</p>';
+  if (!e) return '<p class="fine">No climate data for this Earth double.</p>';
   const t = e.t_mean_c, p = e.precip_mm, ai = e.aridity_index;
   return `<dl class="facts">${fact('Mean temperature', ok(t) ? `${signed(t, 1)} °C` : '—')}${fact('Precipitation', ok(p) ? `${Math.round(p).toLocaleString('en-GB')} mm/yr` : '—')}
     ${fact('Aridity', ok(ai) ? `${aridity(ai)} <span class="n">${ai.toFixed(2)}</span>` : '—', 'wide w')}</dl>${e.source ? `<p class="fine">${text(e.source)}</p>` : ''}`;
 }
 
 // What the match measures and what it does not, one line each (the N/A-not-zero rule of the analog-scoring report): only
-// terrain form is measured, climate is a model at the site centre, the rest is not assessed. Static: no engine string.
+// terrain form is measured, climate is a model at the Earth double's centre, the rest is not assessed. Static: no engine string.
 const COVERS: [string, string, string][] = [
-  ['match', 'Terrain form at 200 m', 'Measured'], ['partial', 'Climate at the site centre', 'Modelled'],
+  ['match', 'Terrain form at 200 m', 'Measured'], ['partial', 'Climate at the Earth double’s centre', 'Modelled'],
   ['not_measurable', 'Rock type and chemistry', 'Not assessed'], ['not_measurable', 'Subsurface and caves', 'Not assessed'],
   ['not_measurable', 'Biology and habitability', 'Not assessed'],
 ];
@@ -223,11 +225,11 @@ export function windowNote(id: Body, s: { lat: number; lon: number; iau?: string
 const FIT_WORD = { match: 'Match', partial: 'Partial', gap: 'Gap' };
 export function climateFitBlock(e: MatchResult['environment'] | undefined, body: unknown) {
   const f = climateFit(e), w = body === 'moon' || body === 'mars' ? BODIES[body] : undefined;
-  if (!f || !w) return '<p class="fine">No climate fit for this site: its NASA POWER climatology isn’t available.</p>';
+  if (!f || !w) return '<p class="fine">No climate fit for this Earth double: its NASA POWER climatology isn’t available.</p>';
   const target = { temperature: `${w.name} surface, ${Object.fromEntries(w.stats).Temperature}`, dryness: `${w.name} has no liquid surface water` };
   return `<div class="rhead"><span class="sm">Climate fit <b>${f.verdict}</b></span></div>
-    <ul class="props">${f.rows.map(r => `<li class="s-${r.status}"><i class="mk mk-${r.status}" aria-hidden="true"></i><span class="pl">${r.key === 'temperature' ? 'Temperature' : 'Dryness'}</span><span class="ps">${FIT_WORD[r.status]}</span><span class="pnote">This site: ${r.earth}. ${target[r.key]}.</span></li>`).join('')}</ul>
-    <p class="fine">A coarse cold-and-dry band, not a measured distance, and separate from the terrain match. Temperature matches at a mean of ${COLD_C} °C or below and is partial up to ${COOL_C} °C; dryness matches below an aridity index of ${ARID} and is partial below ${SEMI_ARID}. The Earth side is mean annual air temperature (NASA POWER climatology) and aridity (Global Aridity Index v3.1) at the site centre; ${w.name}’s temperatures are surface values, so air against surface is only a rough comparison.</p>`;
+    <ul class="props">${f.rows.map(r => `<li class="s-${r.status}"><i class="mk mk-${r.status}" aria-hidden="true"></i><span class="pl">${r.key === 'temperature' ? 'Temperature' : 'Dryness'}</span><span class="ps">${FIT_WORD[r.status]}</span><span class="pnote">Earth double: ${r.earth}. ${target[r.key]}.</span></li>`).join('')}</ul>
+    <p class="fine">A coarse cold-and-dry band, not a measured distance, and separate from the terrain match. Temperature matches at a mean of ${COLD_C} °C or below and is partial up to ${COOL_C} °C; dryness matches below an aridity index of ${ARID} and is partial below ${SEMI_ARID}. The Earth side is mean annual air temperature (NASA POWER climatology) and aridity (Global Aridity Index v3.1) at the Earth double’s centre; ${w.name}’s temperatures are surface values, so air against surface is only a rough comparison.</p>`;
 }
 
 /**
@@ -238,9 +240,9 @@ export function climateFitBlock(e: MatchResult['environment'] | undefined, body:
 export function skinBlock(skin: { busy: boolean; v?: Skin } | undefined, body: unknown, lat: unknown, lon: unknown) {
   if (!skin) return '';
   const v = skin.v, c = (x: number) => `${signed(x, 1)} °C`, m = measuredAt(body, lat, lon);
-  const earth = (k: 'min' | 'max', what: string) => fact(`Earth site, ${what}`, v ? `${c(v[k])} <span class="n">mean daily ${k === 'min' ? 'minimum' : 'maximum'} skin temperature</span>` : skin.busy ? 'Loading…' : 'Not available', 'wide w');
+  const earth = (k: 'min' | 'max', what: string) => fact(`Earth double, ${what}`, v ? `${c(v[k])} <span class="n">mean daily ${k === 'min' ? 'minimum' : 'maximum'} skin temperature</span>` : skin.busy ? 'Loading…' : 'Not available', 'wide w');
   const target = body === 'moon' && ok(m?.tbol_midnight_k) ? fact('Moon, local midnight', `${c(m.tbol_midnight_k - 273.15)} <span class="n">Diviner, at ${esc(SITES.moon.find(s => s.id === m.id)?.name ?? m.id)}</span>`, 'wide w')
-    : fact(body === 'mars' ? 'Mars' : 'Target', 'No surface temperature was read for this target', 'wide w');
+    : fact(body === 'mars' ? 'Mars' : body === 'moon' ? 'Moon' : 'Site', 'No surface temperature was read for this site', 'wide w');
   return `<div data-wx><h3 class="sec">Surface temperature</h3><dl class="facts">${earth('min', 'night-time')}${earth('max', 'day-time')}${target}</dl>
     <p class="fine">Skin temperature is the surface’s own, not the air’s: NASA POWER’s climatology, 2001 to 2025. It is the like-for-like of the Moon’s midnight surface temperature. Not part of the climate fit.</p></div>`;
 }
@@ -292,20 +294,20 @@ export function limits(body: unknown) {
 // the factors not assessed. It scores nothing and adds no claim; the purpose says what the search was for, not how it weighted.
 export function verdict(r: MatchResult, res: SearchResponse) {
   const ps = r.properties ?? [], by = (s: string) => ps.filter(p => status(p) === s).map(label).join(', ') || 'none';
-  const f = climateFit(r.environment), l = r.location ?? {}, world = res.target?.body === 'moon' ? 'the Moon' : res.target?.body === 'mars' ? 'Mars' : 'the target';
+  const f = climateFit(r.environment), l = r.location ?? {}, world = res.target?.body === 'moon' ? 'the Moon' : res.target?.body === 'mars' ? 'Mars' : 'the site';
   const k = ok(l.lat) && ok(l.lon) ? establishedAt(l.lat, l.lon) : undefined, n = ok(l.lat) && ok(l.lon) ? nearestAnalog(l.lat, l.lon) : undefined;
   const known = k ? `Inside ${k.name}, ${k.place}` : n && n.km <= NEAR_KM ? `${Math.round(n.km)} km from ${n.site.name}` : n ? `Not near any of the ${SITES.earth.length} listed analog sites` : '—';
   const row = (k2: string, v: string) => fact(k2, v, 'wide w');
   const m = measuredAt(res.target?.body, res.target?.lat, res.target?.lon), proc = processOf(res.target?.type);
-  const read = !m ? 'Nothing for this target' : m.body === 'mars' ? 'Thermal inertia, water and elements, the nearest cave candidate' : 'Midnight surface temperature, rock abundance, the nearest pit';
+  const read = !m ? 'Nothing for this site' : m.body === 'mars' ? 'Thermal inertia, water and elements, the nearest cave candidate' : 'Midnight surface temperature, rock abundance, the nearest pit';
   // [data-wx]: its climate fit row redraws when the site's NASA POWER climatology lands (data/climate.ts powerClimate).
   return `<div data-wx><h3 class="sec">Analog verdict</h3><dl class="facts">
     ${row('Strong on', by('match'))}${row('Partial on', by('partial'))}${row('Gaps', by('gap'))}${row('Not measurable at 200 m', by('not_measurable'))}
-    ${row('Climate fit', f ? `${f.verdict} <span class="n">cold and dry, apart from the terrain match</span>` : 'No climate for this site')}
+    ${row('Climate fit', f ? `${f.verdict} <span class="n">cold and dry, apart from the terrain match</span>` : 'No climate for this Earth double')}
     ${row('Listed analog sites', known)}
     ${proc ? row('Kind of landform searched', `${text(res.target?.type)}: ${proc} <span class="n">inferred from its IAU descriptor, not a finding about this site</span>`) : ''}
-    ${row('Not assessed for the Earth site', 'Rock type and chemistry, subsurface and caves, biology and habitability')}
-    ${row('Read at the target, not scored', read)}
+    ${row('Not assessed for the Earth double', 'Rock type and chemistry, subsurface and caves, biology and habitability')}
+    ${row('Read at the site, not scored', read)}
     ${r.purpose ? row('Searched for', text(purposeLabel(String(r.purpose)))) : ''}
     ${row('How it could help', `Trials that depend on terrain form, such as driving, walking, surveying or setting up equipment on ground shaped like ${world}’s. Gravity, vacuum and radiation need other facilities.`)}</dl></div>`;
 }
@@ -320,14 +322,14 @@ export interface Ops { months?: number[]; busy: boolean; shadow?: ShadowResult |
 export function missionBlock(r: MatchResult, ops?: Ops) {
   const cf = climateFit(r.environment), ts = terrainScore(r.fidelity?.score), months = ops?.months;
   const sw = shadowWeight(r.purpose), sh = ops?.shadow, fit = missionFit(r.purpose, { terrain: ts, climate: climateScore(cf?.verdict), ops: operationsScore(r.purpose, months, sh?.fit) });
-  const opsMonths = months ? `${months.length} of 12 months sit under this mission’s weather limits (NASA POWER climatology). Planning limits, a judgment.` : ops?.busy ? 'Loading the site’s climatology…'
-    : sh ? 'The site’s climatology is not available.' : 'Not assessed: the site’s climatology is not available.';
+  const opsMonths = months ? `${months.length} of 12 months sit under this mission’s weather limits (NASA POWER climatology). Planning limits, a judgment.` : ops?.busy ? 'Loading the Earth double’s climatology…'
+    : sh ? 'The Earth double’s climatology is not available.' : 'Not assessed: the Earth double’s climatology is not available.';
   // The shadow fit counts only for the missions that move over the ground (data/mission.ts SHADOW_W): the share of each window in shadow.
   const opsShadow = sw <= 0 ? '' : sh ? ` Shadow fit ${sh.fit} of 100: how closely the two windows’ shadows match with the sun ${SUN_HEIGHTS.slice(0, -1).join('°, ')}° and ${SUN_HEIGHTS[SUN_HEIGHTS.length - 1]}° up. It carries ${Math.round(sw * 100)} of this factor’s 100 weight.`
     : ' Shadow fit not available: it needs both windows as real elevation.';
   const why: Record<Factor, string> = {
     terrain: ts === null ? 'Not assessed: the engine gave no terrain score' : `The engine’s terrain score, ${num(r.fidelity?.score, 2)}, measured at 200 m. Rock type is not in it.`,
-    climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: cold and dry against the target. A judgment band.` : 'Not assessed: the engine gave no climate for this site',
+    climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: cold and dry against the site. A judgment band.` : 'Not assessed: the engine gave no climate for this Earth double',
     astro: 'Not assessed: Eidolon holds no biology or biosignature data',
     ops: `${opsMonths}${opsShadow}`,
     fidelity: 'Doesn’t apply to a field site: gravity, pressure and radiation are the same at every site on Earth. Facilities give them: see Known analogs on the site view.',
@@ -454,7 +456,7 @@ const FAILS: Record<string, [string, string]> = {
   start_failed: ['The search engine failed to start', 'It needs a restart before Earth can be searched.'],
   bad_response: ['The answer couldn’t be read', 'The search engine answered in a form Eidolon doesn’t expect.'],
   invalid_request: ['The search engine refused the request', 'This is a bug on Eidolon’s side; the browser console has the details.'],
-  unknown_target: ['Not a named target', 'This feature isn’t in the search engine’s list of named targets. Find it under its IAU name, or search its coordinates instead.'],
+  unknown_target: ['Not a named feature', 'This feature isn’t in the search engine’s list of named features. Find it under its IAU name, or search its coordinates instead.'],
   unsupported_purpose: ['Not a purpose this search serves', 'Polar lighting geometry is a separate lighting study, not part of the terrain search. Pick another purpose above.'],
 };
 FAILS.unknown_purpose = FAILS.invalid_request;
@@ -466,7 +468,7 @@ export const failure = (code: string, end = '') => { const [h, b] = failOf(code)
 /** No elevation data (no_dem: the Moon beyond 60°, plan Gaps 2): `known`, the site's curated analog sites follow;
  *  `terrain`, the name of the real elevation shown instead (terrain/dem.ts), if any. */
 export const noData = (custom: boolean, known: boolean, terrain?: string) => box(`The search engine has no data for this ${custom ? 'point' : 'site'}`, '',
-  `The search engine reads Moon terrain only within 59.5° of the equator, so it can’t score ${known ? 'these established analog sites' : 'Earth sites against it'}. ${terrain ? `The terrain shown here is the ${esc(terrain)}.` : 'The terrain shown here is illustrative.'}`);
+  `The search engine reads Moon terrain only within 59.5° of the equator, so it can’t score ${known ? 'these established analog sites' : 'Earth doubles against it'}. ${terrain ? `The terrain shown here is the ${esc(terrain)}.` : 'The terrain shown here is illustrative.'}`);
 /** The engine's no-match wording (spec §5.3: show it prominently), from the first result's summary. */
 export const noAnalog = (res?: SearchResponse) => String(res?.results[0]?.explanation?.summary).startsWith('No close analog');
 /** The detection frame's Matching readout (ui/detection.ts) for a site's search; `remote`: searched by coordinates. */

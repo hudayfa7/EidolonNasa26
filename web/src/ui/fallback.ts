@@ -12,7 +12,7 @@ import { EARTH_BY, SITES, type Site } from '../data/sites';
 import { esc, setHTML } from '../dom';
 import { RM } from '../motion';
 import { parseHash, routeOf, type Route } from '../routes';
-import { banner, brief, conf, failHead, fractions, noAnalog, placeTag, purposeLabel, strs, targetNote, TESTED, text } from './results';
+import { banner, brief, conf, failHead, fractions, noAnalog, placeTag, purposeLabel, SAMPLE, strs, targetNote, TESTED, text } from './results';
 
 const TOP = 3, WORLDS: Body[] = ['moon', 'mars'];   // Moon bases first, as the intro has it
 const href = (r: Partial<Route>) => `#/${routeOf(r)}`;
@@ -67,7 +67,7 @@ export function showFallback(msg = 'This view needs WebGL. Turn on hardware acce
     <div class="meta-row" aria-hidden="true"><span>NASA Space Apps Challenge 2026</span><span>Earth, low orbit</span><span>Scroll for featured sites</span></div></div>
   <section class="fb" aria-labelledby="fb-h"><h2 class="title" id="fb-h" tabindex="-1">Featured sites</h2>
     <p class="lede">Each site on the Moon and Mars with its closest doubles on Earth, from the site’s own search. Every name links to its view in Eidolon, which opens wherever WebGL runs.</p>
-    <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}. ${TESTED}${MOCK ? ' These are sample results.' : ''}</p>
+    <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}. ${TESTED}${MOCK ? SAMPLE : ''}</p>
     <div class="fb-cols">${WORLDS.map(id => `<div><h3>${BODIES[id].name}</h3><ul>${SITES[id].map(s => entry(id, s)).join('')}</ul></div>`).join('')}</div>
     <p class="fine">The poster is Eidolon’s title view, drawn from NASA’s Blue Marble and Black Marble maps of Earth, the Blue Marble clouds, NOAA’s ETOPO1 relief and the MODIS water mask.</p></section>`;
   // shortcut: the default purpose only, no picker here; add one if this page is ever used to plan.

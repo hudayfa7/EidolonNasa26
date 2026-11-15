@@ -25,7 +25,7 @@ const ok = (x: unknown): x is number => typeof x === 'number' && Number.isFinite
 const signed = (x: number, d: number) => `${x < 0 ? '−' : ''}${Math.abs(x).toFixed(d)}`;
 
 /** Where an Earth site's climate comes from, as the result detail and the listing print it. */
-export const CLIMATE_SRC = 'Temperature and precipitation: NASA POWER climatology (T2M, PRECTOTCORR), NASA Langley Research Center. Aridity: Global Aridity Index v3.1 (Zomer, Xu and Trabucco 2022, CC BY 4.0), at the site centre.';
+export const CLIMATE_SRC = 'Temperature and precipitation: NASA POWER climatology (T2M, PRECTOTCORR), NASA Langley Research Center. Aridity: Global Aridity Index v3.1 (Zomer, Xu and Trabucco 2022, CC BY 4.0), at the Earth double’s centre.';
 const DAYS = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /**
  * The engine's `environment` with its WorldClim 2.1 temperature and precipitation replaced by NASA POWER's (the site's
