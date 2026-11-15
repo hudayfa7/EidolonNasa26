@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eidolon</title><!-- each route sets its own (ui/chrome.ts) -->
+<link rel="icon" href="data:,"><!-- set from src/brand/logo.svg by brand.ts -->
+<!-- Link previews. Scrapers want absolute URLs: VITE_SITE_URL (.env) is the deployed origin, empty in development.
+     og.jpg is the title view at 1200 × 630, made by `npm run poster` (scripts/poster.mjs). -->
+<meta name="description" content="A planning tool for Earth analog sites. Pick a site on the Moon or Mars: Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, then helps plan a test campaign at one.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Eidolon">
+<meta property="og:title" content="Eidolon: the Moon and Mars, on Earth">
+<meta property="og:url" content="%VITE_SITE_URL%/">
+<meta property="og:description" content="Pick a site on the Moon or Mars: Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, then helps plan a test campaign at one.">
+<meta property="og:image" content="%VITE_SITE_URL%/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Earth from low orbit with the sun at its edge, the Eidolon wordmark in coral, and the line: Eidolon reads terrain form at 200 m and finds the places on Earth that come closest.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eidolon: the Moon and Mars, on Earth">
+<meta name="twitter:description" content="Pick a site on the Moon or Mars: Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, then helps plan a test campaign at one.">
+<meta name="twitter:image" content="%VITE_SITE_URL%/og.jpg">
+<meta name="twitter:image:alt" content="Earth from low orbit with the sun at its edge, the Eidolon wordmark in coral, and the line: Eidolon reads terrain form at 200 m and finds the places on Earth that come closest.">
+<style>
+/* First paint (plan, Rendering "First paint"), until the scene's first frame (app.ts fades it): styled here, so it
+   needs no script and none of the app's CSS. In production first paint still waits on the app's stylesheet in the head
+   (its fonts are self-hosted, tokens.css, and swap in): inside the 1.5 s budget (npm run perf; docs/progress.md,
+   Performance).
+   Two frames. On #/ (class .intro, set by the script after it) the intro's first frame: Earth's air edge on, a sky
+   that is one gradient by height above the horizon at any size (the field of view is fixed in height), over the
+   stage's ground; the canvas draws the same sky (scene/rig.ts limbPose), so the fade shows no change. On a deep link a
+   frame of the title: its ground, lockup and wordmark (title.css), a drawn globe with the atmosphere tokens' rim, and
+   its sun, placed as in the title at each size. Colours are copies of tokens.css's --title-* and --glow-*. */
+#poster{ position:fixed; inset:0; z-index:45; overflow:hidden; pointer-events:none; color:#fff;
+  background:radial-gradient(60% 70% at 78% 18%, rgba(242,136,95,.22), transparent 62%),radial-gradient(70% 80% at 10% 90%, rgba(10,58,62,.55), transparent 70%),linear-gradient(180deg,#041214,#06191B 60%,#040B0C); }
+#poster .pe{ position:absolute; left:74%; top:35%; width:76vh; height:76vh; margin:-38vh 0 0 -38vh; border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, #1B3654 0, #0B1A2D 52%, #050B13 100%);
+  box-shadow:0 0 0 1.5px rgba(140,198,255,.7), 0 0 26px 3px rgba(94,156,255,.42), 0 0 110px 34px rgba(63,126,255,.16); }
+#poster .ps{ position:absolute; left:calc(74% - 27vh); top:calc(35% - 30vh); width:40vh; height:40vh; margin:-20vh 0 0 -20vh; border-radius:50%;
+  background:radial-gradient(circle, #FFFAF2 0, rgba(255,226,204,.55) 9%, rgba(255,215,189,.12) 30%, transparent 62%); }
+#poster .pl{ position:absolute; left:clamp(18px,4vw,60px); top:clamp(20px,4vh,36px); display:flex; align-items:center; gap:12px; font:400 26px/1 Newsreader,Georgia,serif; }
+#poster .pw{ position:absolute; left:clamp(18px,4vw,60px); bottom:clamp(92px,15vh,168px); margin:0; font:600 clamp(76px,13.5vw,212px)/.86 Geist,system-ui,sans-serif; letter-spacing:-.05em; color:#F2885F; }
+#poster .pm{ position:absolute; left:clamp(18px,4vw,60px); bottom:28px; margin:0; font:11px/1.4 "Geist Mono",ui-monospace,monospace; letter-spacing:.04em; color:rgba(233,237,240,.55); }
+#poster .pl img{ width:46px; height:46px; }
+/* the intro's sky by height above the horizon, concentric with the planet (radius about 4 viewport heights), which it
+   also draws; stops sampled from the canvas's first intro frame (sample again if the atmosphere or limbPose changes) */
+#poster.intro{ --hz:91.7%; background:radial-gradient(circle at 50% calc(var(--hz) + 405vh), #475E6E 398.5vh, #4F687A 400.5vh, #5C778C 402.5vh, #748FA5 404.4vh, #849DB0 405vh, #9DAFBC 405vh,
+    #97A9B6 406.4vh, #92A5B4 407.4vh, #889CB0 409.4vh, #7D93AA 411.4vh, #728AA3 413.4vh, #67809B 415.4vh, #526C89 419.4vh, #3E5876 423.4vh, #2A425E 428.4vh, #1A2F49 433.4vh, #0F2137 438.4vh, #091628 443.4vh, #070F1D 448.4vh, rgba(6,11,22,0) 465vh),
+  radial-gradient(55% 75% at -8% 45%, rgba(255,214,166,.08), rgba(255,214,166,0) 62%), radial-gradient(40% 50% at 108% 30%, rgba(169,210,242,.05), rgba(169,210,242,0) 70%), #06070A; }
+#poster.intro .ps, #poster.intro .pe, #poster.intro .pl, #poster.intro .pw{ display:none; }
+#poster.intro .pm{ left:0; right:0; top:46%; bottom:auto; text-align:center; }   /* where the brief's lines come in */
+@media (max-aspect-ratio:4/5){ #poster.intro{ --hz:98.4%; }
+  #poster .pe{ left:49%; top:26.6%; width:56vw; height:56vw; margin:-28vw 0 0 -28vw; } #poster .ps{ left:22.6%; top:15.6%; } #poster .pw{ bottom:calc(46vh + 10px); } }
+</style>
+</head>
+<body data-view="intro">
+<button id="skipto" type="button" hidden>Skip to the panel</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark"></symbol><!-- filled from src/brand/logo.svg by brand.ts (the poster, before any script, takes the file itself) -->
+</svg>
+
+<header id="top">
+  <button class="brand" data-go="system" aria-label="Eidolon, all worlds"><svg class="logo"><use href="#mark"/></svg><span>Eidolon</span></button>
+  <nav id="crumbs" aria-label="Location"></nav>
+  <div class="tright">
+    <button id="camps-btn" data-camps aria-haspopup="dialog" title="My campaigns"><span class="t">My campaigns</span><span class="n"></span></button><!-- its icon from ui/icons.ts (ui/campaigns.ts) -->
+    <div id="rate" role="group" aria-label="Time rate"><button data-rate="1">Live</button><button data-rate="600" aria-pressed="true">10 min/s</button><button data-rate="3600">1 h/s</button></div>
+    <div id="clocks"><span><b>UTC</b><span id="c-utd">--/-- </span><span id="c-utc">--:--</span></span><span class="mtc" title="Coordinated Mars Time"><b>Mars</b><span id="c-mtc">--:--</span></span></div>
+  </div>
+</header>
+
+<main id="stage">
+  <canvas id="gl" aria-label="3D view"></canvas><!-- its name, role and Tab stop follow the view (ui/chrome.ts) -->
+  <div id="ui">
+    <div id="intro-ov"><h1>Choose a world</h1><p>Pick the Moon or Mars, then a site on it, to find the places on Earth that come closest.</p></div>
+    <div id="labels"></div>
+    <div id="ring"></div>
+    <div id="hud"><i class="b b1"></i><i class="b b2"></i><i class="b b3"></i><i class="b b4"></i><canvas id="tape" width="640" height="68"></canvas>
+      <dl class="rl"><dt>Sub-observer</dt><dd id="h-obs">-</dd><dt>Sub-solar</dt><dd id="h-sun">-</dd><dt>Rotation</dt><dd id="h-rot">-</dd><dt>Time rate</dt><dd id="h-rate">-</dd></dl>
+      <dl class="rr"><dt>Cursor</dt><dd id="h-cur">-</dd><dt>Sun elevation</dt><dd id="h-elev">-</dd><dt>Local time</dt><dd id="h-lt">-</dd><dt>Daylight</dt><dd id="h-day">-</dd></dl>
+      <div class="hb" id="h-hint">[ Click the surface to pin a site ]</div></div>
+    <div id="cursor" aria-hidden="true"><i></i></div>
+    <div id="kf"></div>
+    <div id="grat" aria-hidden="true"></div>
+    <div id="markers"></div>
+    <div id="ppin" aria-hidden="true"><i></i><span></span></div>
+    <button id="more" data-go="beyond" aria-label="Beyond the Moon and Mars"><span>Beyond</span><i aria-hidden="true"></i></button>
+    <button id="sites" data-go="mars/sites"><span>Featured sites</span><i aria-hidden="true"></i></button>
+    <button id="cue" data-info><span>More about Eidolon</span><i aria-hidden="true"></i></button>
+    <div id="divider"></div>
+    <div class="cap" id="cap0"></div><div class="cap" id="cap1"></div>
+    <div class="tui" id="tui0"></div><div class="tui" id="tui1"></div>
+    <div id="toggle" role="group" aria-label="Comparison view"><button data-view="terrain" aria-pressed="true">Terrain</button><button data-view="overlay" aria-pressed="false" title="Ghost the Earth double's terrain onto the target's">Overlay</button><button data-view="globe" aria-pressed="false">Globe</button><button data-scale aria-pressed="false" hidden title="Show both globes at their true sizes">Same scale</button>
+      <div id="mix" hidden><span class="mb" style="--c:var(--mars)"><i></i><span>Mars</span></span><input type="range" min="0" max="100" step="5" value="50"><span class="mb" style="--c:var(--earth)"><i></i>Earth</span></div></div>
+    <button id="area" hidden title="Keep the search to the part of Earth in view"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><circle cx="5.2" cy="5.2" r="3.6"/><path d="m7.9 7.9 2.9 2.9"/></svg><span class="t">Search this area</span></button>
+    <div id="status"><span id="st-l"></span><span id="st-m" aria-hidden="true"><i></i>Loading full-resolution maps</span><span id="st-r"></span></div>
+  </div>
+  <div id="scan" aria-hidden="true"><div class="top"><i></i><i></i></div>
+    <div class="pinw"><div class="ring"></div><div class="dot"></div><div class="rd"><div class="t t1"></div></div></div>
+    <div class="scan-row"><div>Terrain<span id="sc1"></span></div><div>Position<span id="sc2"></span></div><div id="sc3h">Matching<span id="sc3"></span></div></div></div>
+  <section id="grid" aria-label="Featured sites"></section>
+</main>
+
+<aside id="panel" aria-label="Details"><button id="grip" type="button" aria-controls="panel" aria-label="Panel at half height. Expand to full height"></button><p id="shint" aria-hidden="true"></p><div class="pin" id="pin"></div></aside>
+<dialog id="camps" aria-labelledby="camps-h"><div class="pin"></div></dialog>
+
+<section id="title" aria-label="Eidolon">
+  <div class="hero">
+    <svg id="annot" aria-hidden="true"></svg>
+    <div class="lockup"><svg class="logo"><use href="#mark"/></svg><span>Eidolon</span></div>
+    <h1 class="big" aria-label="Eidolon"></h1>
+    <div class="blurb">
+      <p style="margin:0"><em>Permanent bases on the Moon and landings on Mars</em> are rehearsed on Earth first. Few of the places we rehearse in were ever measured against the ground they stand in for.</p>
+      <p style="margin:12px 0 0"><em>Eidolon</em> reads terrain form at 200&nbsp;m and finds the places on Earth that come closest.</p>
+      <div class="tcta"><button class="btn primary" data-go="system">Enter the system</button><button class="btn ghost" id="replay">Replay intro</button></div>
+    </div>
+    <div class="meta-row"><span>NASA Space Apps Challenge 2026</span><span id="t-coord">Earth, low orbit</span><span>Scroll for credits</span></div>
+  </div>
+  <footer id="tfoot">
+    <div class="art" aria-hidden="true"><canvas id="dots"></canvas><canvas id="dither"></canvas><div class="artcap"><span id="ac-n">Eidolon</span><span id="ac-s">The Moon and Mars, on Earth</span></div><div class="steps"><i class="on"></i><i></i><i></i><i></i></div></div>
+    <div>
+      <div class="fbrand"><svg class="logo"><use href="#mark"/></svg><span>Eidolon</span></div>
+      <p>A planning tool for Earth analog sites. Pick a site on the Moon or Mars: Eidolon ranks the places on Earth whose terrain form comes closest at 200&nbsp;m, then helps plan a test campaign at one. On the Moon, matching reaches 60° from the equator for now.</p>
+      <dl>
+        <dt>Built for</dt><dd>NASA Space Apps Challenge 2026</dd>
+        <dt>Challenge</dt><dd>Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars</dd>
+        <dt>Data</dt><dd>NASA, USGS, ESA, JAXA, NOAA, Copernicus and Open-Meteo open data. Match scores in this preview are samples.</dd>
+      </dl>
+      <div class="actions"><button class="btn primary" data-go="system">Enter the system</button><button class="btn ghost" id="totop">Back to top</button></div>
+    </div>
+  </footer>
+</section>
+
+<section id="sysinfo" aria-label="About Eidolon">
+  <div class="si-in">
+    <button class="si-close" data-close><i aria-hidden="true"></i>Back to the system</button>
+    <p class="si-lead">Every rover, drill and habitat bound for a Moon base or Mars rehearses on Earth first. Eidolon finds where.</p>
+    <div class="si-grid">
+      <div class="si-col"><h3>How it works</h3>
+        <ol class="si-steps">
+          <li><b>Pick a site</b><span>A candidate base location on the Moon, a landing site on Mars, any named feature, or a point you pin.</span></li>
+          <li><b>Read its terrain</b><span>The search reads the terrain form of an 18.8&nbsp;km window at 200&nbsp;m: landform shape and size, relief, slope, roughness, raised or incised. Features under about 600&nbsp;m across don’t show at this scale.</span></li>
+          <li><b>Find its doubles</b><span>Earth’s land is ranked by how closely its terrain form matches. Typically 2 of 3 searches find a good terrain analog in the first five results. On the Moon, matching reaches 60° from the equator for now, so the south-pole base regions show terrain only. Compare side by side, then plan a test campaign.</span></li>
+        </ol></div>
+      <div class="si-col"><h3>Data</h3>
+        <dl class="si-data"><dt>Moon</dt><dd>LROC WAC and Clementine imagery, LOLA and SLDEM2015 elevation</dd><dt>Mars</dt><dd>Viking MDIM 2.1 and MGS TES imagery, MOLA and MOLA–HRSC elevation</dd><dt>Earth</dt><dd>Landsat WELD, Blue Marble and Black Marble imagery, Blue Marble clouds, Copernicus DEM and ETOPO1 elevation</dd><dt>Weather</dt><dd>Open-Meteo forecast, NASA POWER climatology</dd><dt>Photos</dt><dd>Rover, lander and Apollo crew photographs; NASA field photographs of Earth sites</dd><dt>Beyond</dt><dd>Mariner 10, MESSENGER, Galileo and Cassini images of Venus, Mercury, Callisto and Titan</dd></dl>
+        <p class="fine">Real imagery and elevation at Jezero, Gale, Hadley–Apennine, the south-pole regions and the established Earth sites, and real elevation at every Earth double; elsewhere the terrain is illustrative. Match scores are samples until the search engine is connected.</p>
+        <p class="fine">Copernicus DEM: © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.</p></div>
+      <div class="si-col"><h3>Built for</h3><p>NASA Space Apps Challenge 2026</p><p class="si-ch">Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars</p></div>
+    </div>
+    <div class="si-logo" aria-hidden="true"><svg class="logo"><use href="#mark"/></svg><span>Eidolon</span></div>
+    <div class="si-foot"><span>Eidolon, 2026</span><span>The Moon and Mars, on Earth</span></div>
+  </div>
+</section>
+
+<section id="beyond" aria-label="Beyond the Moon and Mars">
+  <div class="fx" aria-hidden="true"><canvas id="galaxy"></canvas><canvas id="gpath"></canvas><canvas id="gorb"></canvas>
+    <span class="gl gl1">Galactic centre<b>26,000 light-years away</b></span><span class="gl gl2">The Sun<b>230 km/s around the centre</b></span></div>
+  <div class="bin">
+    <div class="bhero"><h2>Beyond the Moon and Mars</h2>
+    <p class="lead">Venus, Mercury and the outer moons ask for habitats Earth can only partly rehearse. Eidolon starts with the Moon and Mars.</p>
+    <div class="actions"><button class="btn primary" data-go="system">Back to the system</button></div></div>
+    <div class="cards-wrap"><div class="cards">
+      <article class="card"><figure><canvas class="scene" data-scene="venus"></canvas></figure>
+        <div class="w">Venus</div><h3>Cloud cities</h3><p>At about 50&nbsp;km up, the air is near 1&nbsp;bar and around 75&nbsp;°C. Habitats float in the clouds instead of landing, as in NASA's HAVOC study.</p><span class="st">Concept</span></article>
+      <article class="card"><figure><canvas class="scene" data-scene="mercury"></canvas></figure>
+        <div class="w">Mercury</div><h3>Polar mines</h3><p>Permanently shadowed craters near the poles hold water ice, a short traverse from ground that reaches 430&nbsp;°C by day.</p><span class="st">Concept</span></article>
+      <article class="card"><figure><canvas class="scene" data-scene="callisto"></canvas></figure>
+        <div class="w">Callisto, Jupiter</div><h3>Low-radiation base</h3><p>Far enough out to miss Jupiter's worst radiation. NASA's HOPE study picked it as the site for a crewed outpost in the Jupiter system.</p><span class="st">Concept</span></article>
+      <article class="card"><figure><canvas class="scene" data-scene="titan"></canvas></figure>
+        <div class="w">Titan, Saturn</div><h3>Shoreline habitat</h3><p>Nitrogen air at 1.5&nbsp;bar and seas of liquid methane. No pressure suit needed, only warmth and oxygen at −179&nbsp;°C.</p><span class="st">Concept</span></article>
+    </div>
+    </div>
+  </div>
+</section>
+
+<div id="intro" hidden>
+  <div class="ih">
+    <div class="tl tl1"><div><b>Craft</b>Eidolon-1</div><div><b>Orbit</b>Low Earth</div></div>
+    <div class="tl tl2"><div><b>UTC</b><span id="i-utc">--:--:--</span></div><div><b>Sunrise</b><span id="i-cd">T−00:00:08</span></div></div>
+    <div class="tl tl3"><div><b>Altitude</b>412.0 km</div><div><b>Velocity</b>7.66 km/s</div></div>
+    <div class="tl tl4"><div><b>Sub-point</b><span id="i-ll">12.4N 031.2W</span></div><div><b>Sun elevation</b><span id="i-se">−1.8°</span></div></div>
+  </div>
+  <div class="frm" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i><span class="fl1">Mission brief</span><span class="fl2">00 / 03</span></div>
+  <div class="lines" aria-live="polite"><p></p><p></p><p></p></div>
+  <button class="skip">Skip intro</button>
+</div>
+
+<div id="poster"><div class="ps" aria-hidden="true"></div><div class="pe" aria-hidden="true"></div>
+  <div class="pl" aria-hidden="true"><img src="/src/brand/logo.svg" alt=""><span>Eidolon</span></div><p class="pw" aria-hidden="true">Eidolon</p>
+  <p class="pm" role="status">Loading the Moon, Mars and Earth</p></div>
+<script>/^#?\/?(\?.*)?$/.test(location.hash) && document.getElementById('poster').classList.add('intro')   // #/ opens on the intro (routes.ts parseHash)</script>
+<div id="live" class="sr" aria-live="polite"></div>
+<div id="live-s" class="sr" role="status"></div><!-- the shown site's search, as it changes (ui/chrome.ts) -->
+<div id="gl-fail"><p>This view needs WebGL. Turn on hardware acceleration in your browser settings, then reload.</p></div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
