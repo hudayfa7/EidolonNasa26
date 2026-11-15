@@ -762,7 +762,7 @@ export const STATES = [
   // My campaigns (Stretch 5) from the confirmation: the campaign just requested, selected; the focus on the heading.
   { name: 'book-done-camps', seq: 'book', refNA: true, steps: [{ tap: '#pin [data-camps]' }, { seek: 5.1 }, { expect: '#camps[open] .row.is-sel[aria-current]' }, { expect: '#camps-h:focus' },
     { eval: rowLL(1, '34.6750° N, 105.0750° W') }, { eval: UNDER_BTN }],
-    check: 'The dialog (the panel\'s look, its right edge under the top bar\'s button (asserted); a bottom sheet on a phone) over a dimmed page: Close, "My campaigns", one row: United States of America, 34.6750° N, 105.0750° W (mono), "Tue 6 Oct 2026 to Sat 10 Oct 2026 · 5 days", "For Jezero Crater, Mars · 6 people", EID-261004-W4DC, selected; "Kept in this browser only. A mock-up: …"' },
+    check: 'The dialog (the panel\'s look, its right edge under the top bar\'s button (asserted); a bottom sheet on a phone) over a dimmed page: Close, "My campaigns", one row: United States of America, 34.6750° N, 105.0750° W (tabular figures), "Tue 6 Oct 2026 to Sat 10 Oct 2026 · 5 days", "For Jezero Crater, Mars · 6 people", EID-261004-W4DC, selected; "Kept in this browser only. A mock-up: …"' },
   // The listing of a cell inside an established site (Pilbara, Jezero's double): the site's surface photo, its credit.
   { name: 'book-listing-photo', route: '#/mars/jezero/compare/@-21.2250,119.4250/book', refNA: true, steps: [{ seek: 3 }, { wait: 400 }, { scroll: '#panel', to: '.imgs' }],
     check: 'Context and regional crops, then the Pilbara photo (a stromatolite outcrop: domed red rock, pale chert cracked into blocks); "Images: Landsat WELD…" and "Surface: Stromatolite outcrop in the Pilbara, 2019 · NASA/JPL-Caltech."' },

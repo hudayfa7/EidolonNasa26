@@ -52,7 +52,7 @@ export function hud(R: Rect[], sim: Date) {
   setReading(out.day, cur.on ? (el > 0 ? 'Yes' : 'No') : '-'); setReading(out.lt, cur.on ? hudLocalTime(id, cur.lon, sim, slo) : '-', news);
   // Each side's readouts only where they fit beside the box, clear of the panel and the stage's edge (hud.css: 22 px
   // out). Their widths, read when their kind of text changes (the HUD on, a body or rate picked, the cursor on or off);
-  // mono figures keep them steady in between.
+  // tabular figures keep them steady in between.
   if (changed) sideW = side.map(e => e.offsetWidth);
   setClass(side[0], 'off', x0 - 22 - sideW[0] < r.x + 4); setClass(side[1], 'off', x1 + 22 + sideW[1] > r.x + r.w - 4);
   setText(out.hint, kb ? `[ Arrows turn · + − zoom${PICKABLE.includes(id) ? ' · Enter pins the centre' : ''} ]`
@@ -61,7 +61,7 @@ export function hud(R: Rect[], sim: Date) {
   const key = `${id}|${olon.toFixed(2)}`; if (key === tapeKey) return; tapeKey = key;
   const w = tape.width, h = tape.height, span = 60, px = w / (span * 2);
   tg.clearRect(0, 0, w, h); tg.strokeStyle = 'rgba(231,233,236,.75)'; tg.fillStyle = 'rgba(231,233,236,.85)'; tg.lineWidth = 2;
-  tg.font = '20px "Geist Mono", ui-monospace, monospace'; tg.textAlign = 'center';
+  tg.font = '20px Geist, system-ui, sans-serif'; tg.textAlign = 'center';
   for (let d = Math.ceil((olon - span) / 5) * 5; d <= olon + span; d += 5) {
     const x = w / 2 + (d - olon) * px, major = ((d % 30) + 30) % 30 === 0;
     tg.globalAlpha = Math.max(0, 1 - Math.abs(d - olon) / span); tg.beginPath(); tg.moveTo(x, h - 4); tg.lineTo(x, h - (major ? 20 : 11)); tg.stroke();

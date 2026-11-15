@@ -90,7 +90,6 @@ const NS = 'http://www.w3.org/2000/svg', ann = $<SVGSVGElement>('#annot');
 const mk = (tag: string, at: Record<string, string | number>, par: Element = ann) => {
   const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, String(at[k])); par.appendChild(e); return e;
 };
-const mono = 'Geist Mono, ui-monospace, monospace';
 const A = {
   frame: mk('rect', { fill: 'none', stroke: 'rgba(255,255,255,.32)', 'stroke-dasharray': '4 6', 'stroke-width': 1 }),
   vl: mk('line', { stroke: 'rgba(255,255,255,.18)', 'stroke-dasharray': '4 6' }), hl: mk('line', { stroke: 'rgba(255,255,255,.18)', 'stroke-dasharray': '4 6' }),
@@ -98,13 +97,13 @@ const A = {
   circles: [0, 1, 2].map(() => mk('circle', { fill: 'none', stroke: 'rgba(255,255,255,.3)', 'stroke-width': 1 })),
   sites: SITES.earth.map(s => {
     const g = mk('g', {}) as SVGGElement; mk('circle', { r: 3.5, fill: '#E9EDF0' }, g);
-    const t = mk('text', { x: 9, y: 3.5, fill: 'rgba(233,237,240,.82)', 'font-size': 10, 'font-family': mono }, g) as SVGTextElement;
+    const t = mk('text', { x: 9, y: 3.5, fill: 'rgba(233,237,240,.82)', 'font-size': 10 }, g) as SVGTextElement;
     t.textContent = `${s.name}  ${fmtLL(s.lat, s.lon, 'earth')}`;
     return { s, g, t, w: 0, x: 0, y: 0, d: 0, on: false };
   }),
   sat: (() => {
     const g = mk('g', {}); mk('circle', { r: 3, fill: '#F2885F' }, g);
-    const t = mk('text', { x: 9, y: -7, fill: 'rgba(233,237,240,.9)', 'font-size': 10, 'font-family': mono }, g) as SVGTextElement;
+    const t = mk('text', { x: 9, y: -7, fill: 'rgba(233,237,240,.9)', 'font-size': 10 }, g) as SVGTextElement;
     t.textContent = 'Eidolon-1  412 km';
     return { g, t, w: 0 };
   })(),

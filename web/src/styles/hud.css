@@ -1,5 +1,5 @@
 /* Globe HUD */
-#hud{ position:absolute; left:0; top:0; pointer-events:none; opacity:0; transition:opacity .4s; font:10.5px/1.6 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:rgba(231,233,236,.85); }
+#hud{ position:absolute; left:0; top:0; pointer-events:none; opacity:0; transition:opacity .4s; font:10.5px/1.6 var(--sans); letter-spacing:.06em; text-transform:uppercase; color:rgba(231,233,236,.85); }
 #hud.on{ opacity:1; }
 #hud .b{ position:absolute; width:20px; height:20px; border:0 solid rgba(255,255,255,.5); }
 #hud .b1{ left:0; top:0; border-left-width:1px; border-top-width:1px; }
@@ -8,7 +8,7 @@
 #hud .b4{ right:0; bottom:0; border-right-width:1px; border-bottom-width:1px; }
 #hud dl{ position:absolute; top:50%; margin:0; transform:translateY(-50%); display:grid; grid-template-columns:auto auto; gap:1px 12px; white-space:nowrap; }
 #hud dt{ color:rgba(160,166,174,.9); }   /* 6:1 over the stage's ground (.75 was about 4.5:1) */
-#hud dd{ margin:0; font-variant-numeric:tabular-nums; }
+#hud dd{ margin:0; }
 /* Telemetry flash (motion.ts setReading): coral as a reading changes, easing back with --fl. currentColor here is the inherited colour. */
 #hud dd{ color:color-mix(in srgb, var(--coral) calc(var(--fl, 0) * 100%), currentColor); }
 #hud .rl{ right:calc(100% + 22px); text-align:right; }
@@ -53,8 +53,8 @@
 #area[hidden]{ display:none; }
 #divider{ position:absolute; top:0; bottom:0; width:1px; background:var(--line-2); opacity:0; }
 .cap{ position:absolute; left:0; top:0; pointer-events:none; opacity:0; }
-.cap .n{ font:400 20px/1.15 var(--serif); }
-.cap .s{ margin-top:4px; font:11.5px/1.3 var(--mono); color:var(--text-2); }
+.cap .n{ font:400 20px/1.15 var(--sans); }
+.cap .s{ margin-top:4px; font:11.5px/1.3 var(--sans); color:var(--text-2); }
 .cap .s i{ display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--c); margin-right:7px; }
 .cap .s.ell i{ width:11px; height:7px; margin:0 5px 0 -2px; border:1.5px solid var(--coral); background:none; box-sizing:border-box; }   /* the landing ellipse's outline (ui/ellipse.ts), centred under the dot, its text in line */
 .cap .s.ell.pale i{ border-color:#FFE3D2; }   /* as drawn over the slope tint's coral */
@@ -69,7 +69,7 @@
 .tui .north svg{ width:14px; height:20px; }
 .tui .legend{ position:absolute; right:18px; bottom:96px; width:170px; font-size:11.5px; color:var(--text-2); }
 .tui .ramp{ height:6px; border-radius:3px; margin:6px 0 4px; }
-.tui .lr{ display:flex; justify-content:space-between; font:11px/1.3 var(--mono); }
+.tui .lr{ display:flex; justify-content:space-between; font:11px/1.3 var(--sans); }
 .tui .note{ position:absolute; left:18px; bottom:96px; font-size:11.5px; color:var(--text-3); max-width:30ch; }
 /* The site's orbital image over its block (ui/terrain-ui.ts): its toggle under the north arrow */
 .tui .drape{ position:absolute; right:18px; top:62px; height:26px; padding:0 10px; border:1px solid var(--line-2); border-radius:8px; background:rgba(13,15,18,.6); color:var(--text-2); font:12px/1 var(--sans); cursor:pointer; pointer-events:auto; }
@@ -85,7 +85,7 @@
 .tui .sk{ display:flex; align-items:center; gap:7px; margin-top:6px; }
 .tui .sk i{ flex:none; width:9px; height:9px; border-radius:2px; background:var(--coral); }
 /* The block's major contours, labelled on their lines (as the graticule's labels: a dark edge over any ground) */
-.tui .cl{ position:absolute; left:0; top:0; font:10px/1 var(--mono); letter-spacing:.03em; color:rgba(231,233,236,.85); white-space:nowrap;
+.tui .cl{ position:absolute; left:0; top:0; font:10px/1 var(--sans); letter-spacing:.03em; color:rgba(231,233,236,.85); white-space:nowrap;
   text-shadow:-1px -1px 0 #06070A,0 -1px 0 #06070A,1px -1px 0 #06070A,-1px 0 0 #06070A,1px 0 0 #06070A,-1px 1px 0 #06070A,0 1px 0 #06070A,1px 1px 0 #06070A; }
 .tui.narrow .cl{ display:none; }
 .tui.narrow .note{ display:none; }
@@ -97,16 +97,16 @@
 .tui .lw i{ flex:none; width:7px; height:7px; border-radius:50%; background:var(--c); }
 .tui .lw .w{ flex:none; width:36px; }
 .tui .lw .ramp{ flex:1; min-width:24px; margin:0; }
-.tui .lw .lv{ flex:none; min-width:20ch; text-align:right; font:11px/1.3 var(--mono); }
+.tui .lw .lv{ flex:none; min-width:20ch; text-align:right; font:11px/1.3 var(--sans); }
 #status{ position:absolute; left:0; bottom:0; height:var(--status); display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 18px; font-size:12px; color:var(--text-3); border-top:1px solid var(--line); background:rgba(6,7,10,.6); transition:opacity .4s; }
 #status .eng{ display:inline-flex; align-items:center; gap:8px; color:var(--text-2); }   /* a pin's search, the engine warming up (ui/chrome.ts) */
 #status .eng i{ width:6px; height:6px; border-radius:50%; background:var(--coral); animation:skel 1.6s ease-in-out infinite; }
 @media (prefers-reduced-motion:reduce){ #status .eng i{ animation:none; } }
-#status .v{ font-family:var(--mono); color:var(--text-2); font-variant-numeric:tabular-nums; }
+#status .v{ color:var(--text-2); }
 body[data-view="title"] #status,body[data-view="intro"] #status,body[data-view="beyond"] #status{ opacity:0; }
 /* The worlds' full-resolution maps on their way after the low tier (app.ts): HUD type, in the hints' place. Visual only,
    so hidden from screen readers. */
-#st-m{ display:none; align-items:center; gap:8px; margin-left:auto; font:10.5px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:rgba(160,166,174,.9); white-space:nowrap; }
+#st-m{ display:none; align-items:center; gap:8px; margin-left:auto; font:10.5px/1 var(--sans); letter-spacing:.06em; text-transform:uppercase; color:rgba(160,166,174,.9); white-space:nowrap; }
 #st-m.on{ display:inline-flex; }
 #st-m.on + #st-r{ display:none; }
 #st-m i{ width:5px; height:5px; border-radius:50%; background:currentColor; animation:skel 1.6s ease-in-out infinite; }

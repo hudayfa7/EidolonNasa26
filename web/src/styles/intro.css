@@ -7,13 +7,13 @@
 #intro .frm i{ position:absolute; width:18px; height:18px; border:0 solid rgba(238,243,246,.6); }
 #intro .frm .b1{ left:0; top:0; border-left-width:1px; border-top-width:1px; } #intro .frm .b2{ right:0; top:0; border-right-width:1px; border-top-width:1px; }
 #intro .frm .b3{ left:0; bottom:0; border-left-width:1px; border-bottom-width:1px; } #intro .frm .b4{ right:0; bottom:0; border-right-width:1px; border-bottom-width:1px; }
-#intro .frm span{ position:absolute; font:10.5px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:rgba(238,243,246,.62); white-space:nowrap; }
+#intro .frm span{ position:absolute; font:10.5px/1 var(--sans); letter-spacing:.1em; text-transform:uppercase; color:rgba(238,243,246,.62); white-space:nowrap; }
 #intro .frm .fl1{ left:0; top:-22px; } #intro .frm .fl2{ right:0; bottom:-22px; }
 /* Telemetry flash (motion.ts setReading, as hud.css): the countdown and the frame's counter, both over dark sky. */
 #i-cd{ color:color-mix(in srgb, var(--coral) calc(var(--fl, 0) * 100%), currentColor); }
 #intro .frm .fl2{ color:color-mix(in srgb, var(--coral) calc(var(--fl, 0) * 100%), rgba(238,243,246,.62)); }
-#intro .lines p{ position:absolute; left:0; right:0; top:0; margin:0; opacity:0; font:300 clamp(22px,2.8vw,32px)/1.42 var(--serif); letter-spacing:-.01em; color:#F1F5F8; text-align:center; text-wrap:balance; will-change:filter,opacity,transform; }
-#intro .tl{ position:absolute; display:grid; gap:2px; font:11px/1.6 var(--mono); letter-spacing:.08em; text-transform:uppercase; color:rgba(238,243,246,.82); }
+#intro .lines p{ position:absolute; left:0; right:0; top:0; margin:0; opacity:0; font:300 clamp(22px,2.8vw,32px)/1.42 var(--sans); letter-spacing:-.01em; color:#F1F5F8; text-align:center; text-wrap:balance; will-change:filter,opacity,transform; }
+#intro .tl{ position:absolute; display:grid; gap:2px; font:11px/1.6 var(--sans); letter-spacing:.08em; text-transform:uppercase; color:rgba(238,243,246,.82); }
 #intro .tl b{ display:inline-block; min-width:76px; font-weight:400; color:rgba(238,243,246,.42); }
 #intro .tl1{ left:28px; top:26px; } #intro .tl2{ right:28px; top:26px; text-align:right; } #intro .tl3{ left:28px; bottom:30px; } #intro .tl4{ right:28px; bottom:30px; text-align:right; }
 #intro .tl2 b,#intro .tl4 b{ min-width:0; margin-right:12px; }

@@ -28,7 +28,7 @@ function put(n: number, o: BodyObj, cam: THREE.Camera, r: Rect, lat: number, lon
   if (nrm.dot(_c.copy(cam.position).sub(w).normalize()) < .38) return n;
   proj(w, cam, r, P); const x = P.x + dx, y = P.y + dy, el = GRATS[n];
   // One collision pass: a label under the preview chip or on a site marker (or its label) gives way to it.
-  // shortcut: label box from the mono advance (10 px, .03em tracking ≈ 6.3 px a character); measure if the font changes
+  // shortcut: label box from a fixed advance (Geist 10 px, .03em tracking: at most 6 px a character); measure if the font changes
   // And inside the viewport, within the HUD's box (it shows with the labels: hud.ts), so clear of the tape, the hint and the
   // status bar: zoomed in, the outer rings ran under the top bar and onto the hint.
   const lw = txt.length * 6.3;

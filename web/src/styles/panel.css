@@ -11,15 +11,15 @@
 .phead > [data-go]{ min-width:0; }   /* a long way back (an IAU name) gives way to Copy link's words on one line */
 .phead > [data-go] > span:last-child{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .chev{ flex:none; width:7px; height:7px; border-left:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); margin-top:1px; }
-.title{ width:fit-content; margin:14px 0 0; font:400 34px/1.1 var(--serif); letter-spacing:-.012em; }   /* a route focuses it: the ring round its words on a keyboard arrival */
+.title{ width:fit-content; margin:14px 0 0; font:400 34px/1.1 var(--sans); letter-spacing:-.012em; }   /* a route focuses it: the ring round its words on a keyboard arrival */
 html:not(.kb) .title{ outline:none; }   /* not before any key (scene/input.ts): Chrome rings a focus on load as a keyboard one */
-.coords{ margin:8px 0 0; font:12px/1.3 var(--mono); color:var(--text-3); }
+.coords{ margin:8px 0 0; font:12px/1.3 var(--sans); color:var(--text-3); }
 .lede{ margin:10px 0 0; color:var(--text-2); font-size:14px; line-height:1.55; max-width:42ch; }
 .facts{ display:grid; grid-template-columns:1fr 1fr; gap:1px; margin:20px 0 0; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
 .facts div{ background:var(--surface); padding:10px 12px; }
 .facts .wide{ grid-column:1 / -1; }
 .facts dt{ font-size:11.5px; color:var(--text-3); }
-.facts dd{ margin:3px 0 0; font:13px/1.35 var(--mono); font-variant-numeric:tabular-nums; }
+.facts dd{ margin:3px 0 0; font:13px/1.35 var(--sans); }
 .sec{ margin:28px 0 8px; font:500 12.5px/1.3 var(--sans); color:var(--text-2); }
 [data-doubles]{ outline:none; scroll-margin-top:18px; }
 .rows{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
@@ -29,7 +29,7 @@ button.row:hover{ background:var(--surface-2); }
 .row.is-sel{ background:var(--surface-3); }
 .row .dot{ width:7px; height:7px; border-radius:50%; background:var(--c); align-self:center; }
 .row .nm{ font-size:14px; }
-.row .mt{ font:12px/1 var(--mono); color:var(--text-3); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.row .mt{ font:12px/1 var(--sans); color:var(--text-3); white-space:nowrap; }
 .row .sb{ grid-column:2 / -1; font-size:12.5px; color:var(--text-3); }
 /* Results (ui/results.ts): banner, cards, a result's detail */
 .banner{ margin:0 0 12px; padding:10px 12px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface-2); font-size:12.5px; line-height:1.5; color:var(--text-2); }
@@ -43,12 +43,12 @@ button.row:hover{ background:var(--surface-2); }
 /* A tile whose hillshade is missing (spec §6), apart from one still loading (an empty tile) */
 .th .ph{ display:grid; place-items:center; width:100%; height:100%; padding:4px; border:1px dashed var(--line-2); border-radius:inherit; text-align:center; font-size:10px; line-height:1.3; color:var(--text-3); }
 .result .cb,.gd .cb{ display:flex; flex-direction:column; align-items:flex-start; gap:3px; min-width:0; }
-.result .rk,.gd .rk{ align-self:stretch; display:flex; justify-content:space-between; font:11px/1.2 var(--mono); letter-spacing:.06em; color:var(--text-3); }
+.result .rk,.gd .rk{ align-self:stretch; display:flex; justify-content:space-between; font:11px/1.2 var(--sans); letter-spacing:.06em; color:var(--text-3); }
 .nt{ display:inline-flex; align-items:center; gap:5px; letter-spacing:0; }
 .ic{ width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:1.1; stroke-linejoin:round; }
 .sec .ic,.fl .ic,.coords .ic{ margin-right:7px; vertical-align:-1px; stroke-linecap:round; }   /* the booking flow's (ui/icons.ts) */
-.result .nm{ font:400 18px/1.2 var(--serif); }
-.result .ll,.gd .ll,#camps .row .ll{ font:11.5px/1.3 var(--mono); color:var(--text-3); font-variant-numeric:tabular-nums; }
+.result .nm{ font:400 18px/1.2 var(--sans); }
+.result .ll,.gd .ll,#camps .row .ll{ font:11.5px/1.3 var(--sans); color:var(--text-3); }
 .sm{ font-size:12px; color:var(--text-3); }
 .sm b{ margin-left:4px; font:500 12px/1 var(--sans); color:var(--coral); }
 .su{ font-size:12.5px; line-height:1.5; color:var(--text-2); overflow-wrap:anywhere; }
@@ -67,7 +67,7 @@ button.row:hover{ background:var(--surface-2); }
 .res{ margin-top:20px; }
 .rhead{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; }
 .rhead .sm{ font-size:13px; } .rhead .sm b{ font-size:13px; }
-.n2{ font:12px/1 var(--mono); color:var(--text-3); font-variant-numeric:tabular-nums; }
+.n2{ font:12px/1 var(--sans); color:var(--text-3); }
 .rhead .badge{ margin-left:auto; }
 .lk{ display:flex; align-items:center; gap:10px; margin-top:12px; font-size:12px; color:var(--text-3); }
 .seg{ display:flex; gap:3px; }
@@ -76,8 +76,8 @@ button.row:hover{ background:var(--surface-2); }
 .res > .su{ margin:14px 0 0; }
 .props,.notes{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
 .props li{ display:grid; grid-template-columns:8px 1fr auto 34px; align-items:center; column-gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:13px; }
-.props .ps{ font-size:12px; color:var(--text-2); }
-.props .pv{ font:12px/1 var(--mono); color:var(--text-3); text-align:right; font-variant-numeric:tabular-nums; }
+.props .ps{ font-size:12px; color:var(--text-2); text-wrap:balance; }   /* never a lone number ("Not assessed / · weight 15"); nowrap overflows the column beside a long label */
+.props .pv{ font:12px/1 var(--sans); color:var(--text-3); text-align:right; }
 .props .s-not_measurable .pl,.props .s-not_measurable .ps{ color:var(--text-3); }
 .props .pnote{ grid-column:2 / -1; margin-top:3px; font-size:12px; line-height:1.45; color:var(--text-3); }
 .jump{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px; }   /* Plan a test campaign, then Other doubles */
@@ -85,8 +85,7 @@ button.row:hover{ background:var(--surface-2); }
 .jump .go .chev{ transform:rotate(-135deg); margin:1px 0 0 2px; }   /* to the site selector grid (body view) */
 .notes li{ position:relative; padding:9px 0 9px 16px; border-bottom:1px solid var(--line); font-size:12.5px; line-height:1.5; color:var(--text-2); }
 .notes li::before{ content:""; position:absolute; left:2px; top:16px; width:5px; height:5px; border-radius:50%; background:var(--text-3); }
-.facts dd.w,.facts .w dd{ font-family:var(--sans); }
-.facts dd .n{ font-family:var(--mono); color:var(--text-3); margin-left:4px; }
+.facts dd .n{ color:var(--text-3); margin-left:4px; }
 .drawer{ margin-top:22px; border-top:1px solid var(--line); }
 .drawer summary{ display:flex; align-items:center; gap:10px; padding:12px 2px; list-style:none; font:500 12.5px/1.3 var(--sans); color:var(--text-2); cursor:pointer; }
 .drawer summary::-webkit-details-marker{ display:none; }
@@ -94,7 +93,7 @@ button.row:hover{ background:var(--surface-2); }
 .drawer summary .chev{ transform:rotate(-135deg); margin-top:3px; transition:transform .2s; }
 .drawer[open] summary .chev{ transform:rotate(-45deg); margin-top:-3px; }
 .drawer h4{ margin:16px 0 6px; font:500 12px/1.3 var(--sans); color:var(--text-3); }
-.raw{ margin:0; font:11.5px/1.5 var(--mono); font-variant-numeric:tabular-nums; }
+.raw{ margin:0; font:11.5px/1.5 var(--sans); }
 .raw div{ display:flex; justify-content:space-between; gap:12px; padding:4px 0; border-bottom:1px solid var(--line); }
 .raw dt{ color:var(--text-3); } .raw dd{ margin:0; text-align:right; overflow-wrap:anywhere; }
 /* The search's states (ui/results.ts): a wait with its bar, a failure with its buttons, no elevation data; the skeleton */
@@ -118,7 +117,6 @@ button.row:hover{ background:var(--surface-2); }
 @media (prefers-reduced-motion:reduce){ .skel li{ animation:none; } }
 /* The search's purpose and filters (ui/panel.ts), the named-feature search (ui/target-search.ts) */
 [data-ask]{ outline:none; }
-#tq,#tq-msg{ font-family:var(--sans); }   /* names, not coordinates */
 .tgt{ margin-bottom:12px; }
 .sel{ width:100%; height:38px; padding:0 34px 0 12px; border:1px solid var(--line-2); border-radius:8px; color:var(--text); font:13px/1 var(--sans); appearance:none; cursor:pointer;
   background:var(--surface-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23A0A6AE' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 14px center;
@@ -135,7 +133,7 @@ button.row:hover{ background:var(--surface-2); }
 .ck:has(input:disabled){ color:var(--text-3); cursor:default; }
 .area{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:4px 14px; margin-top:16px; font-size:13px; color:var(--text-2); }
 .area .fl{ margin:0; }
-.area .n{ font:12px/1.45 var(--mono); color:var(--text); font-variant-numeric:tabular-nums; }
+.area .n{ font:12px/1.45 var(--sans); color:var(--text); }
 .area .btn{ height:30px; padding:0 12px; }
 .opts{ margin-top:8px; }
 .opts .row{ cursor:pointer; }
@@ -151,18 +149,18 @@ button.row:hover{ background:var(--surface-2); }
 .cform{ margin-top:14px; }
 .cform label{ display:block; margin-bottom:6px; font-size:12px; color:var(--text-3); }
 .cfield{ display:flex; gap:6px; }
-.cfield input{ flex:1; min-width:0; height:38px; padding:0 12px; border:1px solid var(--line-2); border-radius:8px; background:var(--surface-2); color:var(--text); font:13px/1 var(--mono); font-variant-numeric:tabular-nums; transition:border-color .15s; }
+.cfield input{ flex:1; min-width:0; height:38px; padding:0 12px; border:1px solid var(--line-2); border-radius:8px; background:var(--surface-2); color:var(--text); font:13px/1 var(--sans); transition:border-color .15s; }
 .cfield input::placeholder{ color:var(--text-3); }
 .cfield input:focus{ border-color:rgba(255,255,255,.42); }
 .cfield input[readonly]{ background:transparent; }
 .cfield input[aria-invalid="true"]{ border-color:rgba(242,136,95,.75); }
 .cfield .btn{ height:38px; flex:none; }
-.cmsg{ margin:7px 0 0; min-height:1.5em; font:11.5px/1.5 var(--mono); color:var(--text-3); }
+.cmsg{ margin:7px 0 0; min-height:1.5em; font:11.5px/1.5 var(--sans); color:var(--text-3); }
 .cmsg.ok{ color:var(--text-2); } .cmsg.err{ color:var(--coral); }
 @media (pointer:coarse){ .cmsg .kb{ display:none; } }
-.cmsg kbd{ font:10.5px/1 var(--mono); padding:1px 5px; border:1px solid var(--line-2); border-radius:4px; color:var(--text-2); }
+.cmsg kbd{ font:10.5px/1 var(--sans); padding:1px 5px; border:1px solid var(--line-2); border-radius:4px; color:var(--text-2); }
 .map canvas[data-move]{ cursor:crosshair; }   /* only where a click moves the pin (ui/topomap.ts) */
-.mread{ position:absolute; left:0; top:0; pointer-events:none; font:11px/1.4 var(--mono); font-variant-numeric:tabular-nums; color:var(--text); background:rgba(6,7,10,.88); border:1px solid var(--line-2); border-radius:6px; padding:5px 7px; white-space:nowrap; }
+.mread{ position:absolute; left:0; top:0; pointer-events:none; font:11px/1.4 var(--sans); color:var(--text); background:rgba(6,7,10,.88); border:1px solid var(--line-2); border-radius:6px; padding:5px 7px; white-space:nowrap; }
 .mread[hidden]{ display:none; }
 .mcap{ margin:6px 0 0; font-size:11.5px; color:var(--text-3); }
 /* The slope hazard under the site map and sunlight (ui/slope.ts): its key, a coral square as the map tints its steep ground */
@@ -173,10 +171,9 @@ button.row:hover{ background:var(--surface-2); }
 .srange{ display:flex; align-items:center; gap:12px; }
 .sun .srange input,.ell .srange input{ flex:1; width:auto; min-width:0; }
 @media (pointer:coarse){ .sun .srange input,.ell .srange input{ height:44px; } }   /* a 44 px touch target */
-.srange output{ min-width:5ch; text-align:right; font:13px/1 var(--mono); font-variant-numeric:tabular-nums; color:var(--text); }
+.srange output{ min-width:5ch; text-align:right; font:13px/1 var(--sans); color:var(--text); }
 .sun .cfield input{ color-scheme:dark; }   /* the date's own picker icon and popup, dark */
 .sun .facts,.ell .facts{ margin-top:14px; }
-.sun .facts .sub,.ell .facts .sub.w{ font-family:var(--sans); }   /* words: from the east, below the horizon, east–west */
 .ell + .imgs{ margin-top:18px; }
 /* Profile and measure (ui/measure.ts), under the map: the ends, then the cross-section in the facts' frame. */
 #pin:has(#ms-on:checked) .map canvas{ cursor:crosshair; }
@@ -184,22 +181,22 @@ button.row:hover{ background:var(--surface-2); }
 .mform .fl{ margin:12px 0 6px; }
 .prof{ margin:14px 0 0; padding:9px 12px 6px; border:1px solid var(--line); border-radius:10px; }
 .prof figcaption{ display:flex; justify-content:space-between; gap:12px; font-size:11.5px; color:var(--text-3); }
-.prof output{ font:11px/1.35 var(--mono); font-variant-numeric:tabular-nums; color:var(--text); }
+.prof output{ font:11px/1.35 var(--sans); color:var(--text); }
 .prof svg{ display:block; width:100%; height:auto; margin-top:6px; }
 .prof .g{ stroke:var(--line-2); }
 .prof .fill{ fill:color-mix(in srgb, var(--coral) 13%, transparent); }
 .prof .ln{ fill:none; stroke:var(--coral); stroke-width:1.6; stroke-linejoin:round; }
-.prof text{ font:10.5px var(--mono); fill:var(--text-3); }   /* viewBox units: â‰¥ 10 px in the 288 px desktop chart */
+.prof text{ font:10.5px var(--sans); fill:var(--text-3); }   /* viewBox units: â‰¥ 10 px in the 288 px desktop chart */
 .prof .hov line{ stroke:var(--text-2); stroke-dasharray:2 2; }
 .prof .hov circle{ fill:var(--coral); stroke:var(--bg); stroke-width:1.5; }
 .meas .facts{ margin-top:8px; }
 /* A solid 1 px dark edge, not a soft halo: the labels stay readable (AA) over the Moon's and Mars's lit ground. */
-#grat span{ position:absolute; left:0; top:0; font:10px/1 var(--mono); letter-spacing:.03em; color:rgba(231,233,236,.8); text-shadow:-1px -1px 0 #06070A,0 -1px 0 #06070A,1px -1px 0 #06070A,-1px 0 0 #06070A,1px 0 0 #06070A,-1px 1px 0 #06070A,0 1px 0 #06070A,1px 1px 0 #06070A,0 0 4px rgba(0,0,0,.9); white-space:nowrap; pointer-events:none; will-change:transform; }
+#grat span{ position:absolute; left:0; top:0; font:10px/1 var(--sans); letter-spacing:.03em; color:rgba(231,233,236,.8); text-shadow:-1px -1px 0 #06070A,0 -1px 0 #06070A,1px -1px 0 #06070A,-1px 0 0 #06070A,1px 0 0 #06070A,-1px 1px 0 #06070A,0 1px 0 #06070A,1px 1px 0 #06070A,0 0 4px rgba(0,0,0,.9); white-space:nowrap; pointer-events:none; will-change:transform; }
 #ppin{ position:absolute; left:0; top:0; width:0; height:0; pointer-events:none; opacity:0; transition:opacity .25s; }
 #ppin.on{ opacity:1; }
 #ppin i{ position:absolute; left:-16px; top:-16px; width:32px; height:32px; border:1.5px dashed var(--coral); border-radius:50%; animation:pspin 9s linear infinite; }
 #ppin::before{ content:""; position:absolute; left:-3px; top:-3px; width:6px; height:6px; border-radius:50%; background:var(--coral); }
-#ppin span{ position:absolute; left:24px; top:-11px; font:11px/1 var(--mono); color:var(--text); background:rgba(13,15,18,.9); border:1px solid var(--line-2); border-radius:6px; padding:5px 7px; white-space:nowrap; }
+#ppin span{ position:absolute; left:24px; top:-11px; font:11px/1 var(--sans); color:var(--text); background:rgba(13,15,18,.9); border:1px solid var(--line-2); border-radius:6px; padding:5px 7px; white-space:nowrap; }
 #ppin.left span{ left:auto; right:24px; }
 @keyframes pspin{ to{ transform:rotate(360deg); } }
 @media (prefers-reduced-motion:reduce){ #ppin i{ animation:none; } }
@@ -231,14 +228,14 @@ button.row:hover{ background:var(--surface-2); }
 .pair{ display:grid; gap:10px; margin-top:16px; }
 .pair .pa{ display:grid; grid-template-columns:10px 1fr; gap:12px; align-items:baseline; }
 .pair .dot{ width:8px; height:8px; border-radius:50%; background:var(--c); }
-.pair .pn{ font:400 22px/1.15 var(--serif); }
+.pair .pn{ font:400 22px/1.15 var(--sans); }
 .pair .ps{ font-size:12.5px; color:var(--text-3); }
 .cmp{ width:100%; margin-top:20px; border-collapse:collapse; font-size:12.5px; }
 .cmp thead th{ text-align:left; font-weight:500; color:var(--text-2); padding:0 0 8px; border-bottom:1px solid var(--line-2); vertical-align:bottom; }
 .cmp th:not(:first-child),.cmp td:not(:first-child){ text-align:right; padding-left:10px; }
 .cmp td,.cmp tbody th{ padding:8px 0; border-bottom:1px solid var(--line); vertical-align:top; }
 .cmp tbody th{ text-align:left; font-weight:400; color:var(--text-3); }   /* each row's measure */
-.cmp td.n{ font-family:var(--mono); font-size:12px; font-variant-numeric:tabular-nums; }
+.cmp td.n{ font-size:12px; }
 .fine{ margin:10px 0 0; font-size:11.5px; color:var(--text-3); line-height:1.5; }
 .fine a,.fine button{ color:inherit; text-underline-offset:2px; } .fine a:hover,.fine button:hover{ color:var(--text-2); }   /* a source's credit; My campaigns on a confirmation */
 .fine button{ padding:0; border:0; background:none; font:inherit; text-decoration:underline; cursor:pointer; }
@@ -247,16 +244,16 @@ button.row:hover{ background:var(--surface-2); }
 .wx li{ display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:6px; }
 .wx .bar{ width:100%; max-width:18px; height:calc(var(--h) * 38px + 3px); border-radius:2px; background:var(--line-2); }
 .wx li.go .bar{ background:var(--earth); }
-.wx .d{ font:11px/1 var(--mono); color:var(--text-3); }
+.wx .d{ font:11px/1 var(--sans); color:var(--text-3); }
 /* The booking flow (ui/booking.ts): its steps, the plan form with the weather window's days, the reference */
 .bsteps{ list-style:none; display:flex; flex-wrap:wrap; gap:4px 12px; margin:14px 0 0; padding:0; font-size:11.5px; line-height:1.4; color:var(--text-3); counter-reset:st; }
 .bsteps li{ counter-increment:st; }
-.bsteps li::before{ content:counter(st); margin-right:5px; font-family:var(--mono); }
+.bsteps li::before{ content:counter(st); margin-right:5px; }
 .bsteps .done{ color:var(--text-2); }
 .bsteps [aria-current]{ color:var(--text); }
 [data-book] .title + .state{ margin-top:16px; }   /* a step's wait, error or empty box under its heading */
 [data-book] .actions + .imgs{ margin-top:20px; }
-.facts dd .sub{ display:block; margin:3px 0 0; font-size:12px; color:var(--text-3); }   /* a second line, in the dd's face (.n adds mono) */
+.facts dd .sub{ display:block; margin:3px 0 0; font-size:12px; color:var(--text-3); }   /* a second line, in the dd's face */
 .facts .pre dd{ white-space:pre-wrap; overflow-wrap:anywhere; }
 .bform .fl{ margin:22px 0 7px; }
 .bform .fs{ margin-top:22px; }
@@ -268,9 +265,9 @@ button.row:hover{ background:var(--surface-2); }
 .day:hover{ background:var(--surface-2); }
 .day .bar{ width:14px; height:calc(var(--h) * 26px + 3px); border-radius:2px; background:var(--line-2); }
 .day.go .bar{ background:var(--earth); }
-.day .w{ font:10.5px/1 var(--mono); color:var(--text-3); }
+.day .w{ font:10.5px/1 var(--sans); color:var(--text-3); }
 .day .w.m{ color:var(--text-2); }   /* the month, on the first day and where one starts */
-.day .n{ font:12px/1 var(--mono); color:var(--text-2); font-variant-numeric:tabular-nums; }
+.day .n{ font:12px/1 var(--sans); color:var(--text-2); }
 .day[aria-pressed="true"]{ background:var(--surface-3); border-color:var(--coral); }
 .day[aria-pressed="true"] .n{ color:var(--text); }
 .dsum{ margin:8px 0 0; font-size:12.5px; line-height:1.5; color:var(--text-2); }
@@ -286,7 +283,7 @@ button.row:hover{ background:var(--surface-2); }
 .bform .sel[aria-invalid="true"],.bform textarea[aria-invalid="true"]{ border-color:rgba(242,136,95,.75); }
 .ferr{ margin:6px 0 0; font-size:12px; line-height:1.45; color:var(--coral); }
 .bform .actions{ margin-top:24px; }
-.ref{ margin:16px 0 0; font:400 24px/1.2 var(--mono); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+.ref{ margin:16px 0 0; font:400 24px/1.2 var(--sans); letter-spacing:.04em; }
 .ref span{ display:block; margin-bottom:6px; font:12px/1.3 var(--sans); letter-spacing:0; color:var(--text-3); }
 /* My campaigns (ui/campaigns.ts): the panel's look in a dialog under the top bar's button (--r: its right edge on the
    button's); a bottom sheet on a phone (responsive.css). Its scroller is the dialog. It moves as a panel does (0.9 s,
@@ -303,7 +300,7 @@ button.row:hover{ background:var(--surface-2); }
 @starting-style{ #camps[open]{ opacity:0; translate:0 -10px; } #camps[open]::backdrop{ background:rgba(6,7,10,0); } }
 #camps .pin{ padding:18px 22px 22px; }
 #camps .rows{ margin-top:18px; }
-#camps .row .n{ font:12px/1.5 var(--mono); font-variant-numeric:tabular-nums; }   /* the reference */
+#camps .row .n{ font:12px/1.5 var(--sans); }   /* the reference */
 #camps .state{ margin-top:16px; }
 
 /* The result detail's two answers (ui/results.ts missionBlock, verdict): each a card above the grouped evidence. */
@@ -321,15 +318,16 @@ button.row:hover{ background:var(--surface-2); }
 .exl > li:first-child{ border-top:0; }
 details.ex summary{ display:grid; grid-template-columns:auto 1fr auto; gap:2px 10px; align-items:baseline; padding:9px 2px; list-style:none; cursor:pointer; }
 details.ex summary::-webkit-details-marker{ display:none; }
-details.ex .rk{ font:500 11px/1 var(--mono); color:var(--text-3); }
+details.ex .rk{ font:500 11px/1 var(--sans); color:var(--text-3); }
 details.ex .nm{ font-size:13.5px; color:var(--text); }
-details.ex .cv{ font:500 13px/1 var(--mono); color:var(--text); }
+details.ex .cv{ font:500 13px/1 var(--sans); color:var(--text); }
 details.ex .cv .n{ font-size:11px; color:var(--text-3); }
 details.ex .sb{ grid-column:2 / 4; font-size:12px; color:var(--text-2); }
 details.ex .pnote{ margin:0 0 10px 30px; font-size:12px; line-height:1.45; color:var(--text-3); }
 details.ex .pnote a{ color:inherit; text-decoration:underline; text-underline-offset:2px; }
 .drawer.grp summary .nf{ margin-left:auto; font-size:11.5px; color:var(--text-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }/* The site view's main headings (ui/panel.ts doublesHTML, siteHTML): Earth doubles, then Site map. */
-.dh{ display:flex; align-items:baseline; gap:10px; margin:12px 0 8px; white-space:nowrap; font:400 22px/1.2 var(--serif); color:var(--text); }
+.dh{ display:flex; align-items:baseline; gap:10px; margin:12px 0 8px; font:400 22px/1.2 var(--sans); color:var(--text); text-wrap:balance; }
+.dh:has(.nf){ white-space:nowrap; }   /* Earth doubles keeps its note on its line; the longer analog-sites heading wraps */
 .dh .nf{ margin-left:auto; min-width:0; flex:0 1 auto; font:400 11.5px/1.3 var(--sans); color:var(--text-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 /* The site field's message line takes no room until it has something to say. */
 .cmsg.site:empty{ display:none; }
@@ -355,7 +353,7 @@ details.ex .pnote a{ color:inherit; text-decoration:underline; text-underline-of
 .wleg li{ display:inline-flex; align-items:center; gap:6px; max-width:240px; overflow:hidden; white-space:nowrap; transition:max-width .9s cubic-bezier(.45,0,.55,1), opacity .7s, margin .9s; }
 .wleg li.off{ max-width:0; opacity:0; margin:0 -6px; }
 .wleg i{ width:9px; height:9px; border-radius:2px; }
-.wleg b{ font:500 12px/1 var(--mono); color:var(--text); }
+.wleg b{ font:500 12px/1 var(--sans); color:var(--text); }
 .wf-terrain{ background:#4A9A92; } .wf-climate{ background:#5C84B8; } .wf-astro{ background:#7FA06A; } .wf-ops{ background:#B79B4E; }
 .wf-fidelity{ background:#8A78B8; } .wf-human{ background:#B8708C; } .wf-infra{ background:#6F7782; }
 @media (prefers-reduced-motion:reduce){ .wleg li{ transition:none; } }/* View tools (ui/vtools.ts, ui/panel.ts renderTools): a window over the stage's right-hand side, under its top-right buttons and clear

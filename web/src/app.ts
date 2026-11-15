@@ -42,7 +42,7 @@ import { measureBars } from './views/title';
 // The fonts stylesheet has settled before this runs (module scripts wait for pending stylesheets). A face that fails
 // doesn't hold the start, nor (outside ?capture) one that stalls past 7 s: what lands later goes through onAsset.
 async function fontsLoaded() {
-  await Promise.all([document.fonts.load('300 1em Newsreader'), document.fonts.load('600 1em Geist')]).catch(() => {});
+  await document.fonts.load('1em Geist').catch(() => {});
   await document.fonts.ready;
 }
 const ceiling = (p: Promise<unknown>) => CAPTURE ? p : Promise.race([p, new Promise(r => setTimeout(r, 7000))]);
