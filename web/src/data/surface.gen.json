@@ -1,0 +1,291 @@
+{
+ "fetched": "2026-11-14",
+ "sources": {
+  "moon": {
+   "dataset": "LRO Diviner global high-resolution mosaics (GHRM), 70°S–70°N, about 237 m/px",
+   "layers": "tbol_m, treg_m, ra_sam",
+   "provider": "NASA PDS Geosciences Node, bundle urn:nasa:pds:lro_diviner_derived1",
+   "url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/"
+  },
+  "mars": {
+   "dataset": "THEMIS-derived global thermal inertia mosaic (quantitative, 32-bit), 100 m/px",
+   "layers": "thermal inertia",
+   "provider": "USGS Astrogeology Science Center, Astropedia; Fergason et al. 2006, JGR 111, E12004",
+   "url": "https://astrogeology.usgs.gov/search/map/mars-themis-derived-global-thermal-inertia-mosaic"
+  },
+  "elements": {
+   "dataset": "Odyssey GRS element concentrations (water, iron, silicon, potassium, chlorine, thorium), smoothed 5° bins",
+   "provider": "NASA PDS Geosciences Node (ODY-M-GRS-5-ELEMENTS-V1.0); Boynton et al. 2007, JGR 112, E12S99",
+   "url": "https://pds-geosciences.wustl.edu/missions/odyssey/grs_elements.html"
+  },
+  "caves": {
+   "mars": {
+    "dataset": "Mars Global Cave Candidate Catalog v1 (about 1,060 unconfirmed candidate entrances)",
+    "provider": "USGS Astrogeology Science Center, NASA PDS; Cushing 2012 and 2016",
+    "url": "https://astrogeology.usgs.gov/search/map/mars_global_cave_candidate_catalog_v1_cushing"
+   },
+   "moon": {
+    "dataset": "Lunar Pit Atlas (about 280 pits)",
+    "provider": "LROC, Arizona State University, NASA PDS (LRO-L-LROC-5-RDR-V1.0); Wagner and Robinson 2021",
+    "url": "https://data.lroc.im-ldi.com/lroc/view_rdr/SHAPEFILE_LUNAR_PIT_LOCATIONS"
+   }
+  }
+ },
+ "sites": {
+  "jezero": {
+   "body": "mars",
+   "lat": 18.38,
+   "lon": 77.58,
+   "window_km": 2.1,
+   "thermal_inertia": 321,
+   "thermal_inertia_range": [
+    255,
+    403
+   ],
+   "valid_px": 441,
+   "of_px": 441,
+   "caves": {
+    "catalogue": "mars",
+    "total": 1062,
+    "nearest_km": 614,
+    "nearest_label": "CC0808",
+    "nearest_type": "kst",
+    "within_100_km": 0
+   },
+   "elements": {
+    "bin_centre": [
+     17.5,
+     77.5
+    ],
+    "bin_deg": 5,
+    "h2o_wt": 3.531,
+    "h2o_sigma": 0.363,
+    "fe_wt": 16.625,
+    "si_wt": 20.605,
+    "k_wt": 0.316,
+    "cl_wt": 0.389,
+    "th_ppm": 0.599
+   }
+  },
+  "gale": {
+   "body": "mars",
+   "lat": -5.4,
+   "lon": 137.8,
+   "window_km": 2.1,
+   "thermal_inertia": 322,
+   "thermal_inertia_range": [
+    274,
+    455
+   ],
+   "valid_px": 441,
+   "of_px": 441,
+   "caves": {
+    "catalogue": "mars",
+    "total": 1062,
+    "nearest_km": 1419,
+    "nearest_label": "CC0832",
+    "nearest_type": "lat",
+    "within_100_km": 0
+   },
+   "elements": {
+    "bin_centre": [
+     -7.5,
+     137.5
+    ],
+    "bin_deg": 5,
+    "h2o_wt": 5.403,
+    "h2o_sigma": 0.364,
+    "fe_wt": 13.957,
+    "si_wt": 20.618,
+    "k_wt": 0.341,
+    "cl_wt": 0.566,
+    "th_ppm": 0.644
+   }
+  },
+  "arcadia": {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "window_km": 5.1,
+   "thermal_inertia": 158,
+   "thermal_inertia_range": [
+    120,
+    197
+   ],
+   "valid_px": 881,
+   "of_px": 2601,
+   "caves": {
+    "catalogue": "mars",
+    "total": 1062,
+    "nearest_km": 1352,
+    "nearest_label": "CC0885",
+    "nearest_type": "irr",
+    "within_100_km": 0
+   },
+   "elements": {
+    "bin_centre": [
+     47.5,
+     182.5
+    ],
+    "bin_deg": 5,
+    "h2o_wt": 5.261,
+    "h2o_sigma": 0.569,
+    "fe_wt": 14.304,
+    "si_wt": 20.099,
+    "k_wt": 0.258,
+    "cl_wt": 0.339,
+    "th_ppm": 0.416
+   }
+  },
+  "utopia": {
+   "body": "mars",
+   "lat": 46.7,
+   "lon": 117.5,
+   "window_km": 20.1,
+   "thermal_inertia": null,
+   "thermal_inertia_range": [
+    null,
+    null
+   ],
+   "valid_px": 0,
+   "of_px": 40401,
+   "note": "The THEMIS tile holds too few valid pixels here to give a value.",
+   "caves": {
+    "catalogue": "mars",
+    "total": 1062,
+    "nearest_km": 1399,
+    "nearest_label": "CC0499",
+    "nearest_type": "srp",
+    "within_100_km": 0
+   },
+   "elements": {
+    "bin_centre": [
+     47.5,
+     117.5
+    ],
+    "bin_deg": 5,
+    "h2o_wt": 4.229,
+    "h2o_sigma": 0.518,
+    "fe_wt": 14.548,
+    "si_wt": 21.407,
+    "k_wt": 0.322,
+    "cl_wt": 0.404,
+    "th_ppm": 0.666
+   }
+  },
+  "meridiani": {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "window_km": 2.1,
+   "thermal_inertia": 230,
+   "thermal_inertia_range": [
+    160,
+    253
+   ],
+   "valid_px": 441,
+   "of_px": 441,
+   "caves": {
+    "catalogue": "mars",
+    "total": 1062,
+    "nearest_km": 624,
+    "nearest_label": "CC0416",
+    "nearest_type": "sky",
+    "within_100_km": 0
+   },
+   "elements": {
+    "bin_centre": [
+     -2.5,
+     352.5
+    ],
+    "bin_deg": 5,
+    "h2o_wt": 5.343,
+    "h2o_sigma": 0.393,
+    "fe_wt": 15.169,
+    "si_wt": 19.857,
+    "k_wt": 0.31,
+    "cl_wt": 0.571,
+    "th_ppm": 0.608
+   }
+  },
+  "elysium": {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "window_km": 2.1,
+   "thermal_inertia": 173,
+   "thermal_inertia_range": [
+    149,
+    211
+   ],
+   "valid_px": 441,
+   "of_px": 441,
+   "caves": {
+    "catalogue": "mars",
+    "total": 1062,
+    "nearest_km": 1110,
+    "nearest_label": "CC0089",
+    "nearest_type": "irr",
+    "within_100_km": 0
+   },
+   "elements": {
+    "bin_centre": [
+     2.5,
+     137.5
+    ],
+    "bin_deg": 5,
+    "h2o_wt": 5.162,
+    "h2o_sigma": 0.41,
+    "fe_wt": 16.258,
+    "si_wt": 20.284,
+    "k_wt": 0.279,
+    "cl_wt": 0.622,
+    "th_ppm": 0.564
+   }
+  },
+  "hadley": {
+   "body": "moon",
+   "lat": 26.13,
+   "lon": 3.63,
+   "window_km": 2.1,
+   "tbol_midnight_k": 98.18,
+   "tbol_midnight_range_k": [
+    97.05,
+    101.34
+   ],
+   "treg_midnight_k": 97.13,
+   "rock_abundance": 0.003,
+   "valid_px": 81,
+   "caves": {
+    "catalogue": "moon",
+    "total": 278,
+    "nearest_km": 234,
+    "nearest_label": "Aristillus 4",
+    "nearest_type": "Impact Melt",
+    "within_100_km": 0
+   }
+  },
+  "taurus": {
+   "body": "moon",
+   "lat": 20.19,
+   "lon": 30.77,
+   "window_km": 2.1,
+   "tbol_midnight_k": 104.48,
+   "tbol_midnight_range_k": [
+    100.59,
+    132.03
+   ],
+   "treg_midnight_k": 101.07,
+   "rock_abundance": 0.009,
+   "valid_px": 81,
+   "caves": {
+    "catalogue": "moon",
+    "total": 278,
+    "nearest_km": 367,
+    "nearest_label": "Mare Tranquillitatis Pit",
+    "nearest_type": "Mare",
+    "within_100_km": 0
+   }
+  }
+ }
+}

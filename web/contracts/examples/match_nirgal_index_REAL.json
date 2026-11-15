@@ -1,0 +1,327 @@
+[
+ {
+  "target_id": "Nirgal_Vallis",
+  "purpose": "rover_mobility",
+  "site_id": "earth_cell_960934",
+  "rank": 1,
+  "fidelity": {
+   "score": 0.875,
+   "percentile_earth": 1.0,
+   "matcher": "F2s-200m-v1.1",
+   "confidence": "medium"
+  },
+  "properties": [
+   {
+    "key": "terrain_form",
+    "label": "Landform shape",
+    "score": 0.989,
+    "percentile_earth": 0.989,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "relief",
+    "label": "Relief",
+    "score": 0.992,
+    "percentile_earth": 0.992,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "slope",
+    "label": "Slope",
+    "score": 0.913,
+    "percentile_earth": 0.913,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "roughness",
+    "label": "Roughness",
+    "score": 1.0,
+    "percentile_earth": 1.0,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "landform_polarity",
+    "label": "Raised vs incised",
+    "score": 0.953,
+    "percentile_earth": 0.953,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "landform_scale",
+    "label": "Landform size",
+    "score": 0.403,
+    "percentile_earth": 0.403,
+    "weight": 1.0,
+    "status": "gap",
+    "baseline_m": 200.0
+   }
+  ],
+  "location": {
+   "lat": 19.375,
+   "lon": -155.175,
+   "elevation_m": 922.0,
+   "country": "United States of America",
+   "sovereign": "United States of America",
+   "access": "partner",
+   "surface": "barren"
+  },
+  "raw": {
+   "ranking_score": 1.8132,
+   "shape_cosine": 0.8845,
+   "relief_ratio": 0.969,
+   "relief_mismatch_oct": 0.046,
+   "polarity_mismatch": -0.661,
+   "scale_mismatch_oct": -0.747,
+   "terrain_properties_pct": 0.8913
+  },
+  "environment": {
+   "t_mean_c": 17.7,
+   "precip_mm": 2044.0,
+   "aridity_index": 2.024,
+   "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+  },
+  "explanation": {
+   "summary": "United States of America (19.38, -155.18): shape similarity 0.88 (partial); relief 1.0x the target; landform mix at 3 km: slope 72%, spur 12% (target slope 25%).",
+   "strengths": [
+    "landform shape",
+    "relief",
+    "slope",
+    "roughness",
+    "raised vs incised"
+   ],
+   "gaps": [
+    "landform size"
+   ],
+   "caveats": [
+    "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+    "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+   ]
+  }
+ },
+ {
+  "target_id": "Nirgal_Vallis",
+  "purpose": "rover_mobility",
+  "site_id": "earth_cell_1116025",
+  "rank": 2,
+  "fidelity": {
+   "score": 0.972,
+   "percentile_earth": 1.0,
+   "matcher": "F2s-200m-v1.1",
+   "confidence": "medium"
+  },
+  "properties": [
+   {
+    "key": "terrain_form",
+    "label": "Landform shape",
+    "score": 0.989,
+    "percentile_earth": 0.989,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "relief",
+    "label": "Relief",
+    "score": 0.98,
+    "percentile_earth": 0.98,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "slope",
+    "label": "Slope",
+    "score": 0.934,
+    "percentile_earth": 0.934,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "roughness",
+    "label": "Roughness",
+    "score": 0.98,
+    "percentile_earth": 0.98,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "landform_polarity",
+    "label": "Raised vs incised",
+    "score": 0.99,
+    "percentile_earth": 0.99,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "landform_scale",
+    "label": "Landform size",
+    "score": 0.957,
+    "percentile_earth": 0.957,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   }
+  ],
+  "location": {
+   "lat": -18.725,
+   "lon": -70.175,
+   "elevation_m": 764.0,
+   "country": "Chile",
+   "sovereign": "Chile",
+   "access": "partner",
+   "surface": "barren"
+  },
+  "raw": {
+   "ranking_score": 1.8127,
+   "shape_cosine": 0.8836,
+   "relief_ratio": 0.928,
+   "relief_mismatch_oct": 0.108,
+   "polarity_mismatch": 0.19,
+   "scale_mismatch_oct": 0.046,
+   "terrain_properties_pct": 0.8296
+  },
+  "environment": {
+   "t_mean_c": 17.3,
+   "precip_mm": 0.0,
+   "aridity_index": 0.0,
+   "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+  },
+  "explanation": {
+   "summary": "Chile (-18.73, -70.18): shape similarity 0.88 (partial); relief 0.9x the target; landform mix at 3 km: slope 36%, spur 20% (target slope 25%).",
+   "strengths": [
+    "landform shape",
+    "relief",
+    "slope",
+    "roughness",
+    "raised vs incised",
+    "landform size"
+   ],
+   "gaps": [],
+   "caveats": [
+    "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+    "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+   ]
+  }
+ },
+ {
+  "target_id": "Nirgal_Vallis",
+  "purpose": "rover_mobility",
+  "site_id": "earth_cell_963789",
+  "rank": 3,
+  "fidelity": {
+   "score": 0.826,
+   "percentile_earth": 1.0,
+   "matcher": "F2s-200m-v1.1",
+   "confidence": "medium"
+  },
+  "properties": [
+   {
+    "key": "terrain_form",
+    "label": "Landform shape",
+    "score": 0.959,
+    "percentile_earth": 0.959,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "relief",
+    "label": "Relief",
+    "score": 0.985,
+    "percentile_earth": 0.985,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "slope",
+    "label": "Slope",
+    "score": 0.778,
+    "percentile_earth": 0.778,
+    "weight": 1.0,
+    "status": "partial",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "roughness",
+    "label": "Roughness",
+    "score": 0.933,
+    "percentile_earth": 0.933,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "landform_polarity",
+    "label": "Raised vs incised",
+    "score": 0.989,
+    "percentile_earth": 0.989,
+    "weight": 1.0,
+    "status": "match",
+    "baseline_m": 200.0
+   },
+   {
+    "key": "landform_scale",
+    "label": "Landform size",
+    "score": 0.309,
+    "percentile_earth": 0.309,
+    "weight": 1.0,
+    "status": "gap",
+    "baseline_m": 200.0
+   }
+  ],
+  "location": {
+   "lat": 19.275,
+   "lon": -155.675,
+   "elevation_m": 2334.0,
+   "country": "United States of America",
+   "sovereign": "United States of America",
+   "access": "partner",
+   "surface": "barren"
+  },
+  "raw": {
+   "ranking_score": 1.7638,
+   "shape_cosine": 0.8217,
+   "relief_ratio": 1.057,
+   "relief_mismatch_oct": -0.08,
+   "polarity_mismatch": 0.205,
+   "scale_mismatch_oct": -0.939,
+   "terrain_properties_pct": 0.8592
+  },
+  "environment": {
+   "t_mean_c": 11.7,
+   "precip_mm": 851.0,
+   "aridity_index": 0.6557,
+   "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+  },
+  "explanation": {
+   "summary": "United States of America (19.27, -155.68): shape similarity 0.82 (partial); relief 1.1x the target; landform mix at 3 km: slope 81%, spur 13% (target slope 25%).",
+   "strengths": [
+    "landform shape",
+    "relief",
+    "roughness",
+    "raised vs incised"
+   ],
+   "gaps": [
+    "landform size"
+   ],
+   "caveats": [
+    "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+    "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+   ]
+  }
+ }
+]

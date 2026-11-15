@@ -1,0 +1,8 @@
+{
+ "target": {
+  "body": "mars",
+  "name": "Jezero"
+ },
+ "purpose": "rover_mobility",
+ "k": 5
+}

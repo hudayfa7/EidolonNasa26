@@ -1,0 +1,146 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://eidolon.local/contracts/api/search_request.json",
+ "title": "POST /api/v1/search body",
+ "type": "object",
+ "properties": {
+  "target": {
+   "type": "object",
+   "description": "Either name (IAU feature, fast) or lat+lon (any point, slower).",
+   "properties": {
+    "body": {
+     "enum": [
+      "mars",
+      "moon"
+     ]
+    },
+    "name": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "lat": {
+     "type": [
+      "number",
+      "null"
+     ],
+     "minimum": -90,
+     "maximum": 90
+    },
+    "lon": {
+     "type": [
+      "number",
+      "null"
+     ],
+     "minimum": -180,
+     "maximum": 360
+    }
+   },
+   "required": [
+    "body"
+   ],
+   "additionalProperties": false,
+   "anyOf": [
+    {
+     "required": [
+      "name"
+     ],
+     "properties": {
+      "name": {
+       "type": "string"
+      }
+     }
+    },
+    {
+     "required": [
+      "lat",
+      "lon"
+     ],
+     "properties": {
+      "lat": {
+       "type": "number"
+      },
+      "lon": {
+       "type": "number"
+      }
+     }
+    }
+   ]
+  },
+  "purpose": {
+   "enum": [
+    "rover_mobility",
+    "drill_isru",
+    "eva_training",
+    "habitat_ops",
+    "astrobiology",
+    "education",
+    "thermal"
+   ],
+   "default": "rover_mobility"
+  },
+  "k": {
+   "type": "integer",
+   "minimum": 1,
+   "maximum": 20,
+   "default": 10
+  },
+  "filters": {
+   "type": "object",
+   "properties": {
+    "sovereigns": {
+     "type": [
+      "array",
+      "null"
+     ],
+     "items": {
+      "type": "string"
+     }
+    },
+    "bbox": {
+     "type": [
+      "array",
+      "null"
+     ],
+     "items": {
+      "type": "number"
+     },
+     "minItems": 4,
+     "maxItems": 4,
+     "description": "[lon_min, lat_min, lon_max, lat_max]"
+    },
+    "access": {
+     "type": [
+      "array",
+      "null"
+     ],
+     "items": {
+      "enum": [
+       "partner",
+       "non_partner",
+       "antarctic_treaty",
+       "unknown"
+      ]
+     }
+    },
+    "exclude_polar": {
+     "type": "boolean",
+     "default": false
+    },
+    "surface": {
+     "enum": [
+      "barren",
+      "any",
+      null
+     ]
+    }
+   },
+   "additionalProperties": false
+  }
+ },
+ "required": [
+  "target"
+ ],
+ "additionalProperties": false
+}

@@ -1,0 +1,2423 @@
+{
+ "credits": {
+  "blend": [
+   "MOLA–HRSC blended DEM, 200 m",
+   "NASA, ESA, DLR, FU Berlin, USGS"
+  ],
+  "sldem": [
+   "SLDEM2015 (LOLA and Kaguya TC), 59 m",
+   "NASA GSFC, JAXA"
+  ],
+  "lolaPole": [
+   "LOLA south polar DEM, 240 m",
+   "NASA GSFC"
+  ],
+  "lolaCap": [
+   "LOLA south polar DEM, resampled to 1 km",
+   "NASA GSFC"
+  ],
+  "glo30": [
+   "Copernicus DEM GLO-30",
+   "© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+  ],
+  "mdim": [
+   "Viking MDIM 2.1 colour mosaic",
+   "NASA, USGS, NASA Ames"
+  ],
+  "mdimTes": [
+   "Viking MDIM 2.1 colour mosaic over MGS TES albedo",
+   "NASA, USGS, NASA Ames; NASA, JPL, Arizona State University"
+  ],
+  "wac": [
+   "LROC WAC global mosaic",
+   "NASA, GSFC, Arizona State University"
+  ],
+  "wacPole": [
+   "LROC WAC south polar mosaic",
+   "NASA, GSFC, Arizona State University"
+  ],
+  "wacClem": [
+   "LROC WAC global mosaic over Clementine 750 nm albedo",
+   "NASA, GSFC, Arizona State University; NASA and DoD Clementine, USGS"
+  ],
+  "bmng": [
+   "Blue Marble Next Generation with shaded relief and bathymetry",
+   "NASA Earth Observatory, via NASA GIBS"
+  ],
+  "bmng500": [
+   "Blue Marble Next Generation, 500 m",
+   "NASA Earth Observatory, via NASA GIBS"
+  ],
+  "weld": [
+   "Landsat WELD true-colour composite, 1999",
+   "NASA, USGS, South Dakota State University, via NASA GIBS"
+  ],
+  "weldBmng": [
+   "Landsat WELD true-colour composite, 1999, its gaps from Blue Marble Next Generation",
+   "NASA, USGS, South Dakota State University, NASA Earth Observatory, via NASA GIBS"
+  ]
+ },
+ "patches": [
+  {
+   "body": "mars",
+   "lat": 18.38,
+   "lon": 77.58,
+   "km": 60,
+   "n": 192,
+   "min": -2807.5,
+   "max": -1192.5,
+   "src": "blend",
+   "file": "patches/mars-3e8897cd4b.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 18.4082,
+   "lon": 77.6873,
+   "km": 18.8,
+   "n": 94,
+   "min": -2739.7,
+   "max": -2501.9,
+   "src": "blend",
+   "file": "patches/mars-bf006e4170.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 18.38,
+   "lon": 77.58,
+   "km": 140.31413612565444,
+   "n": 336,
+   "min": -3732.7,
+   "max": -210,
+   "src": "blend",
+   "file": "patches/mars-e28f37d94d.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -5.4,
+   "lon": 137.8,
+   "km": 180,
+   "n": 192,
+   "min": -4634.2,
+   "max": 1332.5,
+   "src": "blend",
+   "file": "patches/mars-977f2b703a.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -5.3672,
+   "lon": 137.811,
+   "km": 18.8,
+   "n": 94,
+   "min": -3242.9,
+   "max": 810.4,
+   "src": "blend",
+   "file": "patches/mars-59630d61fb.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -5.4,
+   "lon": 137.8,
+   "km": 260.1047120418848,
+   "n": 622,
+   "min": -4668.9,
+   "max": 1430,
+   "src": "blend",
+   "file": "patches/mars-31ae83a9ae.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "km": 30,
+   "n": 192,
+   "min": -4114,
+   "max": -4043.3,
+   "src": "blend",
+   "file": "patches/mars-1be890bab5.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "km": 18.8,
+   "n": 94,
+   "min": -4114,
+   "max": -4050.5,
+   "src": "blend",
+   "file": "patches/mars-5827d5463c.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "km": 110.15706806282722,
+   "n": 264,
+   "min": -4117.6,
+   "max": -3872.8,
+   "src": "blend",
+   "file": "patches/mars-9aedd3421e.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 46.7,
+   "lon": 117.5,
+   "km": 30,
+   "n": 192,
+   "min": -4990.4,
+   "max": -4622.7,
+   "src": "blend",
+   "file": "patches/mars-0519a5c970.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 46.7363,
+   "lon": 117.5168,
+   "km": 18.8,
+   "n": 94,
+   "min": -4982.2,
+   "max": -4858.6,
+   "src": "blend",
+   "file": "patches/mars-86033dc70b.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 46.7,
+   "lon": 117.5,
+   "km": 110.15706806282722,
+   "n": 264,
+   "min": -5022.7,
+   "max": -4627.5,
+   "src": "blend",
+   "file": "patches/mars-d5cd9ca1e2.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "km": 20,
+   "n": 192,
+   "min": -1475.4,
+   "max": -1287,
+   "src": "blend",
+   "file": "patches/mars-cdd4485314.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "km": 18.8,
+   "n": 94,
+   "min": -1476.2,
+   "max": -1289.8,
+   "src": "blend",
+   "file": "patches/mars-10d6157728.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "km": 100.10471204188481,
+   "n": 240,
+   "min": -2048.7,
+   "max": -1185.9,
+   "src": "blend",
+   "file": "patches/mars-baabb704f0.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "km": 40,
+   "n": 192,
+   "min": -2690.5,
+   "max": -2574,
+   "src": "blend",
+   "file": "patches/mars-6cc2451765.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "km": 18.8,
+   "n": 94,
+   "min": -2665.7,
+   "max": -2588.1,
+   "src": "blend",
+   "file": "patches/mars-daf6aa8b36.bin"
+  },
+  {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "km": 120.20942408376963,
+   "n": 288,
+   "min": -3498.8,
+   "max": -1561.7,
+   "src": "blend",
+   "file": "patches/mars-9f88dba4a2.bin"
+  },
+  {
+   "body": "moon",
+   "lat": 26.13,
+   "lon": 3.63,
+   "km": 30,
+   "n": 192,
+   "min": -2262.9,
+   "max": 2139.1,
+   "src": "sldem",
+   "file": "patches/moon-5a1ba6380c.bin"
+  },
+  {
+   "body": "moon",
+   "lat": 25.7159,
+   "lon": 3.1467,
+   "km": 18.8,
+   "n": 94,
+   "min": -2963.5,
+   "max": -233.2,
+   "src": "sldem",
+   "file": "patches/moon-970ad08e37.bin"
+  },
+  {
+   "body": "moon",
+   "lat": 26.13,
+   "lon": 3.63,
+   "km": 90.15706806282722,
+   "n": 288,
+   "min": -2957.5,
+   "max": 2163.6,
+   "src": "sldem",
+   "file": "patches/moon-76b904e924.bin"
+  },
+  {
+   "body": "moon",
+   "lat": 20.19,
+   "lon": 30.77,
+   "km": 30,
+   "n": 192,
+   "min": -2979.9,
+   "max": -197.2,
+   "src": "sldem",
+   "file": "patches/moon-97cf1346dd.bin"
+  },
+  {
+   "body": "moon",
+   "lat": 20.0702,
+   "lon": 30.7867,
+   "km": 18.8,
+   "n": 94,
+   "min": -2921.3,
+   "max": -230.2,
+   "src": "sldem",
+   "file": "patches/moon-6749dd96df.bin"
+  },
+  {
+   "body": "moon",
+   "lat": 20.19,
+   "lon": 30.77,
+   "km": 90.15706806282722,
+   "n": 288,
+   "min": -3751.2,
+   "max": 64.3,
+   "src": "sldem",
+   "file": "patches/moon-fd7b5984bf.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -86,
+   "lon": 0,
+   "km": 97.69633507853403,
+   "n": 312,
+   "min": -4013.4,
+   "max": 5164.8,
+   "src": "lolaPole",
+   "file": "patches/moon-e2716fba49.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -86,
+   "lon": 0,
+   "km": 18.8,
+   "n": 94,
+   "min": 1376.8,
+   "max": 5167.7,
+   "src": "lolaPole",
+   "file": "patches/moon-9e9060d6b4.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -87.4,
+   "lon": -5,
+   "km": 117.69633507853403,
+   "n": 282,
+   "min": -4371.9,
+   "max": 5163,
+   "src": "lolaPole",
+   "file": "patches/moon-04cb888824.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -87.4,
+   "lon": -5,
+   "km": 18.8,
+   "n": 94,
+   "min": -4000.6,
+   "max": -1677.5,
+   "src": "lolaPole",
+   "file": "patches/moon-2d641d28ec.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -85.2,
+   "lon": 53.5,
+   "km": 127.69633507853403,
+   "n": 272,
+   "min": -3890.7,
+   "max": 7016.5,
+   "src": "lolaPole",
+   "file": "patches/moon-b6896fe93e.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -85.2,
+   "lon": 53.5,
+   "km": 18.8,
+   "n": 94,
+   "min": -1006.7,
+   "max": 1315.1,
+   "src": "lolaPole",
+   "file": "patches/moon-f5783c7413.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -88.5,
+   "lon": -87,
+   "km": 77.69633507853403,
+   "n": 372,
+   "min": -3131.3,
+   "max": 1952.7,
+   "src": "lolaPole",
+   "file": "patches/moon-f331fb29de.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -88.5,
+   "lon": -87,
+   "km": 18.8,
+   "n": 94,
+   "min": -2340.3,
+   "max": 698.9,
+   "src": "lolaPole",
+   "file": "patches/moon-e99a639e23.bin"
+  },
+  {
+   "body": "mars",
+   "lat": -4.59,
+   "lon": 137.44,
+   "km": 18.8,
+   "n": 94,
+   "min": -4555.5,
+   "max": -2372.7,
+   "src": "blend",
+   "file": "patches/mars-4834cc8d8d.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -24.1,
+   "lon": -70,
+   "km": 30,
+   "n": 192,
+   "min": 850.6,
+   "max": 2313,
+   "src": "glo30",
+   "file": "patches/earth-07c0ac054f.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -24.1,
+   "lon": -70,
+   "km": 18.8,
+   "n": 94,
+   "min": 957.6,
+   "max": 1868.7,
+   "src": "glo30",
+   "file": "patches/earth-5f30159b5a.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 75.38,
+   "lon": -89.68,
+   "km": 30,
+   "n": 192,
+   "min": 9.1,
+   "max": 405.1,
+   "src": "glo30",
+   "file": "patches/earth-129defb0b6.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 75.38,
+   "lon": -89.68,
+   "km": 18.8,
+   "n": 94,
+   "min": 47.2,
+   "max": 344.4,
+   "src": "glo30",
+   "file": "patches/earth-0d67c80141.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 36.5,
+   "lon": -117.1,
+   "km": 40,
+   "n": 192,
+   "min": -84.4,
+   "max": 2266.1,
+   "src": "glo30",
+   "file": "patches/earth-c66905abb0.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 36.5,
+   "lon": -117.1,
+   "km": 18.8,
+   "n": 94,
+   "min": -76.9,
+   "max": 2024.8,
+   "src": "glo30",
+   "file": "patches/earth-225b51ff24.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -77.5,
+   "lon": 162,
+   "km": 30,
+   "n": 192,
+   "min": 89.8,
+   "max": 2180.4,
+   "src": "glo30",
+   "file": "patches/earth-d3e7284e86.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -77.5,
+   "lon": 162,
+   "km": 18.8,
+   "n": 94,
+   "min": 89.8,
+   "max": 2016.8,
+   "src": "glo30",
+   "file": "patches/earth-eaf2c701d5.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 79.4,
+   "lon": 13.3,
+   "km": 20,
+   "n": 192,
+   "min": 0,
+   "max": 1289.2,
+   "src": "glo30",
+   "file": "patches/earth-5f3586a2e2.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 79.4,
+   "lon": 13.3,
+   "km": 18.8,
+   "n": 94,
+   "min": 0,
+   "max": 1281.2,
+   "src": "glo30",
+   "file": "patches/earth-e3a73ac111.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 29,
+   "lon": -13.6,
+   "km": 20,
+   "n": 192,
+   "min": -0.1,
+   "max": 568.6,
+   "src": "glo30",
+   "file": "patches/earth-3334303492.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 29,
+   "lon": -13.6,
+   "km": 18.8,
+   "n": 94,
+   "min": 0,
+   "max": 532.8,
+   "src": "glo30",
+   "file": "patches/earth-f28b8086da.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 19.82,
+   "lon": -155.47,
+   "km": 20,
+   "n": 192,
+   "min": 1470.7,
+   "max": 4192.6,
+   "src": "glo30",
+   "file": "patches/earth-845cf82b4f.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 19.82,
+   "lon": -155.47,
+   "km": 18.8,
+   "n": 94,
+   "min": 1546.3,
+   "max": 4183.8,
+   "src": "glo30",
+   "file": "patches/earth-e6956bf81f.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 37.7,
+   "lon": -6.6,
+   "km": 20,
+   "n": 192,
+   "min": 139.2,
+   "max": 687.6,
+   "src": "glo30",
+   "file": "patches/earth-8e7e015f62.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 37.7,
+   "lon": -6.6,
+   "km": 18.8,
+   "n": 94,
+   "min": 144.3,
+   "max": 667.3,
+   "src": "glo30",
+   "file": "patches/earth-268dacc821.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 38.41,
+   "lon": -110.79,
+   "km": 20,
+   "n": 192,
+   "min": 1290.2,
+   "max": 1547.5,
+   "src": "glo30",
+   "file": "patches/earth-c5e05802e6.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 38.41,
+   "lon": -110.79,
+   "km": 18.8,
+   "n": 94,
+   "min": 1292.5,
+   "max": 1543.5,
+   "src": "glo30",
+   "file": "patches/earth-7ec38bf93d.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 37.55,
+   "lon": 29.68,
+   "km": 16,
+   "n": 192,
+   "min": 1066.9,
+   "max": 1832.1,
+   "src": "glo30",
+   "file": "patches/earth-c407bd28ff.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 37.55,
+   "lon": 29.68,
+   "km": 18.8,
+   "n": 94,
+   "min": 1030.1,
+   "max": 2032.2,
+   "src": "glo30",
+   "file": "patches/earth-d82183fee2.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 14.24,
+   "lon": 40.3,
+   "km": 16,
+   "n": 192,
+   "min": -126.4,
+   "max": -9.3,
+   "src": "glo30",
+   "file": "patches/earth-2957c1b917.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 14.24,
+   "lon": 40.3,
+   "km": 18.8,
+   "n": 94,
+   "min": -124.8,
+   "max": 147.1,
+   "src": "glo30",
+   "file": "patches/earth-23449ee994.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -21.2,
+   "lon": 119.4,
+   "km": 25,
+   "n": 192,
+   "min": 126.9,
+   "max": 414.5,
+   "src": "glo30",
+   "file": "patches/earth-f2f858bc3b.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -21.2,
+   "lon": 119.4,
+   "km": 18.8,
+   "n": 94,
+   "min": 132.4,
+   "max": 393,
+   "src": "glo30",
+   "file": "patches/earth-3a27fe442e.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 35.03,
+   "lon": -111.02,
+   "km": 4,
+   "n": 192,
+   "min": 1562.3,
+   "max": 1744.6,
+   "src": "glo30",
+   "file": "patches/earth-511b0caeec.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 35.03,
+   "lon": -111.02,
+   "km": 18.8,
+   "n": 94,
+   "min": 1508.1,
+   "max": 1788.8,
+   "src": "glo30",
+   "file": "patches/earth-ea92729c71.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 64.85,
+   "lon": -16.83,
+   "km": 20,
+   "n": 192,
+   "min": 664.8,
+   "max": 1130.7,
+   "src": "glo30",
+   "file": "patches/earth-5b5a8137ef.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 64.85,
+   "lon": -16.83,
+   "km": 18.8,
+   "n": 94,
+   "min": 668.4,
+   "max": 1108.1,
+   "src": "glo30",
+   "file": "patches/earth-54e2afe08a.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 34.675,
+   "lon": -105.075,
+   "km": 18.8,
+   "n": 94,
+   "min": 1581.8,
+   "max": 1801.7,
+   "src": "glo30",
+   "file": "patches/earth-a164efce33.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -29.725,
+   "lon": 124.025,
+   "km": 18.8,
+   "n": 94,
+   "min": 330.6,
+   "max": 440.8,
+   "src": "glo30",
+   "file": "patches/earth-a7f9f11b43.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -27.825,
+   "lon": 127.125,
+   "km": 18.8,
+   "n": 94,
+   "min": 374.3,
+   "max": 487.7,
+   "src": "glo30",
+   "file": "patches/earth-d2602185a8.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 33.975,
+   "lon": 3.925,
+   "km": 18.8,
+   "n": 94,
+   "min": 556,
+   "max": 684.5,
+   "src": "glo30",
+   "file": "patches/earth-ec06c1c297.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 33.775,
+   "lon": 4.225,
+   "km": 18.8,
+   "n": 94,
+   "min": 552,
+   "max": 685.4,
+   "src": "glo30",
+   "file": "patches/earth-c110b55358.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 62.375,
+   "lon": -142.775,
+   "km": 18.8,
+   "n": 94,
+   "min": 672,
+   "max": 2754.4,
+   "src": "glo30",
+   "file": "patches/earth-43e6bb9695.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 61.075,
+   "lon": -142.275,
+   "km": 18.8,
+   "n": 94,
+   "min": 374.8,
+   "max": 2161.8,
+   "src": "glo30",
+   "file": "patches/earth-749b8dc01b.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 39.075,
+   "lon": -117.175,
+   "km": 18.8,
+   "n": 94,
+   "min": 1655.8,
+   "max": 3320.3,
+   "src": "glo30",
+   "file": "patches/earth-500c985dd0.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 60.875,
+   "lon": -144.575,
+   "km": 18.8,
+   "n": 94,
+   "min": 46.8,
+   "max": 1750.4,
+   "src": "glo30",
+   "file": "patches/earth-cff171a169.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 37.275,
+   "lon": -118.075,
+   "km": 18.8,
+   "n": 94,
+   "min": 1498,
+   "max": 2962.9,
+   "src": "glo30",
+   "file": "patches/earth-7578cc2863.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 43.575,
+   "lon": 92.425,
+   "km": 18.8,
+   "n": 94,
+   "min": 1716.8,
+   "max": 3514,
+   "src": "glo30",
+   "file": "patches/earth-0f8dd9b3f1.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 19.675,
+   "lon": -155.775,
+   "km": 18.8,
+   "n": 94,
+   "min": 942.5,
+   "max": 2489.1,
+   "src": "glo30",
+   "file": "patches/earth-5c8e425c37.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 48.875,
+   "lon": 91.325,
+   "km": 18.8,
+   "n": 94,
+   "min": 1306.2,
+   "max": 2733.6,
+   "src": "glo30",
+   "file": "patches/earth-133b69aacf.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 38.675,
+   "lon": -114.075,
+   "km": 18.8,
+   "n": 94,
+   "min": 1658.6,
+   "max": 2795.2,
+   "src": "glo30",
+   "file": "patches/earth-bb82097c13.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 40.075,
+   "lon": -115.475,
+   "km": 18.8,
+   "n": 94,
+   "min": 1817,
+   "max": 3105.7,
+   "src": "glo30",
+   "file": "patches/earth-47b6350be0.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 38.425,
+   "lon": -110.775,
+   "km": 18.8,
+   "n": 94,
+   "min": 1289.6,
+   "max": 1530.6,
+   "src": "glo30",
+   "file": "patches/earth-72dffdcbf0.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -21.225,
+   "lon": 119.425,
+   "km": 18.8,
+   "n": 94,
+   "min": 138.7,
+   "max": 397.1,
+   "src": "glo30",
+   "file": "patches/earth-b85ddd4098.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 75.375,
+   "lon": -89.675,
+   "km": 18.8,
+   "n": 94,
+   "min": 48.9,
+   "max": 348.9,
+   "src": "glo30",
+   "file": "patches/earth-3a8912f7f7.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -43.575,
+   "lon": 170.425,
+   "km": 18.8,
+   "n": 94,
+   "min": 784.4,
+   "max": 3049.7,
+   "src": "glo30",
+   "file": "patches/earth-8c991c5c97.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 35.375,
+   "lon": 138.725,
+   "km": 18.8,
+   "n": 94,
+   "min": 439.7,
+   "max": 3705.5,
+   "src": "glo30",
+   "file": "patches/earth-144c64e299.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -77.525,
+   "lon": 167.125,
+   "km": 18.8,
+   "n": 94,
+   "min": 443.6,
+   "max": 3747.5,
+   "src": "glo30",
+   "file": "patches/earth-8e442c5a07.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -0.925,
+   "lon": -91.375,
+   "km": 18.8,
+   "n": 94,
+   "min": 0,
+   "max": 1656,
+   "src": "glo30",
+   "file": "patches/earth-fd10ab8f62.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -74.325,
+   "lon": 164.725,
+   "km": 18.8,
+   "n": 94,
+   "min": 0,
+   "max": 2695.4,
+   "src": "glo30",
+   "file": "patches/earth-979efc44ad.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 56.075,
+   "lon": 160.625,
+   "km": 18.8,
+   "n": 94,
+   "min": 984.4,
+   "max": 4803.2,
+   "src": "glo30",
+   "file": "patches/earth-71b422bd7d.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 19.175,
+   "lon": 3.325,
+   "km": 18.8,
+   "n": 94,
+   "min": 458.5,
+   "max": 517.4,
+   "src": "glo30",
+   "file": "patches/earth-0210f8c455.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 17.175,
+   "lon": 29.625,
+   "km": 18.8,
+   "n": 94,
+   "min": 394.3,
+   "max": 501.4,
+   "src": "glo30",
+   "file": "patches/earth-eee28c300f.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -28.125,
+   "lon": 123.225,
+   "km": 18.8,
+   "n": 94,
+   "min": 424.4,
+   "max": 538,
+   "src": "glo30",
+   "file": "patches/earth-0df8af9074.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 20.775,
+   "lon": 24.925,
+   "km": 18.8,
+   "n": 94,
+   "min": 678.1,
+   "max": 781,
+   "src": "glo30",
+   "file": "patches/earth-f273dc233b.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -27.925,
+   "lon": 118.225,
+   "km": 18.8,
+   "n": 94,
+   "min": 410,
+   "max": 493.3,
+   "src": "glo30",
+   "file": "patches/earth-8e208f7f20.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 80.175,
+   "lon": -21.675,
+   "km": 18.8,
+   "n": 94,
+   "min": 8.5,
+   "max": 1028,
+   "src": "glo30",
+   "file": "patches/earth-4bbb010613.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -72.725,
+   "lon": 169.525,
+   "km": 18.8,
+   "n": 94,
+   "min": 5.7,
+   "max": 1798.4,
+   "src": "glo30",
+   "file": "patches/earth-43f2b2e747.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -74.425,
+   "lon": 163.525,
+   "km": 18.8,
+   "n": 94,
+   "min": 22.3,
+   "max": 1711.2,
+   "src": "glo30",
+   "file": "patches/earth-fa05ab936f.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 69.875,
+   "lon": -70.275,
+   "km": 18.8,
+   "n": 94,
+   "min": 0,
+   "max": 1446.7,
+   "src": "glo30",
+   "file": "patches/earth-b3ef003927.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -25.825,
+   "lon": -68.075,
+   "km": 18.8,
+   "n": 94,
+   "min": 3445.5,
+   "max": 4349.7,
+   "src": "glo30",
+   "file": "patches/earth-68b0660650.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -24.325,
+   "lon": -67.775,
+   "km": 18.8,
+   "n": 94,
+   "min": 3510,
+   "max": 6037.2,
+   "src": "glo30",
+   "file": "patches/earth-1d5e415dd6.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -21.125,
+   "lon": -67.875,
+   "km": 18.8,
+   "n": 94,
+   "min": 3674.7,
+   "max": 5262.1,
+   "src": "glo30",
+   "file": "patches/earth-a8b19e5db2.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -21.625,
+   "lon": -68.275,
+   "km": 18.8,
+   "n": 94,
+   "min": 3721.8,
+   "max": 5475,
+   "src": "glo30",
+   "file": "patches/earth-387fb01e39.bin"
+  },
+  {
+   "body": "earth",
+   "lat": 37.775,
+   "lon": 15.025,
+   "km": 18.8,
+   "n": 94,
+   "min": 404.5,
+   "max": 3300.3,
+   "src": "glo30",
+   "file": "patches/earth-10b862f86d.bin"
+  },
+  {
+   "body": "earth",
+   "lat": -74.125,
+   "lon": 162.325,
+   "km": 18.8,
+   "n": 94,
+   "min": 870.8,
+   "max": 2981,
+   "src": "glo30",
+   "file": "patches/earth-146fea0a6f.bin"
+  },
+  {
+   "body": "moon",
+   "lat": -90,
+   "lon": 0,
+   "km": 606,
+   "n": 607,
+   "min": -7149.5,
+   "max": 6978.1,
+   "src": "lolaCap",
+   "file": "patches/moon-b0a23270b8.bin"
+  }
+ ],
+ "crops": [
+  {
+   "body": "mars",
+   "lat": 18.38,
+   "lon": 77.58,
+   "km": 720,
+   "file": "crops/mars-jezero-720.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 18.38,
+   "lon": 77.58,
+   "km": 210,
+   "file": "crops/mars-jezero-210.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": -5.4,
+   "lon": 137.8,
+   "km": 2160,
+   "file": "crops/mars-gale-2160.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": -5.4,
+   "lon": 137.8,
+   "km": 630,
+   "file": "crops/mars-gale-630.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "km": 360,
+   "file": "crops/mars-arcadia-360.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "km": 105,
+   "file": "crops/mars-arcadia-105.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 46.7,
+   "lon": 117.5,
+   "km": 360,
+   "file": "crops/mars-utopia-360.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 46.7,
+   "lon": 117.5,
+   "km": 105,
+   "file": "crops/mars-utopia-105.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "km": 240,
+   "file": "crops/mars-meridiani-240.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "km": 70,
+   "file": "crops/mars-meridiani-70.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "km": 480,
+   "file": "crops/mars-elysium-480.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "km": 140,
+   "file": "crops/mars-elysium-140.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "moon",
+   "lat": 26.13,
+   "lon": 3.63,
+   "km": 360,
+   "file": "crops/moon-hadley-360.jpg",
+   "src": "wac"
+  },
+  {
+   "body": "moon",
+   "lat": 26.13,
+   "lon": 3.63,
+   "km": 105,
+   "file": "crops/moon-hadley-105.jpg",
+   "src": "wac"
+  },
+  {
+   "body": "moon",
+   "lat": 20.19,
+   "lon": 30.77,
+   "km": 360,
+   "file": "crops/moon-taurus-360.jpg",
+   "src": "wac"
+  },
+  {
+   "body": "moon",
+   "lat": 20.19,
+   "lon": 30.77,
+   "km": 105,
+   "file": "crops/moon-taurus-105.jpg",
+   "src": "wac"
+  },
+  {
+   "body": "moon",
+   "lat": -86,
+   "lon": 0,
+   "km": 720,
+   "file": "crops/moon-malapert-720.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -86,
+   "lon": 0,
+   "km": 210,
+   "file": "crops/moon-malapert-210.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -87.4,
+   "lon": -5,
+   "km": 960,
+   "file": "crops/moon-haworth-960.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -87.4,
+   "lon": -5,
+   "km": 280,
+   "file": "crops/moon-haworth-280.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -85.2,
+   "lon": 53.5,
+   "km": 1080,
+   "file": "crops/moon-nobile-1080.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -85.2,
+   "lon": 53.5,
+   "km": 315,
+   "file": "crops/moon-nobile-315.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -88.5,
+   "lon": -87,
+   "km": 480,
+   "file": "crops/moon-degerlache-480.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -88.5,
+   "lon": -87,
+   "km": 140,
+   "file": "crops/moon-degerlache-140.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "earth",
+   "lat": -24.1,
+   "lon": -70,
+   "km": 360,
+   "file": "crops/earth-atacama-360.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -24.1,
+   "lon": -70,
+   "km": 105,
+   "file": "crops/earth-atacama-105.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 75.38,
+   "lon": -89.68,
+   "km": 360,
+   "file": "crops/earth-haughton-360.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 75.38,
+   "lon": -89.68,
+   "km": 105,
+   "file": "crops/earth-haughton-105.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 36.5,
+   "lon": -117.1,
+   "km": 480,
+   "file": "crops/earth-deathvalley-480.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 36.5,
+   "lon": -117.1,
+   "km": 140,
+   "file": "crops/earth-deathvalley-140.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -77.5,
+   "lon": 162,
+   "km": 360,
+   "file": "crops/earth-dryvalleys-360.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -77.5,
+   "lon": 162,
+   "km": 105,
+   "file": "crops/earth-dryvalleys-105.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 79.4,
+   "lon": 13.3,
+   "km": 240,
+   "file": "crops/earth-svalbard-240.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 79.4,
+   "lon": 13.3,
+   "km": 70,
+   "file": "crops/earth-svalbard-70.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 29,
+   "lon": -13.6,
+   "km": 240,
+   "file": "crops/earth-lanzarote-240.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 29,
+   "lon": -13.6,
+   "km": 70,
+   "file": "crops/earth-lanzarote-70.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 19.82,
+   "lon": -155.47,
+   "km": 240,
+   "file": "crops/earth-maunakea-240.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 19.82,
+   "lon": -155.47,
+   "km": 70,
+   "file": "crops/earth-maunakea-70.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 37.7,
+   "lon": -6.6,
+   "km": 240,
+   "file": "crops/earth-riotinto-240.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 37.7,
+   "lon": -6.6,
+   "km": 70,
+   "file": "crops/earth-riotinto-70.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.41,
+   "lon": -110.79,
+   "km": 240,
+   "file": "crops/earth-hanksville-240.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.41,
+   "lon": -110.79,
+   "km": 70,
+   "file": "crops/earth-hanksville-70.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.55,
+   "lon": 29.68,
+   "km": 192,
+   "file": "crops/earth-salda-192.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.55,
+   "lon": 29.68,
+   "km": 56,
+   "file": "crops/earth-salda-56.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 14.24,
+   "lon": 40.3,
+   "km": 192,
+   "file": "crops/earth-dallol-192.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 14.24,
+   "lon": 40.3,
+   "km": 56,
+   "file": "crops/earth-dallol-56.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.2,
+   "lon": 119.4,
+   "km": 300,
+   "file": "crops/earth-pilbara-300.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.2,
+   "lon": 119.4,
+   "km": 87.5,
+   "file": "crops/earth-pilbara-87_5.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 35.03,
+   "lon": -111.02,
+   "km": 48,
+   "file": "crops/earth-meteor-48.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 35.03,
+   "lon": -111.02,
+   "km": 14,
+   "file": "crops/earth-meteor-14.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 64.85,
+   "lon": -16.83,
+   "km": 240,
+   "file": "crops/earth-holuhraun-240.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 64.85,
+   "lon": -16.83,
+   "km": 70,
+   "file": "crops/earth-holuhraun-70.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 34.675,
+   "lon": -105.075,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-34p675_-105p075-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 34.675,
+   "lon": -105.075,
+   "km": 65.8,
+   "file": "crops/earth-cell-34p675_-105p075-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -29.725,
+   "lon": 124.025,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--29p725_124p025-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -29.725,
+   "lon": 124.025,
+   "km": 65.8,
+   "file": "crops/earth-cell--29p725_124p025-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -27.825,
+   "lon": 127.125,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--27p825_127p125-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -27.825,
+   "lon": 127.125,
+   "km": 65.8,
+   "file": "crops/earth-cell--27p825_127p125-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 33.975,
+   "lon": 3.925,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-33p975_3p925-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 33.975,
+   "lon": 3.925,
+   "km": 65.8,
+   "file": "crops/earth-cell-33p975_3p925-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 33.775,
+   "lon": 4.225,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-33p775_4p225-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 33.775,
+   "lon": 4.225,
+   "km": 65.8,
+   "file": "crops/earth-cell-33p775_4p225-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 62.375,
+   "lon": -142.775,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-62p375_-142p775-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 62.375,
+   "lon": -142.775,
+   "km": 65.8,
+   "file": "crops/earth-cell-62p375_-142p775-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 61.075,
+   "lon": -142.275,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-61p075_-142p275-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 61.075,
+   "lon": -142.275,
+   "km": 65.8,
+   "file": "crops/earth-cell-61p075_-142p275-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 39.075,
+   "lon": -117.175,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-39p075_-117p175-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 39.075,
+   "lon": -117.175,
+   "km": 65.8,
+   "file": "crops/earth-cell-39p075_-117p175-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 60.875,
+   "lon": -144.575,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-60p875_-144p575-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 60.875,
+   "lon": -144.575,
+   "km": 65.8,
+   "file": "crops/earth-cell-60p875_-144p575-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.275,
+   "lon": -118.075,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-37p275_-118p075-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.275,
+   "lon": -118.075,
+   "km": 65.8,
+   "file": "crops/earth-cell-37p275_-118p075-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 43.575,
+   "lon": 92.425,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-43p575_92p425-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 43.575,
+   "lon": 92.425,
+   "km": 65.8,
+   "file": "crops/earth-cell-43p575_92p425-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 19.675,
+   "lon": -155.775,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-19p675_-155p775-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 19.675,
+   "lon": -155.775,
+   "km": 65.8,
+   "file": "crops/earth-cell-19p675_-155p775-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 48.875,
+   "lon": 91.325,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-48p875_91p325-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 48.875,
+   "lon": 91.325,
+   "km": 65.8,
+   "file": "crops/earth-cell-48p875_91p325-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.675,
+   "lon": -114.075,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-38p675_-114p075-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.675,
+   "lon": -114.075,
+   "km": 65.8,
+   "file": "crops/earth-cell-38p675_-114p075-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 40.075,
+   "lon": -115.475,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-40p075_-115p475-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 40.075,
+   "lon": -115.475,
+   "km": 65.8,
+   "file": "crops/earth-cell-40p075_-115p475-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.425,
+   "lon": -110.775,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-38p425_-110p775-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.425,
+   "lon": -110.775,
+   "km": 65.8,
+   "file": "crops/earth-cell-38p425_-110p775-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.225,
+   "lon": 119.425,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--21p225_119p425-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.225,
+   "lon": 119.425,
+   "km": 65.8,
+   "file": "crops/earth-cell--21p225_119p425-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 75.375,
+   "lon": -89.675,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-75p375_-89p675-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 75.375,
+   "lon": -89.675,
+   "km": 65.8,
+   "file": "crops/earth-cell-75p375_-89p675-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -43.575,
+   "lon": 170.425,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--43p575_170p425-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": -43.575,
+   "lon": 170.425,
+   "km": 65.8,
+   "file": "crops/earth-cell--43p575_170p425-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 35.375,
+   "lon": 138.725,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-35p375_138p725-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 35.375,
+   "lon": 138.725,
+   "km": 65.8,
+   "file": "crops/earth-cell-35p375_138p725-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": -77.525,
+   "lon": 167.125,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--77p525_167p125-225_6.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -77.525,
+   "lon": 167.125,
+   "km": 65.8,
+   "file": "crops/earth-cell--77p525_167p125-65_8.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -0.925,
+   "lon": -91.375,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--0p925_-91p375-225_6.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -0.925,
+   "lon": -91.375,
+   "km": 65.8,
+   "file": "crops/earth-cell--0p925_-91p375-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": -74.325,
+   "lon": 164.725,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--74p325_164p725-225_6.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -74.325,
+   "lon": 164.725,
+   "km": 65.8,
+   "file": "crops/earth-cell--74p325_164p725-65_8.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 56.075,
+   "lon": 160.625,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-56p075_160p625-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 56.075,
+   "lon": 160.625,
+   "km": 65.8,
+   "file": "crops/earth-cell-56p075_160p625-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 19.175,
+   "lon": 3.325,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-19p175_3p325-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 19.175,
+   "lon": 3.325,
+   "km": 65.8,
+   "file": "crops/earth-cell-19p175_3p325-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 17.175,
+   "lon": 29.625,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-17p175_29p625-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 17.175,
+   "lon": 29.625,
+   "km": 65.8,
+   "file": "crops/earth-cell-17p175_29p625-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -28.125,
+   "lon": 123.225,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--28p125_123p225-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -28.125,
+   "lon": 123.225,
+   "km": 65.8,
+   "file": "crops/earth-cell--28p125_123p225-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 20.775,
+   "lon": 24.925,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-20p775_24p925-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 20.775,
+   "lon": 24.925,
+   "km": 65.8,
+   "file": "crops/earth-cell-20p775_24p925-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -27.925,
+   "lon": 118.225,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--27p925_118p225-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -27.925,
+   "lon": 118.225,
+   "km": 65.8,
+   "file": "crops/earth-cell--27p925_118p225-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 80.175,
+   "lon": -21.675,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-80p175_-21p675-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 80.175,
+   "lon": -21.675,
+   "km": 65.8,
+   "file": "crops/earth-cell-80p175_-21p675-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": -72.725,
+   "lon": 169.525,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--72p725_169p525-225_6.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -72.725,
+   "lon": 169.525,
+   "km": 65.8,
+   "file": "crops/earth-cell--72p725_169p525-65_8.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -74.425,
+   "lon": 163.525,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--74p425_163p525-225_6.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -74.425,
+   "lon": 163.525,
+   "km": 65.8,
+   "file": "crops/earth-cell--74p425_163p525-65_8.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 69.875,
+   "lon": -70.275,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-69p875_-70p275-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 69.875,
+   "lon": -70.275,
+   "km": 65.8,
+   "file": "crops/earth-cell-69p875_-70p275-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -25.825,
+   "lon": -68.075,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--25p825_-68p075-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -25.825,
+   "lon": -68.075,
+   "km": 65.8,
+   "file": "crops/earth-cell--25p825_-68p075-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -24.325,
+   "lon": -67.775,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--24p325_-67p775-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -24.325,
+   "lon": -67.775,
+   "km": 65.8,
+   "file": "crops/earth-cell--24p325_-67p775-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": -21.125,
+   "lon": -67.875,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--21p125_-67p875-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.125,
+   "lon": -67.875,
+   "km": 65.8,
+   "file": "crops/earth-cell--21p125_-67p875-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.625,
+   "lon": -68.275,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--21p625_-68p275-225_6.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.625,
+   "lon": -68.275,
+   "km": 65.8,
+   "file": "crops/earth-cell--21p625_-68p275-65_8.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.775,
+   "lon": 15.025,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell-37p775_15p025-225_6.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": 37.775,
+   "lon": 15.025,
+   "km": 65.8,
+   "file": "crops/earth-cell-37p775_15p025-65_8.jpg",
+   "src": "weldBmng"
+  },
+  {
+   "body": "earth",
+   "lat": -74.125,
+   "lon": 162.325,
+   "km": 225.60000000000002,
+   "file": "crops/earth-cell--74p125_162p325-225_6.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": -74.125,
+   "lon": 162.325,
+   "km": 65.8,
+   "file": "crops/earth-cell--74p125_162p325-65_8.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "mars",
+   "lat": 18.38,
+   "lon": 77.58,
+   "km": 60,
+   "file": "crops/mars-jezero-60.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": -5.4,
+   "lon": 137.8,
+   "km": 180,
+   "file": "crops/mars-gale-180.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 47.2,
+   "lon": 184.3,
+   "km": 30,
+   "file": "crops/mars-arcadia-30.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 46.7,
+   "lon": 117.5,
+   "km": 30,
+   "file": "crops/mars-utopia-30.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": -1.95,
+   "lon": 354.47,
+   "km": 20,
+   "file": "crops/mars-meridiani-20.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "mars",
+   "lat": 4.5,
+   "lon": 135.6,
+   "km": 40,
+   "file": "crops/mars-elysium-40.jpg",
+   "src": "mdim"
+  },
+  {
+   "body": "moon",
+   "lat": 26.13,
+   "lon": 3.63,
+   "km": 30,
+   "file": "crops/moon-hadley-30.jpg",
+   "src": "wac"
+  },
+  {
+   "body": "moon",
+   "lat": 20.19,
+   "lon": 30.77,
+   "km": 30,
+   "file": "crops/moon-taurus-30.jpg",
+   "src": "wac"
+  },
+  {
+   "body": "moon",
+   "lat": -86,
+   "lon": 0,
+   "km": 60,
+   "file": "crops/moon-malapert-60.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -87.4,
+   "lon": -5,
+   "km": 80,
+   "file": "crops/moon-haworth-80.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -85.2,
+   "lon": 53.5,
+   "km": 90,
+   "file": "crops/moon-nobile-90.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "moon",
+   "lat": -88.5,
+   "lon": -87,
+   "km": 40,
+   "file": "crops/moon-degerlache-40.jpg",
+   "src": "wacPole"
+  },
+  {
+   "body": "earth",
+   "lat": -24.1,
+   "lon": -70,
+   "km": 30,
+   "file": "crops/earth-atacama-30.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 75.38,
+   "lon": -89.68,
+   "km": 30,
+   "file": "crops/earth-haughton-30.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 36.5,
+   "lon": -117.1,
+   "km": 40,
+   "file": "crops/earth-deathvalley-40.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -77.5,
+   "lon": 162,
+   "km": 30,
+   "file": "crops/earth-dryvalleys-30.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 79.4,
+   "lon": 13.3,
+   "km": 20,
+   "file": "crops/earth-svalbard-20.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 29,
+   "lon": -13.6,
+   "km": 20,
+   "file": "crops/earth-lanzarote-20.jpg",
+   "src": "bmng500"
+  },
+  {
+   "body": "earth",
+   "lat": 19.82,
+   "lon": -155.47,
+   "km": 20,
+   "file": "crops/earth-maunakea-20.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.7,
+   "lon": -6.6,
+   "km": 20,
+   "file": "crops/earth-riotinto-20.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 38.41,
+   "lon": -110.79,
+   "km": 20,
+   "file": "crops/earth-hanksville-20.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 37.55,
+   "lon": 29.68,
+   "km": 16,
+   "file": "crops/earth-salda-16.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 14.24,
+   "lon": 40.3,
+   "km": 16,
+   "file": "crops/earth-dallol-16.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": -21.2,
+   "lon": 119.4,
+   "km": 25,
+   "file": "crops/earth-pilbara-25.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 35.03,
+   "lon": -111.02,
+   "km": 4,
+   "file": "crops/earth-meteor-4.jpg",
+   "src": "weld"
+  },
+  {
+   "body": "earth",
+   "lat": 64.85,
+   "lon": -16.83,
+   "km": 20,
+   "file": "crops/earth-holuhraun-20.jpg",
+   "src": "weldBmng"
+  }
+ ]
+}

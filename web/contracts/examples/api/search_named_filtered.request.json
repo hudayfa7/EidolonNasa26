@@ -1,0 +1,13 @@
+{
+ "target": {
+  "body": "moon",
+  "name": "Rima Hadley"
+ },
+ "purpose": "eva_training",
+ "k": 5,
+ "filters": {
+  "sovereigns": [
+   "United States of America"
+  ]
+ }
+}

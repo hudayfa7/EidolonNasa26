@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eidolon.local/contracts/site_listing.json",
+  "title": "SiteListing",
+  "description": "An Earth operating area (the 'listing card'): where it is and how practical it is to test there. Physical fidelity to a target lives in match_result, never here.",
+  "type": "object",
+  "required": ["site_id", "name", "lat", "lon", "operating_radius_km", "practical"],
+  "properties": {
+    "site_id": {"type": "string"},
+    "name": {"type": "string", "description": "Nearest named place or feature; 'Unnamed area near <place>' if none."},
+    "country": {"type": "string"},
+    "lat": {"type": "number", "minimum": -90, "maximum": 90},
+    "lon": {"type": "number", "minimum": -180, "maximum": 180},
+    "operating_radius_km": {"type": "number", "minimum": 0, "description": "Size of the scored operating area (2-10 km)."},
+    "known_analog": {
+      "type": "object",
+      "description": "Present if this area contains a literature-documented analog site.",
+      "properties": {"label_ids": {"type": "array", "items": {"type": "string"}}, "citation": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "practical": {
+      "type": "object",
+      "description": "Practical suitability, shown separately from physical fidelity (never blended into it).",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0, "maximum": 1},
+        "access": {
+          "type": "object",
+          "properties": {
+            "nearest_road_km": {"type": "number"},
+            "nearest_airport": {"type": "string"},
+            "nearest_airport_km": {"type": "number"},
+            "est_travel_hours_from_airport": {"type": "number"}
+          },
+          "additionalProperties": false
+        },
+        "barren_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+        "human_footprint": {"enum": ["very_low", "low", "moderate", "high"]},
+        "protected_area": {
+          "type": "object",
+          "description": "Protected areas are FLAGGED with a permit note, never excluded (many classic analogs are in parks).",
+          "properties": {"is_protected": {"type": "boolean"}, "name": {"type": "string"}, "permit_note": {"type": "string"}},
+          "additionalProperties": false
+        },
+        "best_months": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 12}},
+        "season_note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "media": {
+      "type": "object",
+      "properties": {"thumbnail_url": {"type": "string"}, "hillshade_url": {"type": "string"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

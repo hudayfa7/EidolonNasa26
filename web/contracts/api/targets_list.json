@@ -1,0 +1,26 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://eidolon.local/contracts/api/targets_list.json",
+ "title": "GET /api/v1/targets response",
+ "type": "object",
+ "properties": {
+  "total": {
+   "type": "integer"
+  },
+  "offset": {
+   "type": "integer"
+  },
+  "targets": {
+   "type": "array",
+   "items": {
+    "$ref": "target_summary.json"
+   }
+  }
+ },
+ "required": [
+  "total",
+  "offset",
+  "targets"
+ ],
+ "additionalProperties": false
+}

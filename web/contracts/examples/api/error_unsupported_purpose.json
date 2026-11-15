@@ -1,0 +1,7 @@
+{
+ "status": 422,
+ "detail": {
+  "code": "unsupported_purpose",
+  "message": "Served by the lighting-geometry module (experiments/E007), not the terrain search."
+ }
+}

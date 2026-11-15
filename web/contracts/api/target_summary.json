@@ -1,0 +1,121 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://eidolon.local/contracts/api/target_summary.json",
+ "title": "Target summary",
+ "description": "A Mars/Moon target as returned by /targets and inside search responses. Coordinates planetocentric, east-positive, -180..180.",
+ "type": "object",
+ "properties": {
+  "target_id": {
+   "type": "string",
+   "description": "'body:name' for named targets, 'body:lat,lon' for coordinates"
+  },
+  "body": {
+   "enum": [
+    "mars",
+    "moon"
+   ]
+  },
+  "name": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "type": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "IAU descriptor, e.g. Crater, Vallis, Dorsum"
+  },
+  "code": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "IAU feature-type code (AA crater, VA vallis, ...)"
+  },
+  "family": {
+   "enum": [
+    "depression",
+    "linear",
+    "raised",
+    "other",
+    null
+   ]
+  },
+  "lat": {
+   "type": "number",
+   "minimum": -90,
+   "maximum": 90
+  },
+  "lon": {
+   "type": "number",
+   "minimum": -180,
+   "maximum": 180
+  },
+  "diameter_km": {
+   "type": [
+    "number",
+    "null"
+   ]
+  },
+  "coordinate_source": {
+   "type": "string"
+  },
+  "capability": {
+   "type": [
+    "object",
+    "null"
+   ],
+   "properties": {
+    "tier": {
+     "enum": [
+      "good",
+      "fair",
+      "weak",
+      "insufficient data"
+     ]
+    },
+    "p_target_top3": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "n_targets": {
+     "type": "integer"
+    },
+    "landform_class": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "tier",
+    "p_target_top3",
+    "n_targets"
+   ],
+   "additionalProperties": false,
+   "description": "Production performance for this landform class in fresh blind tests (data/landform_capability_v2.csv). Show a caveat when tier is fair/weak."
+  },
+  "image_url": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "Hillshade PNG of the 18.8 km search window"
+  },
+  "relief_sd_m": {
+   "type": "number"
+  },
+  "window": {
+   "type": "object"
+  }
+ },
+ "required": [
+  "target_id",
+  "body",
+  "lat",
+  "lon"
+ ],
+ "additionalProperties": false
+}

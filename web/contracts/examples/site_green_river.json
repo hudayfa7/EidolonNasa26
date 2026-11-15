@@ -1,0 +1,18 @@
+{
+  "site_id": "earth-38.871--110.230",
+  "name": "Green River sinuous ridges (Cedar Mountain Fm), Utah",
+  "country": "USA",
+  "lat": 38.871,
+  "lon": -110.23,
+  "operating_radius_km": 5,
+  "known_analog": {"label_ids": ["TS01"], "citation": "Hayden et al. 2019, Icarus, doi:10.1016/j.icarus.2019.04.019"},
+  "practical": {
+    "score": 0.74,
+    "access": {"nearest_road_km": 1.2, "nearest_airport": "Grand Junction (GJT) [FAKE]", "nearest_airport_km": 140, "est_travel_hours_from_airport": 2.0},
+    "barren_fraction": 0.93,
+    "human_footprint": "very_low",
+    "protected_area": {"is_protected": false},
+    "best_months": [3, 4, 5, 9, 10],
+    "season_note": "FAKE EXAMPLE VALUES: avoid July-August heat."
+  }
+}

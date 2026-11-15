@@ -1,0 +1,164 @@
+{
+  "earth_day": {
+    "file": "earth_day.jpg",
+    "mime": "image/jpeg",
+    "bytes": 968247,
+    "w": 4096,
+    "h": 2048,
+    "lo": {
+      "file": "lo/earth_day.jpg",
+      "bytes": 80007,
+      "w": 1024,
+      "h": 512
+    },
+    "mid": {
+      "file": "mid/earth_day.jpg",
+      "bytes": 270291,
+      "w": 2048,
+      "h": 1024
+    }
+  },
+  "earth_night": {
+    "file": "earth_night.jpg",
+    "mime": "image/jpeg",
+    "bytes": 106599,
+    "w": 2048,
+    "h": 1024
+  },
+  "earth_spec": {
+    "file": "earth_spec.jpg",
+    "mime": "image/jpeg",
+    "bytes": 67379,
+    "w": 1024,
+    "h": 512
+  },
+  "earth_bump": {
+    "file": "earth_bump.jpg",
+    "mime": "image/jpeg",
+    "bytes": 82260,
+    "w": 2048,
+    "h": 1024
+  },
+  "moon": {
+    "file": "moon.jpg",
+    "mime": "image/jpeg",
+    "bytes": 2100520,
+    "w": 4096,
+    "h": 2048,
+    "lo": {
+      "file": "lo/moon.jpg",
+      "bytes": 123661,
+      "w": 1024,
+      "h": 512
+    },
+    "mid": {
+      "file": "mid/moon.jpg",
+      "bytes": 522327,
+      "w": 2048,
+      "h": 1024
+    }
+  },
+  "moon_bump": {
+    "file": "moon_bump.jpg",
+    "mime": "image/jpeg",
+    "bytes": 276624,
+    "w": 2048,
+    "h": 1024
+  },
+  "mars": {
+    "file": "mars.jpg",
+    "mime": "image/jpeg",
+    "bytes": 1668633,
+    "w": 4096,
+    "h": 2048,
+    "lo": {
+      "file": "lo/mars.jpg",
+      "bytes": 102843,
+      "w": 1024,
+      "h": 512
+    },
+    "mid": {
+      "file": "mid/mars.jpg",
+      "bytes": 442572,
+      "w": 2048,
+      "h": 1024
+    }
+  },
+  "mars_bump": {
+    "file": "mars_bump.jpg",
+    "mime": "image/jpeg",
+    "bytes": 115357,
+    "w": 2048,
+    "h": 1024
+  },
+  "venus": {
+    "file": "venus.jpg",
+    "mime": "image/jpeg",
+    "bytes": 4086,
+    "w": 320,
+    "h": 180
+  },
+  "mercury": {
+    "file": "mercury.jpg",
+    "mime": "image/jpeg",
+    "bytes": 8436,
+    "w": 320,
+    "h": 180
+  },
+  "moon_cap": {
+    "file": "moon_cap.jpg",
+    "mime": "image/jpeg",
+    "bytes": 303218,
+    "w": 1024,
+    "h": 1024
+  },
+  "moon_cap_normal": {
+    "file": "moon_cap_normal.jpg",
+    "mime": "image/jpeg",
+    "bytes": 252190,
+    "w": 1024,
+    "h": 1024
+  },
+  "callisto": {
+    "file": "callisto.jpg",
+    "mime": "image/jpeg",
+    "bytes": 8708,
+    "w": 320,
+    "h": 180
+  },
+  "titan": {
+    "file": "titan.jpg",
+    "mime": "image/jpeg",
+    "bytes": 5255,
+    "w": 320,
+    "h": 180
+  },
+  "mars_normal": {
+    "file": "mars_normal.jpg",
+    "mime": "image/jpeg",
+    "bytes": 751796,
+    "w": 2048,
+    "h": 1024
+  },
+  "moon_normal": {
+    "file": "moon_normal.jpg",
+    "mime": "image/jpeg",
+    "bytes": 1320873,
+    "w": 2048,
+    "h": 1024
+  },
+  "earth_normal": {
+    "file": "earth_normal.jpg",
+    "mime": "image/jpeg",
+    "bytes": 47977,
+    "w": 1024,
+    "h": 512
+  },
+  "earth_clouds": {
+    "file": "earth_clouds.jpg",
+    "mime": "image/jpeg",
+    "bytes": 394498,
+    "w": 2048,
+    "h": 1024
+  }
+}

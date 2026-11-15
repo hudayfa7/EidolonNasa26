@@ -1,0 +1,7 @@
+{
+ "status": 404,
+ "detail": {
+  "code": "unknown_target",
+  "message": "mars:Not A Crater not found; send lat/lon instead"
+ }
+}

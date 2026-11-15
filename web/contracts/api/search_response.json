@@ -1,0 +1,65 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://eidolon.local/contracts/api/search_response.json",
+ "title": "POST /api/v1/search response",
+ "type": "object",
+ "properties": {
+  "query": {
+   "type": "object"
+  },
+  "target": {
+   "$ref": "target_summary.json"
+  },
+  "source": {
+   "enum": [
+    "cache",
+    "live",
+    "remote"
+   ],
+   "description": "cache = precomputed (ms); live = named target with custom filters (~0.2 s); remote = coordinates (DEM read, ~6-10 s)"
+  },
+  "timing_ms": {
+   "type": "number"
+  },
+  "model": {
+   "type": "object",
+   "properties": {
+    "api_version": {
+     "type": "string"
+    },
+    "matcher": {
+     "type": "string"
+    },
+    "judge": {
+     "type": "string"
+    },
+    "engine_commit": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   },
+   "required": [
+    "api_version",
+    "matcher",
+    "judge"
+   ]
+  },
+  "results": {
+   "type": "array",
+   "items": {
+    "$ref": "../match_result.json"
+   }
+  }
+ },
+ "required": [
+  "query",
+  "target",
+  "source",
+  "timing_ms",
+  "model",
+  "results"
+ ],
+ "additionalProperties": false
+}

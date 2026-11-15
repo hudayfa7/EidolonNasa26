@@ -1,0 +1,63 @@
+{
+ "total": 3,
+ "offset": 0,
+ "targets": [
+  {
+   "target_id": "mars:Jezero",
+   "body": "mars",
+   "name": "Jezero",
+   "type": "Crater",
+   "code": "AA",
+   "family": "depression",
+   "lat": 18.4082,
+   "lon": 77.6873,
+   "diameter_km": 47.5212,
+   "coordinate_source": "IAU Gazetteer of Planetary Nomenclature (center point)",
+   "capability": {
+    "tier": "fair",
+    "p_target_top3": 0.53,
+    "n_targets": 17,
+    "landform_class": "crater"
+   },
+   "image_url": "/api/v1/images/target/mars/Jezero.png"
+  },
+  {
+   "target_id": "mars:Jezero Mons",
+   "body": "mars",
+   "name": "Jezero Mons",
+   "type": "Mons",
+   "code": "MO",
+   "family": "raised",
+   "lat": 18.16,
+   "lon": 78.23,
+   "diameter_km": 27.0,
+   "coordinate_source": "IAU Gazetteer of Planetary Nomenclature (center point)",
+   "capability": {
+    "tier": "fair",
+    "p_target_top3": 0.55,
+    "n_targets": 11,
+    "landform_class": "mountain"
+   },
+   "image_url": "/api/v1/images/target/mars/Jezero Mons.png"
+  },
+  {
+   "target_id": "mars:Jezza",
+   "body": "mars",
+   "name": "Jezza",
+   "type": "Crater",
+   "code": "AA",
+   "family": "depression",
+   "lat": -48.4202,
+   "lon": -37.9217,
+   "diameter_km": 9.22147,
+   "coordinate_source": "IAU Gazetteer of Planetary Nomenclature (center point)",
+   "capability": {
+    "tier": "fair",
+    "p_target_top3": 0.53,
+    "n_targets": 17,
+    "landform_class": "crater"
+   },
+   "image_url": "/api/v1/images/target/mars/Jezza.png"
+  }
+ ]
+}
