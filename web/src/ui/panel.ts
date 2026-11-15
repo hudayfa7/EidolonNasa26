@@ -433,10 +433,11 @@ const winOf = (id: Body, s: Site, d: Site) => `${+!terrainOf(id, s).wait}${+!ter
 function terrHTML(id: Body, s: Site, d: Site) {
   const b = BODIES[id], A = terrainOf(id, s).T, B = terrainOf('earth', d).T, terr = [...new Set([A.src, B.src].map(credit))].filter(Boolean);   // the Copernicus notice is owed where its windows show
   const area = (T: typeof A) => `${(T.steep * T.ext * T.ext).toFixed(1)}&nbsp;km²`;   // of the window: no percentages
+  const span = (T: typeof A) => `${fmtM(T.min)} to ${fmtM(T.max)}`.replace(/ m/g, '&nbsp;m');   // a wrap never parts a value from its unit
   const r2 = (k: string, a: string, c: string) => `<tr><th scope="row">${k}</th><td class="n">${a}</td><td class="n">${c}</td></tr>`;
   return `<table class="cmp"><thead><tr><th><span class="sr">Measure</span></th><th>${s.name}</th><th>${esc(d.name)}</th></tr></thead><tbody>
       ${r2('Gravity', b.stats[0][1], '9.81 m/s²')}${r2('Surface pressure', b.stats[1][1], '1,013 hPa')}
-      ${r2('Elevation', `${fmtM(A.min)} to ${fmtM(A.max)}`, `${fmtM(B.min)} to ${fmtM(B.max)}`)}
+      ${r2('Elevation', span(A), span(B))}
       ${r2('Relief', fmtM(A.relief), fmtM(B.relief))}${r2('Mean slope', `${A.meanSlope.toFixed(1)}°`, `${B.meanSlope.toFixed(1)}°`)}
       ${r2('Slopes over 15°', area(A), area(B))}${r2('Area shown', `${A.ext}&nbsp;×&nbsp;${A.ext}&nbsp;km`, `${B.ext}&nbsp;×&nbsp;${B.ext}&nbsp;km`)}
     </tbody></table>

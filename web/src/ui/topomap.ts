@@ -82,11 +82,12 @@ export function drawMap(cv: HTMLCanvasElement, bodyId: Body, site: Site, win = f
   g.fillStyle = 'rgba(6,7,10,.7)'; g.fillRect(10 * u, S - 30 * u, bw + 50 * u, 20 * u);
   g.fillStyle = '#fff'; g.fillRect(16 * u, S - 18 * u, bw, 2.5 * u); g.font = `${10 * u}px Geist, system-ui, sans-serif`; g.textBaseline = 'middle'; g.fillText(`${barKm} km`, 22 * u + bw, S - 17 * u);
   g.textAlign = 'center'; g.fillText('N', S - 16 * u, 18 * u); g.beginPath(); g.moveTo(S - 16 * u, 26 * u); g.lineTo(S - 20 * u, 36 * u); g.lineTo(S - 12 * u, 36 * u); g.closePath(); g.fill(); g.textAlign = 'left';
-  g.fillStyle = 'rgba(6,7,10,.7)'; g.fillRect(10 * u, 10 * u, 112 * u, 20 * u); g.fillStyle = '#fff'; g.fillText(`${T.ext} × ${T.ext} km`, 16 * u, 20 * u);
+  const ext = `${T.ext} × ${T.ext} km`, ew = g.measureText(ext).width + 12 * u;   // sized to its text, as chip() below
+  g.fillStyle = 'rgba(6,7,10,.7)'; g.fillRect(10 * u, 10 * u, ew, 20 * u); g.fillStyle = '#fff'; g.fillText(ext, 16 * u, 20 * u);
   // Edge coordinates: the midpoint of each edge, half the extent from the centre along its own bearing.
   const half = T.ext / 2, c = midOf(bodyId, site, win), at = (x: number, y: number) => localToLL(BODIES[bodyId].R, c.lat, c.lon, x, y);
   // What the map's labels cover (x, y, w, h): the extent, the scale bar, north and each chip, for the line's length to clear.
-  const boxes = [[10 * u, 10 * u, 112 * u, 20 * u], [10 * u, S - 30 * u, bw + 50 * u, 20 * u], [S - 24 * u, 8 * u, 16 * u, 30 * u]];
+  const boxes = [[10 * u, 10 * u, ew, 20 * u], [10 * u, S - 30 * u, bw + 50 * u, 20 * u], [S - 24 * u, 8 * u, 16 * u, 30 * u]];
   const chip = (txt: string, x: number, y: number, al: 'c' | 'l' | 'r') => {
     g.font = `${9.5 * u}px Geist, system-ui, sans-serif`; const w = g.measureText(txt).width + 10 * u, h = 17 * u;
     const x0 = al === 'c' ? x - w / 2 : al === 'r' ? x - w : x; boxes.push([x0, y - h / 2, w, h]); g.fillStyle = 'rgba(6,7,10,.72)'; g.fillRect(x0, y - h / 2, w, h);

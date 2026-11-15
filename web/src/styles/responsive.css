@@ -98,7 +98,8 @@
   #camps,#camps[open]{ translate:none; } @starting-style{ #camps[open]{ translate:none; } } }
 /* ?capture: time only moves through window.__eidolon.seek, so CSS motion is off (docs/progress.md, ?capture contract). */
 [data-capture] *,[data-capture] *::before,[data-capture] *::after,[data-capture] *::backdrop{ transition:none !important; animation:none !important; }
-/* Phone: View tools sits at the stage's top right, above the sheet, narrower and shorter. */
+/* Phone: View tools sits at the stage's right, under its top-right buttons (north, Orbital image) as on the desktop,
+   above the sheet, narrower and shorter. */
 @media (max-width:759px){
-  #vtools{ top:calc(var(--top) + 8px); right:8px; width:min(290px, calc(100vw - 16px)); max-height:calc(100dvh - var(--top) - var(--sheet) - 24px); }
+  #vtools{ top:calc(var(--top) + 100px); right:8px; width:min(290px, calc(100vw - 16px)); max-height:calc(100dvh - var(--top) - var(--sheet) - 116px); }
 }
