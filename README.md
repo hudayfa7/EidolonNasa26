@@ -7,8 +7,8 @@ NASA Space Apps Challenge 2026: *Identify Earth locations that analog the perman
 Pick a site on the Moon or Mars and Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, shows the
 two side by side in 3D, and helps plan a test campaign at one.
 
-**Live site: [eidolon-nasa26.vercel.app](https://eidolon-nasa26.vercel.app).** It shows sample results, built from
-answers the search engine saved; the real model runs on your own computer
+**Live site: [eidolon-nasa26.vercel.app](https://eidolon-nasa26.vercel.app).** It shows sample results replayed from
+the search engine's saved example answers, not live searches; the real model runs on your own computer
 ([Run it with the real model](#run-it-with-the-real-model)).
 
 ## Architecture
@@ -18,21 +18,22 @@ answers the search engine saved; the real model runs on your own computer
  ┌─────────────────────────────────────────────┐            ┌──────────────────────────────────────────┐
  │ three.js scene: globes, 3D terrain blocks,  │            │ FastAPI server  /api/v1                  │
  │ compare (side by side, overlay, globe)      │            │  /health  /purposes  /sovereigns         │
- │                                             │   HTTP     │  /search  /targets  /elevation  /images   │
+ │                                             │   HTTP     │  /search  /targets  /elevation  /images  │
  │ src/data/client.ts  ── the one data seam ───┼───────────►│                                          │
- │   http.ts (VITE_DATA=engine)                │   JSON     │ target window: Mars MOLA–HRSC / CTX DEM,  │
- │   mock.ts (default: the engine's examples)  │            │   Moon SLDEM2015, 94 × 94 at 200 m        │
- │                                             │            │ F2s fingerprint index: 500,127 Earth      │
- │ frontend-owned: booking, mission fit,       │            │   sites from Copernicus GLO-30            │
- │ weather (Open-Meteo, NASA POWER), photos    │            │ judge model re-ranks the top matches      │
+ │   http.ts (VITE_DATA=engine)                │   JSON     │ site window: Mars MOLA–HRSC / CTX DEM,   │
+ │   mock.ts (default: the engine's examples)  │            │   Moon SLDEM2015, 94 × 94 at 200 m       │
+ │                                             │            │ F2s fingerprint index: 500,127 Earth     │
+ │ frontend-owned: booking, mission fit,       │            │   sites from Copernicus GLO-30           │
+ │ weather (Open-Meteo, NASA POWER), photos    │            │ judge model re-ranks the top matches     │
  └─────────────────────────────────────────────┘            └──────────────────────────────────────────┘
 ```
 
-- **The search engine** (`engine/`, Python, FastAPI, PyTorch, GDAL). For a target on Mars or the Moon it reads an
+- **The search engine** (`engine/`, Python, FastAPI, PyTorch, GDAL). For a site on Mars or the Moon it reads an
   18.8 km elevation window at 200 m from NASA and USGS elevation models, computes its terrain fingerprint (landform
   shape and size, relief, slope, roughness, raised or incised), ranks 500,127 Earth sites by how closely their own
-  fingerprints match, and re-ranks the best with a learned judge model. Named targets come from the IAU Gazetteer
-  (10,100 features); a search by a named target answers from a cache in milliseconds, one by coordinates in a few seconds (it reads the elevation remotely).
+  fingerprints match, and re-ranks the best with a learned judge model. Named features come from the IAU Gazetteer
+  (10,100 of them); a search by name answers from a cache in milliseconds, one by coordinates in a few seconds (it
+  reads the elevation remotely).
 - **The frontend** (`web/`, Vite, TypeScript, three.js, no UI framework). Globes of Earth, the Moon and Mars, a site
   view with real terrain, an Earth double beside it in 3D from the engine's own elevation, and a booking flow for a
   test campaign. Every engine call goes through one module (`web/src/data/client.ts`) against the engine's JSON Schemas
@@ -62,13 +63,13 @@ On the live search engine, on your own computer:
 1. **Its data** (2.6 GB, not in git): `index/`, `grid/`, `weights/`, `judge/` and `targets/` in `engine/`.
    `sh engine/fetch_data.sh` downloads them from this repo's public GitHub release and checks each file's sha256 (it
    needs `curl` and `sha256sum` or `shasum`, no login; on Windows, run it from Git Bash).
-2. **A Python environment**: `conda env create -f engine/code/environment.yml` (or only what the server imports: numpy,
-   scipy, pandas, matplotlib, pillow, gdal, rasterio, torch, torchvision, fastapi, uvicorn, pydantic), then
-   `pip install -e engine/code`.
+2. **A Python environment**: `conda env create -f engine/code/environment.yml`, then `conda activate eidolon` (the
+   environment installs the engine's own package too). Or only what the server imports (numpy, scipy, pandas,
+   matplotlib, pillow, gdal, rasterio, torch, torchvision, fastapi, uvicorn, pydantic), then `pip install -e engine/code`.
 3. **Start it**: `sh engine/run_server.sh` (Windows: `engine\run_server.bat`).
    `http://127.0.0.1:8000/api/v1/health` says `ready` after about 35–75 s; it holds about 4.4 GB of RAM.
-4. **Run the frontend on it**: `cd web && VITE_DATA=engine npm run dev`. `npm run test:live` checks the frontend against
-   the running engine.
+4. **Run the frontend on it**: in `web/`, after `npm ci`: `VITE_DATA=engine npm run dev` (PowerShell:
+   `$env:VITE_DATA='engine'; npm run dev`). `npm run test:live` checks the frontend against the running engine.
 
 Checks: `npm test`, `npm run typecheck` and `npm run build` in `web/` (the build fails on copy rules and on a data source
 without a licence); `pytest engine/code/tests` for the engine.
@@ -81,7 +82,7 @@ without a licence); `pytest engine/code/tests` for the engine.
 | Moon terrain (search and 3D) | SLDEM2015 (LOLA and SELENE TC); LRO LOLA LDEM_16 and south polar DEM | NASA GSFC; JAXA |
 | Globes and site imagery | Viking MDIM 2.1, MGS TES albedo; LROC WAC mosaics, Clementine 750 nm; Blue Marble, Black Marble, MODIS water mask, Landsat WELD (NASA GIBS) | USGS, NASA JPL, NASA Ames, ASU, NASA Earth Observatory |
 | Measured at the site | LRO Diviner temperatures and rock abundance; THEMIS thermal inertia; Odyssey GRS elements and water; Mars cave candidates; lunar pits | NASA PDS Geosciences Node, USGS, ASU |
-| Earth site climate and weather | NASA POWER climatology (air and skin temperature, rain, wind) | NASA Langley Research Center |
+| Earth double climate and weather | NASA POWER climatology (air and skin temperature, rain, wind) | NASA Langley Research Center |
 | Photographs | Apollo, rover and lander images; NASA field photographs of Earth analog sites | NASA Image and Video Library, JPL Photojournal |
 
 Other open sources: the Copernicus DEM GLO-30 (ESA), ETOPO 1 and 2022 (NOAA), the Global Aridity Index v3.1 (CC BY 4.0),
