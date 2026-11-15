@@ -1,5 +1,7 @@
 # Eidolon
 
+YT Demo: https://youtu.be/rYvHAqMPSGk
+
 ![Eidolon reads terrain form at 200 m and finds the places on Earth that come closest.](web/public/og.jpg)
 
 NASA Space Apps Challenge 2026: *Identify Earth locations that analog the permanent Moon base locations and Mars.*
