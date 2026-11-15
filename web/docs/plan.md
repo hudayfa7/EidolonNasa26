@@ -161,7 +161,7 @@ Ten items, in this order. The booking flow is the largest build; reworking the r
   - Lead with permanent Moon base locations and Mars, but don't promise south-pole matching until the engine has polar data.
   - Say terrain form at 200 m. Never claim surface brightness (the info sheet does today) or features under about 600 m.
   - Never call a score "% analog". Use the engine's tested line: "Typically 2 of 3 searches find a good terrain analog in the first five results."
-  - The engine's spec calls the API MoonBnb; every user-facing string says Eidolon.
+  - Every user-facing string says Eidolon.
 - [ ] **Rendering pipeline and the opening.** The six Must rows under Rendering and shaders, starting with the HDR pipeline.
 - [ ] **Meet the performance budget** on a mid-range laptop and phone (see Verification).
 
@@ -307,7 +307,7 @@ None of these block step 1. The frontend builds against the engine as it stands;
 2. **South pole.** The engine has no Moon data beyond 60°, so the Artemis regions can't be matched. The frontend shows them with terrain and a "no elevation data" note; adding LOLA's polar DEMs is a later engine change.
 3. **Site names.** Results carry a country, not a place name. The frontend shows coordinates and country, plus the established-site tag; a nearest-place name can be added on either side.
 4. **Practical panel.** `site_listing.json` has no implementation, so the booking listing is mocked to that schema.
-5. **Product name.** The engine spec says MoonBnb; check engine-generated summaries and caveats for it at the merge.
+5. **Product name.** Every engine-generated summary and caveat the app shows says Eidolon, never another name; check them at the merge.
 6. **Demo server.** One process, about 5 GB, internet needed for pin searches; decide where it runs during judging.
 
 ## Porting the mock

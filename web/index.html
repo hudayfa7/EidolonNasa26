@@ -25,8 +25,7 @@
 <style>
 /* First paint (plan, Rendering "First paint"), until the scene's first frame (app.ts fades it): styled here, so it
    needs no script and none of the app's CSS. In production first paint still waits on the app's stylesheet in the head
-   (its fonts are self-hosted, tokens.css, and swap in): inside the 1.5 s budget (npm run perf; docs/progress.md,
-   Performance).
+   (its fonts are self-hosted, tokens.css, and swap in): inside the 1.5 s budget (npm run perf).
    Two frames. On #/ (class .intro, set by the script after it) the intro's first frame: Earth's air edge on, a sky
    that is one gradient by height above the horizon at any size (the field of view is fixed in height), over the
    stage's ground; the canvas draws the same sky (scene/rig.ts limbPose), so the fade shows no change. On a deep link a
@@ -121,11 +120,11 @@
     <div class="art" aria-hidden="true"><canvas id="dots"></canvas><canvas id="dither"></canvas><div class="artcap"><span id="ac-n">Eidolon</span><span id="ac-s">The Moon and Mars, on Earth</span></div><div class="steps"><i class="on"></i><i></i><i></i><i></i></div></div>
     <div>
       <div class="fbrand"><svg class="logo"><use href="#mark"/></svg><span>Eidolon</span></div>
-      <p>A planning tool for Earth analog sites. Pick a site on the Moon or Mars: Eidolon ranks the places on Earth whose terrain form comes closest at 200&nbsp;m, then helps plan a test campaign at one. On the Moon, matching reaches 60° from the equator for now.</p>
+      <p>A planning tool for Earth analog sites. Pick a site on the Moon or Mars: Eidolon ranks the places on Earth whose terrain form comes closest at 200&nbsp;m, then helps plan a test campaign at one. On the Moon, matching reaches 59.5° from the equator for now.</p>
       <dl>
         <dt>Built for</dt><dd>NASA Space Apps Challenge 2026</dd>
         <dt>Challenge</dt><dd>Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars</dd>
-        <dt>Data</dt><dd>NASA, USGS, ESA, JAXA, NOAA, Copernicus and Open-Meteo open data. Results on the hosted site are samples.</dd>
+        <dt>Data</dt><dd>NASA, USGS, ESA, JAXA, NOAA, Copernicus, Open-Meteo and Natural Earth open data, and the Global Aridity Index. Results on the hosted site are samples.</dd>
       </dl>
       <div class="actions"><button class="btn primary" data-go="system">Enter the system</button><button class="btn ghost" id="totop">Back to top</button></div>
     </div>
@@ -141,10 +140,10 @@
         <ol class="si-steps">
           <li><b>Pick a site</b><span>A candidate base location on the Moon, a landing site on Mars, any named feature, or a point you pin.</span></li>
           <li><b>Read its terrain</b><span>The search reads the terrain form of an 18.8&nbsp;km window at 200&nbsp;m: landform shape and size, relief, slope, roughness, raised or incised. Features under about 600&nbsp;m across don’t show at this scale.</span></li>
-          <li><b>Find its doubles</b><span>Earth’s land is ranked by how closely its terrain form matches. Typically 2 of 3 searches find a good terrain analog in the first five results. On the Moon, matching reaches 60° from the equator for now, so the south-pole base regions show terrain only. Compare side by side, then plan a test campaign.</span></li>
+          <li><b>Find its doubles</b><span>Earth’s land is ranked by how closely its terrain form matches. Typically 2 of 3 searches find a good terrain analog in the first five results. On the Moon, matching reaches 59.5° from the equator for now, so the south-pole base regions show terrain only. Compare side by side, then plan a test campaign.</span></li>
         </ol></div>
       <div class="si-col"><h3>Data</h3>
-        <dl class="si-data"><dt>Moon</dt><dd>LROC WAC and Clementine imagery, LOLA and SLDEM2015 elevation</dd><dt>Mars</dt><dd>Viking MDIM 2.1 and MGS TES imagery, MOLA and MOLA–HRSC elevation</dd><dt>Earth</dt><dd>Landsat WELD, Blue Marble and Black Marble imagery, Blue Marble clouds, Copernicus DEM and ETOPO1 elevation</dd><dt>Weather</dt><dd>Open-Meteo forecast, NASA POWER climatology</dd><dt>Photos</dt><dd>Rover, lander and Apollo crew photographs; NASA field photographs of Earth sites</dd><dt>Beyond</dt><dd>Mariner 10, MESSENGER, Galileo and Cassini images of Venus, Mercury, Callisto and Titan</dd></dl>
+        <dl class="si-data"><dt>Moon</dt><dd>LROC WAC and Clementine imagery, LOLA and SLDEM2015 elevation</dd><dt>Mars</dt><dd>Viking MDIM 2.1 and MGS TES imagery, MOLA and MOLA–HRSC elevation</dd><dt>Earth</dt><dd>Landsat WELD, Blue Marble and Black Marble imagery, Blue Marble clouds, Copernicus DEM, ETOPO1 and ETOPO 2022 elevation, Global Aridity Index v3.1 aridity, Natural Earth borders</dd><dt>Weather</dt><dd>Open-Meteo forecast, NASA POWER climatology (also each Earth site’s mean temperature and rainfall)</dd><dt>Photos</dt><dd>Rover, lander and Apollo crew photographs; NASA field photographs of Earth sites</dd><dt>Beyond</dt><dd>Mariner 10, MESSENGER, Galileo and Cassini images of Venus, Mercury, Callisto and Titan</dd></dl>
         <p class="fine">Real imagery and elevation at Jezero, Gale, Hadley–Apennine, the south-pole regions and the established Earth sites, and real elevation at every Earth double; elsewhere the terrain is illustrative. On the hosted site, results are samples; run Eidolon with the real model for live ones.</p>
         <p class="fine">Copernicus DEM: © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.</p></div>
       <div class="si-col"><h3>Built for</h3><p>NASA Space Apps Challenge 2026</p><p class="si-ch">Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars</p></div>

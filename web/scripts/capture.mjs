@@ -67,9 +67,13 @@ const withTimeout = (p, ms, what) => {
 };
 
 // Seq states run in one page; with --states, each group runs up to its last wanted state.
+// A `mockOnly` state needs the mock's own data or timing (its made-up cells, its fixed latencies): skipped on the engine
+// (`VITE_DATA=engine` in this process's environment, as for the dev server it starts).
+const ENGINE = process.env.VITE_DATA === 'engine';
 function groups() {
   const out = [], bySeq = new Map();
   for (const s of STATES) {
+    if (ENGINE && s.mockOnly) continue;
     if (s.seq && bySeq.has(s.seq)) { bySeq.get(s.seq).push(s); continue; }
     const g = [s]; out.push(g); if (s.seq) bySeq.set(s.seq, g);
   }
@@ -78,6 +82,8 @@ function groups() {
 
 async function serveReference() {
   const file = path.join(ROOT, 'reference/eidolon.html');
+  // Local only since 2026-11-15 (untracked: its textures have no recorded provenance, docs/credits.md).
+  try { await fs.access(file); } catch { throw new Error('reference/eidolon.html is missing: it is no longer in git; put your own copy there to capture the reference'); }
   const server = http.createServer((req, res) => {
     if (req.url.split('?')[0] !== '/') return res.writeHead(404).end();
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
@@ -93,7 +99,8 @@ async function serveBuild() {
   if (await isEidolon()) return { url, close() {} };
   if (args.url) fail(`${url} is not serving Eidolon`);
   console.log('starting vite dev server on :5173');
-  const child = spawn(path.join(ROOT, 'node_modules/.bin/vite'), ['--port', '5173', '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
+  // Vite's own entry run by node: node_modules/.bin/vite is a shell script that Windows can't spawn.
+  const child = spawn(process.execPath, [path.join(ROOT, 'node_modules/vite/bin/vite.js'), '--port', '5173', '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
   for (let i = 0; i < 100; i++) { if (await isEidolon()) return { url, close: () => child.kill() }; await sleep(300); }
   child.kill(); fail('vite dev server did not come up on :5173 (port taken by something else?)');
 }

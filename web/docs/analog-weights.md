@@ -2,7 +2,7 @@
 
 How Eidolon weighs an analog for a mission, why each weight is what it is, and where every fact comes from. Code:
 `src/data/mission.ts` (tracks, profiles, mission fit), `src/data/analogs.ts` (existing analogs, sources), `src/ui/results.ts`
-(`missionBlock`, `existingBlock`). Decisions 207 and 208 in `progress.md`.
+(`missionBlock`, `existingBlock`).
 
 **Read this first.** No published source gives numeric weights for analog factors. The numbers below are the team's judgment. What the
 sources support is *which* factors matter for *which* mission, and which analogs NASA and its partners use for what. Every weight is

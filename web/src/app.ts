@@ -11,7 +11,7 @@
 import gsap from 'gsap';
 import type { Body } from './coords';
 import { BODIES, ORDER } from './data/bodies';
-import { centreOf, pollHealth, terrainOf } from './data/client';
+import { centreOf, loadMock, MOCK, pollHealth, terrainOf } from './data/client';
 import { clearPins } from './data/pins';
 import { SITES, siteOf } from './data/sites';
 import { $ } from './dom';
@@ -139,12 +139,17 @@ export async function start() {
   // fade in under the poster's fade.
   if (r.view === 'title') bodies.earth.intro.v = 1;
   ORDER.forEach((k, i) => gsap.to(bodies[k].intro, { v: 1, duration: RM ? 0 : .9, ease: 'power2.out', delay: RM ? 0 : .1 + i * .08 }));
-  onUpdate(frame); pollHealth();
+  onUpdate(frame);
+  // /health from boot (the status bar's "starting up"). The mock engine loads after the start (data/client.ts loadMock):
+  // its /health waits for the poster to give way; under ?capture it loads here, so every state's timing is as before.
+  if (CAPTURE && MOCK) await loadMock();
+  const later = MOCK && !CAPTURE;
+  if (!later) pollHealth();
   state.ready = !lost;
   if (r.view === 'title') runIntro(); else { $('#intro').hidden = true; apply(r); }
   run(draw, () => apply(parse()));
   // The first-paint poster (index.html) gives way to the first frame.
-  gsap.to('#poster', { autoAlpha: 0, duration: RM ? 0 : .8, onComplete: () => $('#poster').remove() });
+  gsap.to('#poster', { autoAlpha: 0, duration: RM ? 0 : .8, onComplete: () => { $('#poster').remove(); if (later) pollHealth(); } });
   if (CAPTURE) await full;
   await markReady();
 }

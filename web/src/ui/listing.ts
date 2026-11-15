@@ -61,7 +61,7 @@ export function listingBody(L: SiteListing, l: Loc, env: MatchResult['environmen
       ${fact('Protected area', !pa ? '—' : !pa.is_protected ? 'No' : pa.name ? esc(pa.name) : 'Yes', 'wide w')}</dl>${permits(l, L)}
     <h3 class="sec">${ic('surface')}Surface and climate</h3><dl class="facts">
       ${fact('Surface', word(SURFACE, l?.surface), 'w')}${fact('Elevation', l?.elevation_m == null ? '—' : fmtM(l.elevation_m))}</dl>
-    ${cell ? climate(env) : '<p class="fine">No surface class or climate: the search engine measures them for its own cells, and an established site isn’t one of its results.</p>'}
+    ${cell ? `<div data-wx>${climate(env)}</div>` : '<p class="fine">No surface class or climate: the search engine measures them for its own cells, and an established site isn’t one of its results.</p>'}
     <div data-wx><h3 class="sec">${ic('season')}Season</h3><dl class="facts">${fact(best, busy ? 'Loading…' : months(L) || '—', 'wide w')}</dl>
     ${P.season_note ? `<p class="fine">${text(P.season_note)}</p>` : ''}</div>
     <h3 class="sec">${ic('cost')}Indicative cost</h3><dl class="facts">${fact('Field costs on site, per person-day', `US$&nbsp;${usd(lo)}–${usd(hi)}`, 'wide')}</dl>

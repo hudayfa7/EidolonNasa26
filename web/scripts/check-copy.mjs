@@ -11,7 +11,6 @@ const all = files.map(read).join('\n');
 const PARTS = { 'index.html': read('index.html'), 'the JS': files.filter(f => /^assets\/.*\.js$/.test(f)).map(read).join('\n') };
 
 const FORBIDDEN = [
-  [/moon ?bnb/i, 'the engine spec’s product name: the app says Eidolon'],
   [/surface brightness/i, 'a surface-brightness claim: the search reads terrain form only'],
   [/%\s*analog|analog\s*%|\d\s*%\s*match/i, 'a score as a percentage'],
   [/finds? the closest double/i, 'the old promise of a double for every site'],
