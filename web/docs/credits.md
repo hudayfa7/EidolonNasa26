@@ -220,7 +220,7 @@ a row here for any the index or the models used.
 ## Software
 
 The open-source packages the app ships, builds with and the engine runs on, with their licences and copyright notices,
-are in `THIRD_PARTY_NOTICES.md` at the repo root; Eidolon itself is MIT-licensed (`LICENSE`). One shipped package is not OSI
+are in `THIRD_PARTY_NOTICES.md` at the repo root; Eidolon itself is licensed under the Apache License 2.0 (`LICENSE`). One shipped package is not OSI
 open source: **GSAP** (3.15.0, the animation and timing library), under the GSAP Standard "no charge" License,
 https://gsap.com/standard-license : free for anyone, commercial use included, with use restrictions that don't apply to
 Eidolon (no use in no-code animation builders that compete with Webflow's). Copyright 2008-2026, GreenSock.

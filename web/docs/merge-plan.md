@@ -10,7 +10,7 @@ Names used below. **E** is the engine bundle, a sibling folder of this repo on t
 
 **Goal.** The demo path runs on the live engine, warm and online, and has a fallback that works offline. Both halves live in one repo on GitHub, so a teammate or an agent can clone it and run it.
 
-- [ ] The repo has `web/` (the frontend, with its history) and `engine/` (engine source; the data stays out of git). It is pushed to `hudayfa7/nasahackathon2026` `main`, and CI is green. No tracked file is over 50 MB.
+- [ ] The repo has `web/` (the frontend, with its history) and `engine/` (engine source; the data stays out of git). It is pushed to `main` on the team's GitHub repo (then a private working repo; the public release is `hudayfa7/EidolonNasa26`), and CI is green. No tracked file is over 50 MB.
 - [ ] There is an `AGENTS.md` at the root, in `web/` and in `engine/`. Each of the three folders has a one-line `CLAUDE.md`: `@AGENTS.md`.
 - [ ] The engine boots from `engine/` on the demo machine, and `/api/v1/health` says `ready`. Warm-up time, RSS and pin latency are logged in `web/docs/progress.md`.
 - [ ] The live contract suite passes, once cold and once warm.
@@ -35,7 +35,7 @@ Names used below. **E** is the engine bundle, a sibling folder of this repo on t
 
 **Repo.**
 - Local `main`: 94 commits, about 37 MB packed, largest tracked file 4.7 MB, no remote.
-- GitHub `hudayfa7/nasahackathon2026`: private, empty. 1509Chamma and IsaamSyy have write access.
+- GitHub: the team's private working repo, empty. 1509Chamma and IsaamSyy have write access. (The code was later released publicly as `hudayfa7/EidolonNasa26`.)
 
 ## Decisions for the team
 
@@ -129,7 +129,7 @@ Each phase lists its owner type, tasks, verification and exit. Order: 0 â†’ 1 â†
 - [ ] Add `.github/workflows/ci.yml`, run on push and PR:
   - **web:** Node 26 (local is v26.8.2) with `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`, then `npm ci`, `typecheck`, `test`, `build`.
   - **engine:** Python 3.11, `pip install pytest jsonschema numpy fastapi`, `pytest engine/code/tests`, then the contracts diff above.
-- [ ] Push: `git remote add origin https://github.com/hudayfa7/nasahackathon2026.git && git push -u origin main` (about 37 MB).
+- [ ] Push: `git remote add origin <the team's private working repo> && git push -u origin main` (about 37 MB).
   - If GitHub rejects it with GH007 (the account blocks pushes that expose a private email), the account owner unticks "Block command line pushes that expose my email" in GitHub's email settings, then pushes again. D6 keeps the history, so the author is not rewritten.
 
 **Verify:**

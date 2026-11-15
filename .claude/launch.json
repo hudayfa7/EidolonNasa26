@@ -1,8 +1,0 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    { "name": "eidolon-dev", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "web", "run", "dev"], "port": 5173 },
-    { "name": "eidolon-preview", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "web", "run", "preview"], "port": 4173 },
-    { "name": "eidolon-engine", "runtimeExecutable": "conda", "runtimeArgs": ["run", "--no-capture-output", "-n", "eidolon", "sh", "engine/run_server.sh"], "port": 8000 }
-  ]
-}

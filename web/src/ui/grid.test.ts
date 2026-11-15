@@ -36,7 +36,7 @@ describe('a card\'s doubles', () => {
     const h = gridDoubles('mars', jezero, d({ res }));   // Jezero: tier fair, 47.5 km
     expect(h).toContain('Searched as the IAU feature Jezero · ');
     expect(h).toContain('Larger than the 18.8 km comparison window: the search matches its central part.');
-    expect(h).toContain('<p class="banner">For crater targets, our blind tests found a good Earth analog in the top 3 for 9 of the 17 tested.');
+    expect(h).toContain('<p class="banner">For crater sites, our blind tests found a good Earth analog in the top 3 for 9 of the 17 tested.');
     expect(h.indexOf('class="banner"')).toBeLessThan(h.indexOf('<ul class="gd">'));
     const good = { ...res, target: { ...res.target, capability: { ...res.target.capability!, tier: 'good' as const } } };
     expect(gridDoubles('mars', jezero, d({ res: good }))).not.toContain('class="banner"');

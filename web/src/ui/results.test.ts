@@ -56,9 +56,9 @@ describe('targetNote', () => {
 describe('banner', () => {
   it('fair and weak targets: the share as a count of the targets tested, never a percentage', () => {
     const html = banner(res.target);
-    expect(html).toContain('For crater targets, our blind tests found a good Earth analog in the top 3 for 9 of the 17 tested.');
+    expect(html).toContain('For crater sites, our blind tests found a good Earth analog in the top 3 for 9 of the 17 tested.');
     expect(html).not.toContain('%');
-    expect(banner({ ...res.target, capability: { tier: 'weak', p_target_top3: .31, n_targets: 16, landform_class: '<b>' } })).toContain('&#60;b&#62; targets');
+    expect(banner({ ...res.target, capability: { tier: 'weak', p_target_top3: .31, n_targets: 16, landform_class: '<b>' } })).toContain('&#60;b&#62; sites');
   });
   it('nothing for good, insufficient data or no capability', () => {
     for (const capability of [{ tier: 'good', p_target_top3: .6, n_targets: 5 }, { tier: 'insufficient data', p_target_top3: 0, n_targets: 0 }, null])
@@ -101,7 +101,7 @@ describe('detail', () => {
   });
   it('says what the match covers: terrain form measured, climate modelled, the rest not assessed, and not how places look', () => {
     const html = detail(r0, res);
-    for (const s of ['What this match covers', 'Terrain form at 200 m</span><span class="ps">Measured', 'Climate at the site centre</span><span class="ps">Modelled',
+    for (const s of ['What this match covers', 'Terrain form at 200 m</span><span class="ps">Measured', 'Climate at the Earth double’s centre</span><span class="ps">Modelled',
       'Rock type and chemistry</span><span class="ps">Not assessed', 'Subsurface and caves</span><span class="ps">Not assessed',
       'Biology and habitability</span><span class="ps">Not assessed', 'not on how the two places look'])
       expect(html).toContain(s);
@@ -127,25 +127,25 @@ describe('detail', () => {
   it('the climate fit: a verdict and a row each for temperature and dryness, apart from the terrain match, with its bands and caveat', () => {
     const html = detail(r0, res), fit = html.split('<h3 class="sec">Climate fit</h3>')[1].split('<h3 class="sec">')[0];
     expect(fit).toContain('Climate fit <b>Partial</b>');   // the example is 12.5 °C and an aridity index of 0.19
-    expect(fit).toMatch(/Temperature<\/span><span class="ps">Partial<\/span><span class="pnote">This site: 12\.5 °C mean\. Mars surface, −140 to 20 °C\./);
-    expect(fit).toMatch(/Dryness<\/span><span class="ps">Match<\/span><span class="pnote">This site: aridity index 0\.19\. Mars has no liquid surface water\./);
+    expect(fit).toMatch(/Temperature<\/span><span class="ps">Partial<\/span><span class="pnote">Earth double: 12\.5 °C mean\. Mars surface, −140 to 20 °C\./);
+    expect(fit).toMatch(/Dryness<\/span><span class="ps">Match<\/span><span class="pnote">Earth double: aridity index 0\.19\. Mars has no liquid surface water\./);
     for (const s of ['not a measured distance, and separate from the terrain match', 'NASA POWER climatology', 'Global Aridity Index v3.1', 'air against surface']) expect(fit).toContain(s);
     expect(fit).not.toContain('WorldClim');
     expect(html.indexOf('<h3 class="sec">Climate fit</h3>')).toBeGreaterThan(html.indexOf('<h3 class="sec">Terrain properties</h3>'));
     expect(fit).not.toContain('%');
-    expect(detail({ ...r0, environment: null }, res)).toContain('No climate fit for this site');
-    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).toContain('No climate fit for this site');
+    expect(detail({ ...r0, environment: null }, res)).toContain('No climate fit for this Earth double');
+    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).toContain('No climate fit for this Earth double');
   });
   it('the mission fit: the mission\'s weighted factors with score, weight and evidence, a provisional tier, and what is not assessed never a zero', () => {
     const blk = (h: string) => h.split('<div class="mfit" data-wx>')[1].split('<div class="vcard">')[0];
     const none = blk(detail(r0, res)), nine = blk(detail(r0, res, undefined, { months: [1, 2, 3, 4, 5, 9, 10, 11, 12], busy: false }));
     for (const s of ['Mission fit of this Earth double: Rover mobility', 'Provisional tier <b>A</b>, strong', 'score 84 of 100', 'Terrain form</span><span class="ps">91 of 100 · weight 45',
-      'Climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the site’s climatology is not available',
+      'Climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the Earth double’s climatology is not available',
       'Gravity, pressure and radiation</span><span class="ps">N/A · weight 10', 'Doesn’t apply to a field site: gravity, pressure and radiation are the same at every site on Earth', 'see Known analogs on the site view',
       'Infrastructure</span><span class="ps">Not assessed · weight 15', 'A field site can be judged on 90 of this mission’s 100 weight, and 55 of it is assessed', 'never count as zero',
       'does not change the terrain match or the order of the results']) expect(none).toContain(s);
     for (const s of ['score 81 of 100', 'Operations</span><span class="ps">75 of 100', '9 of 12 months sit under this mission’s weather limits', 'and 75 of it is assessed']) expect(nine).toContain(s);
-    expect(blk(detail(r0, res, undefined, { busy: true }))).toContain('Loading the site’s climatology');
+    expect(blk(detail(r0, res, undefined, { busy: true }))).toContain('Loading the Earth double’s climatology');
     const hab = blk(detail({ ...r0, purpose: 'habitat_ops' } as MatchResult, res));
     for (const s of ['Mission fit of this Earth double: Habitat operations', '<b>No tier</b>: a field site reaches only 40 of this mission’s 100 weight: it needs a habitat or facility too', 'Crew</span><span class="ps">N/A · weight 45']) expect(hab).toContain(s);
     expect(hab).not.toContain('Provisional tier');
@@ -165,7 +165,7 @@ describe('detail', () => {
     const edu = blk(detail({ ...r0, purpose: 'education' } as MatchResult, res, undefined, { months: all, busy: false, shadow }));
     expect(edu).not.toContain('Shadow fit'); expect(edu).toContain('Operations</span><span class="ps">100 of 100');
     const only = blk(detail(r0, res, undefined, { busy: false, shadow }));   // no climatology: the shadow alone, still assessed
-    expect(only).toContain('Operations</span><span class="ps">82 of 100'); expect(only).toContain('The site’s climatology is not available.');
+    expect(only).toContain('Operations</span><span class="ps">82 of 100'); expect(only).toContain('The Earth double’s climatology is not available.');
     expect(rover + edu + only).not.toContain('%');
   });
   it('the booking flow\'s mission fit: a compact tier for the campaign\'s purpose; a warning, never a block, when marginal or worse; a facility to pair when the mission needs one', () => {
@@ -206,12 +206,12 @@ describe('detail', () => {
     const html = detail(r0, res), v = html.split('<h3 class="sec">Analog verdict</h3>')[1].split('<h3 class="sec">')[0];
     const names = (s: string) => r0.properties.filter(p => p.status === s).map(p => p.label).join(', ') || 'none';
     for (const s of [`Strong on</dt><dd>${names('match')}`, `Partial on</dt><dd>${names('partial')}`, `Gaps</dt><dd>${names('gap')}`, `Not measurable at 200 m</dt><dd>${names('not_measurable')}`,
-      'Climate fit</dt><dd>Partial <span class="n">cold and dry, apart from the terrain match', 'Listed analog sites', 'Not assessed for the Earth site</dt><dd>Rock type and chemistry, subsurface and caves, biology and habitability', 'Read at the target, not scored</dt>',
+      'Climate fit</dt><dd>Partial <span class="n">cold and dry, apart from the terrain match', 'Listed analog sites', 'Not assessed for the Earth double</dt><dd>Rock type and chemistry, subsurface and caves, biology and habitability', 'Read at the site, not scored</dt>',
       'How it could help', 'Gravity, vacuum and radiation need other facilities', 'ground shaped like Mars’s']) expect(v).toContain(s);
     expect(html.indexOf('Analog verdict')).toBeLessThan(html.indexOf('What this match covers'));
     expect(v).not.toContain('%');
-    expect(detail({ ...r0, environment: null }, res)).toContain('Climate fit</dt><dd>No climate for this site');
-    expect(detail(r0, { ...res, target: { ...res.target, body: 'mars', lat: 10, lon: 10 } })).toContain('Read at the target, not scored</dt><dd>Nothing for this target');
+    expect(detail({ ...r0, environment: null }, res)).toContain('Climate fit</dt><dd>No climate for this Earth double');
+    expect(detail(r0, { ...res, target: { ...res.target, body: 'mars', lat: 10, lon: 10 } })).toContain('Read at the site, not scored</dt><dd>Nothing for this site');
     expect(detail(r0, { ...res, target: { ...res.target, body: 'moon' } })).toContain('ground shaped like the Moon’s');
     expect(detail(evil(r0), res)).not.toContain('<img src=x');
   });
@@ -229,14 +229,14 @@ describe('detail', () => {
   it('the Earth site\'s surface temperature from NASA POWER beside the Moon\'s midnight value; loading, failed or not asked', () => {
     const v = { mean: 19, min: -2.4, max: 45.2 }, moon = { ...res, target: { ...res.target, body: 'moon' as const, lat: 20.0702, lon: 30.7867 } };
     const withSkin = detail(r0, moon, { busy: false, v }), blk = withSkin.split('<h3 class="sec">Surface temperature</h3>')[1].split('<h3 class="sec">')[0];
-    for (const s of ['Earth site, night-time</dt><dd>−2.4 °C', 'mean daily minimum skin temperature', 'Earth site, day-time</dt><dd>45.2 °C', 'Moon, local midnight</dt><dd>−168.7 °C', 'Diviner, at Taurus–Littrow',
+    for (const s of ['Earth double, night-time</dt><dd>−2.4 °C', 'mean daily minimum skin temperature', 'Earth double, day-time</dt><dd>45.2 °C', 'Moon, local midnight</dt><dd>−168.7 °C', 'Diviner, at Taurus–Littrow',
       'NASA POWER’s climatology, 2001 to 2025', 'Not part of the climate fit']) expect(blk).toContain(s);
     expect(withSkin).toContain('<div data-wx>');   // redraws in place when the feed lands (ui/panel.ts redrawWx)
-    expect(detail(r0, moon, { busy: true })).toContain('Earth site, night-time</dt><dd>Loading…');
-    expect(detail(r0, moon, { busy: false })).toContain('Earth site, night-time</dt><dd>Not available');
+    expect(detail(r0, moon, { busy: true })).toContain('Earth double, night-time</dt><dd>Loading…');
+    expect(detail(r0, moon, { busy: false })).toContain('Earth double, night-time</dt><dd>Not available');
     expect(detail(r0, moon)).not.toContain('Surface temperature</h3>');   // no feed state, no block
-    expect(detail(r0, { ...res, target: { ...res.target, body: 'mars', lat: 18.4082, lon: 77.6873 } }, { busy: false, v })).toContain('Mars</dt><dd>No surface temperature was read for this target');
-    expect(detail(r0, { ...res, target: { ...res.target, body: 'moon', lat: -86, lon: 0 } }, { busy: false, v })).toContain('Target</dt><dd>No surface temperature was read');
+    expect(detail(r0, { ...res, target: { ...res.target, body: 'mars', lat: 18.4082, lon: 77.6873 } }, { busy: false, v })).toContain('Mars</dt><dd>No surface temperature was read for this site');
+    expect(detail(r0, { ...res, target: { ...res.target, body: 'moon', lat: -86, lon: 0 } }, { busy: false, v })).toContain('Moon</dt><dd>No surface temperature was read for this site');
     expect(blk).not.toContain('%');
   });
   it('the NASA values read at the target: Mars thermal inertia, the Moon\'s midnight temperature and rock abundance, with how they were read', () => {
@@ -263,10 +263,10 @@ describe('detail', () => {
     const jezero = at('mars', 18.4082, 77.6873);
     for (const s of ['Water in the top metre</dt><dd>3.5 weight percent', '± 0.4, measured as hydrogen, read as water: ice or water bound in minerals', 'Iron</dt><dd>16.6 weight percent', 'Silicon</dt><dd>20.6 weight percent',
       'Potassium</dt><dd>0.32 weight percent', 'Chlorine</dt><dd>0.39 weight percent', 'Thorium</dt><dd>0.6 parts per million', 'Odyssey GRS element concentrations', 'Boynton et al. 2007', 'about 300 km across at the equator',
-      'Read at the target, not scored</dt><dd>Thermal inertia, water and elements, the nearest cave candidate']) expect(jezero).toContain(s);
+      'Read at the site, not scored</dt><dd>Thermal inertia, water and elements, the nearest cave candidate']) expect(jezero).toContain(s);
     expect(jezero).not.toContain('%');
     expect(at('moon', 20.0702, 30.7867)).not.toContain('Water in the top metre');
-    expect(at('moon', 20.0702, 30.7867)).toContain('Read at the target, not scored</dt><dd>Midnight surface temperature, rock abundance, the nearest pit');
+    expect(at('moon', 20.0702, 30.7867)).toContain('Read at the site, not scored</dt><dd>Midnight surface temperature, rock abundance, the nearest pit');
     expect(at('mars', 46.7, 117.5)).toContain('Water in the top metre</dt><dd>4.2 weight percent');   // Utopia: no thermal value, still the GRS's
   });
   it('the target\'s caves from NASA\'s catalogues: the nearest entry and the count within 100 km, a candidate never called a cave', () => {
@@ -303,7 +303,7 @@ describe('detail', () => {
   });
   it('no climate data, an unknown access or status, no judge', () => {
     const html = detail({ ...r0, environment: null, location: { ...r0.location!, access: 'toString' }, properties: [prop('x', .5, 'constructor')], raw: {} }, res);
-    expect(html).toContain('No climate data for this site.');
+    expect(html).toContain('No climate data for this Earth double.');
     expect(html).toContain('<dt>Access</dt><dd>—</dd>');
     expect(html).toContain('mk-none');
     expect(html).not.toContain('Match likelihood');
@@ -427,7 +427,7 @@ describe('search states', () => {
     expect(failure('unsupported_purpose')).toContain('separate lighting study');
   });
   it('no elevation data, for a point or a site with its known analog sites', () => {
-    expect(noData(true, false)).toContain('The search engine has no data for this point</p><p class="fine">The search engine reads Moon terrain only within 59.5° of the equator, so it can’t score Earth sites against it.');
+    expect(noData(true, false)).toContain('The search engine has no data for this point</p><p class="fine">The search engine reads Moon terrain only within 59.5° of the equator, so it can’t score Earth doubles against it.');
     expect(noData(false, true)).toContain('so it can’t score these established analog sites');
   });
   it('the detection frame\'s Matching line', () => {

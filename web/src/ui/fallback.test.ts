@@ -28,7 +28,7 @@ describe('a featured site\'s doubles in words', () => {
   it('the IAU feature, the capability banner and the results\' notes once (spec §3.4, §5.2; caveats never hidden)', () => {
     const h = fbDoubles('mars', jezero, d({ res }));
     expect(h).toContain('Searched as the IAU feature Jezero · ');
-    expect(h).toContain('<p class="banner">For crater targets');
+    expect(h).toContain('<p class="banner">For crater sites');
     expect(h.match(/Terrain form only, matched at 200 m/g)).toHaveLength(1);   // the same caveat on all three, said once
     expect(h).toContain('Notes on all three: ');
   });

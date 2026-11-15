@@ -4,8 +4,8 @@ The Eidolon search engine (Python, FastAPI), connected to the frontend in `../we
 two against each other. On mock data (the default) the frontend doesn't need it.
 
 - Its data is **not in git**. The server needs five data dirs, 2.6 GB in all: `index/` (2.4 GB), `targets/`,
-  `weights/`, `judge/` and `grid/`. They are gitignored and stored as assets on this repo's private GitHub release
-  [`engine-data-ec4e20b`](https://github.com/hudayfa7/nasahackathon2026/releases/tag/engine-data-ec4e20b). Until they
+  `weights/`, `judge/` and `grid/`. They are gitignored and stored as assets on this repo's public GitHub release
+  [`engine-data-ec4e20b`](https://github.com/hudayfa7/EidolonNasa26/releases/tag/engine-data-ec4e20b). Until they
   are downloaded into this folder, `run_server.sh` cannot start. `MANIFEST.json` lists each file's sha256 and, under
   `provenance`, the sources and licences it derives from.
 - Run it: a conda environment with its packages, then `sh run_server.sh` (Windows: `run_server.bat`); `/api/v1/health`
@@ -18,8 +18,8 @@ engine patches): `code/` (source, contracts, docs, tests, environment), `run_ser
 ## Getting the data
 
 The release holds the 94 data files flat (GitHub assets can't have folders) plus `SHA256SUMS`, which gives each file's
-folder and checksum. You need the GitHub CLI signed in with access to this private repo (`gh auth login`; cloud
-sessions already are), and 2.6 GB free. From the repo root (on Windows, use Git Bash):
+folder and checksum. You need `curl`, `sha256sum` (or `shasum`) and 2.6 GB free; no GitHub login. From the repo root
+(on Windows, use Git Bash):
 
 ```sh
 sh engine/fetch_data.sh
