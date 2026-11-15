@@ -1,0 +1,4 @@
+# Shell scripts check out with LF on every OS (sh fails on CRLF); batch files with CRLF.
+# text=auto: engine/run_server.bat is stored with CR CR LF endings, which plain `text` would renormalize.
+*.sh text eol=lf
+*.bat text=auto eol=crlf

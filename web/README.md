@@ -118,7 +118,7 @@ sizes, and a11y and perf pass on the engine build. What the connection changed:
 - **The Moon's cutoff is 59.5°**, the engine's, in every line of copy. The "Exclude polar sites, beyond 60° latitude"
   filter stays at 60, as the engine filters.
 - **Hadley's compare caption** says its window is centred on Rima Hadley, about 18 km south-west of the Apollo 15 landing
-  site (any named target whose window is over 10 km from its site says so).
+  site (any site whose window is centred on a named feature over 10 km away says so).
 - **Engine patches** (in `../engine/code`): a failed elevation read is no longer cached (E1), a repeat pin search reuses
   its window (E2), and the card hillshades are contrast-stretched (E5, which needs the engine owner's OK).
 - **Known engine behaviour** (for its owner): an area filter round the first double can drop it (it merges sites under
@@ -141,14 +141,14 @@ The engine also sends WorldClim 2.1 temperature and precipitation; Eidolon doesn
 licence, so it can't be shown to be "freely available without restriction", as the Space Apps participant terms require
 of non-NASA data. NASA POWER's climatology, which the app already asks for each site, takes their place.
 
-Match is 2 points, partial 1, gap 0. Both rows matching is **Match** (4 points), 2 or 3 points is **Partial**, fewer is
-**Gap**. A site with no climate (its climatology not loaded or unavailable) has no fit; it is never shown as a zero. The bands are fixed because the
-Moon and Mars are far below freezing on average (`src/data/bodies.ts`) and have no liquid surface water; the thresholds are
-our choice, set once at the top of `climate.ts`.
+Each row scores 2 for a match, 1 for partial, 0 for a gap; 4 points is **Match**, 2 or 3 **Partial**, fewer **Gap**. An
+Earth double with no climate (its climatology not loaded or unavailable) has no fit; it is never shown as a zero. The
+bands are fixed because the Moon and Mars are far below freezing on average (`src/data/bodies.ts`) and have no liquid
+surface water; the thresholds are our choice, set once at the top of `climate.ts`.
 
-**What it cannot say.** The Earth side is air temperature and aridity at the site centre. The Moon and Mars have no map of
-either that is comparable, so air is only roughly set against surface. It says nothing about rock type, subsurface, biology,
-gravity or radiation (the detail lists those as not assessed or as what Earth can't reproduce).
+**What it cannot say.** The Earth side is air temperature and aridity at the Earth double's centre. The Moon and Mars
+have no map of either that is comparable, so air is only roughly set against surface. It says nothing about rock type,
+subsurface, biology, gravity or radiation (the detail lists those as not assessed or as what Earth can't reproduce).
 
 **The NASA surface values** ("Measured at the site") describe the site and are *not* scored, because Earth has no
 like-for-like value in our data. `scripts/fetch-surface.mjs` (`npm run fetch:surface`, network, no login) reads them by HTTP
@@ -161,7 +161,7 @@ range request, so nothing large is downloaded, and writes `src/data/surface.gen.
 | Mars | Mars Global Cave Candidate Catalog v1 (USGS Astrogeology, NASA PDS; Cushing 2012, 2016), about 1,060 candidate entrances | Distance to the nearest candidate, and how many lie within 100 km | The catalogue's own points |
 | Moon | Lunar Pit Atlas (LROC, Arizona State University, NASA PDS; Wagner and Robinson 2021), about 280 pits | Distance to the nearest pit, and how many lie within 100 km | The catalogue's own points |
 
-**Caves.** This is how the "Subsurface and caves" factor is handled for the target. A catalogued entry is a *candidate* or a mapped
+**Caves.** This is how the "Subsurface and caves" factor is handled for the site. A catalogued entry is a *candidate* or a mapped
 pit, never a confirmed cave, and the page says so. None of the featured sites has an entry within 100 km (the nearest is 614 km away
 at Jezero and 367 km at Taurus–Littrow), which is a fact about the catalogues: the Mars candidates cluster around the Tharsis volcanoes.
 The factor stays "Not assessed" for the Earth doubles: we hold no Earth cave data, so nothing is compared.
@@ -176,15 +176,15 @@ not used; Lunar Prospector's maps are the next candidate), rock type and chemist
 and is not held), and biology and habitability anywhere (no NASA map of it exists to read). Rock abundance (Moon) and thermal inertia (Mars)
 above are how rocky the ground is, not what it is made of.
 
-**Kind of landform.** The verdict's "Kind of landform searched" gives, for a named target, the process commonly behind its IAU descriptor
+**Kind of landform.** The verdict's "Kind of landform searched" gives, for a named feature, the process commonly behind its IAU descriptor
 (`src/data/process.ts`: Vallis, Mons, Patera, …). The IAU names a landform's form, not its origin, so every line says "commonly" and the page
 says it is inferred from the descriptor, not a finding about the site.
 
 Each value is the median of the valid pixels in a window of about 2 km at the site's centre; the page shows the window, the
-valid pixel count and the date. A target takes a featured site's values only within 40 km of its centre. Not read: the Moon's
-south-pole sites (the engine has no Moon elevation beyond 59.5° and the mosaics stop at 70°), Utopia Planitia (the THEMIS tile
-holds no valid pixels there), and any pin away from a featured site. Diviner midnight temperature is the night-time floor,
-not an annual mean. Credits: `docs/credits.md`, "Surface values read at the targets".
+valid pixel count and the date. A searched site takes a featured site's values only within 40 km of the featured site's
+centre. Not read: the Moon's south-pole sites (the engine has no Moon elevation beyond 59.5° and the mosaics stop at 70°),
+Utopia Planitia (the THEMIS tile holds no valid pixels there), and any pin away from a featured site. Diviner midnight
+temperature is the night-time floor, not an annual mean. Credits: `docs/credits.md`, "Surface values read at the targets".
 
 ## How the mission fit works
 
@@ -195,21 +195,22 @@ engine's score, the order of the results, or which land is searched.
 **The full method, every weight's reasoning and every source are in [`docs/analog-weights.md`](docs/analog-weights.md).** In short:
 
 - **Three tracks.** Field sites (the engine's Earth doubles) are judged on terrain, climate, astrobiology, operations and infrastructure;
-  facilities (HERA, CHAPEA, the NBL, ARGOS, NSRL…) on target fidelity (gravity, pressure, radiation), human factors and infrastructure;
+  facilities (HERA, CHAPEA, the NBL, ARGOS, NSRL…) on gravity, pressure and radiation, on crew and on infrastructure;
   hybrids (HI-SEAS, MDRS, Concordia) on both. A factor that does not apply is N/A; one with no data is "not assessed". Neither counts as zero.
-- **Seven mission profiles** weight seven factor groups (sum 100). Fidelity and human factors carry weight where a mission needs them (EVA
-  training, habitation, thermal testing), which no field site can give, so the app then says to pair a facility with a field site.
+- **Seven mission profiles** weight seven factor groups (sum 100). Gravity, pressure and radiation, and crew, carry weight where a mission needs
+  them (EVA training, habitation, thermal testing), which no field site can give, so the app then says to pair a facility with a field site.
 - **Scored today for a field site:** terrain (the engine's score), climate (the climate fit's band) and operations (workable months from NASA
-  POWER; for rover mobility, EVA training and drilling also a **shadow fit**: the site view's own shadow march run on the target's and the Earth
+  POWER; for rover mobility, EVA training and drilling also a **shadow fit**: the site view's own shadow march run on the site's and the Earth
   double's windows at grazing sun heights of 1°, 2° and 4°, compared; a judgment score, `src/terrain/shadowfit.ts`). A provisional tier (A 70+ … F) needs the field site to reach at least 50 of the mission's weight and half of that to be assessed.
 - **In the booking flow.** The listing, the plan and the review each show a compact **Mission fit** block for the campaign's own purpose
   (it follows the plan's purpose select): the tier and score, what was scored, a warning (never a block) when the fit is only marginal or
   worse, and, for missions that need what no field site gives, the best facility to pair with the site (`bookingFit` in `src/ui/results.ts`).
   An established site has no search result behind it, so its terrain and climate are not scored there. It stays apart from the listing's
   practical suitability, and nothing in the request changes.
-- **Known analogs.** A collapsed dropdown above the Earth doubles: the three established sites that stand in for most of the mission's
+- **Known analogs.** A collapsed dropdown under the Earth doubles: the three established sites that stand in for most of the mission's
   weight, as compact ranked rows that open to their fact and source (`existingBlock`, `knownAnalogs` in `src/data/analogs.ts`). Field
-  sites and hybrids rank together; one facility joins them only when the mission puts at least 25 of its 100 weight on fidelity and crew.
+  sites and hybrids rank together; one facility joins them only when the mission puts at least 25 of its 100 weight on gravity,
+  pressure and radiation, and crew.
 - **View tools and the site panel.** Sunlight, slope hazard and landing ellipse, which change how the block and the map
   look, sit in a **View tools** window over the stage (`src/ui/vtools.ts`), collapsed to its title until opened and open
   while a tool is on. Measure stays under the map it draws on. The panel keeps Imagery and credits and Known analogs as

@@ -27,8 +27,11 @@ export const text = (x: unknown) => esc(String(x ?? '—'));
 // Engine prose (engine.py) carries percentages: "…; landform mix at 3 km: flat 42%, shoulder 15% (target flat 25%).",
 // and the capability caveat's "for 53% of targets". No percentages on the page, so each becomes the fraction it stands
 // for ("flat 0.42"): the engine prints whole percents, so nothing is lost.
-// Its ratios ("relief 0.9x the target") take the page's multiplication sign.
-export const fractions = (s: string) => s.replace(/(\d+(?:\.\d+)?)\s?%/g, (_, n: string) => String(+(+n / 100).toFixed(4))).replace(/(\d)x\b/g, '$1×');
+// Its ratios ("relief 0.9x the target") take the page's multiplication sign. Its "target" is the site on the Moon or Mars
+// and its "site" the Earth cell, so the cell becomes the Earth double first ("the site is likely vegetated, so … differ
+// from the target"), then the target the site; its polar note's "|lat| > 60" is said in words.
+export const fractions = (s: string) => s.replace(/(\d+(?:\.\d+)?)\s?%/g, (_, n: string) => String(+(+n / 100).toFixed(4))).replace(/(\d)x\b/g, '$1×')
+  .replace(/\bsite\b/g, 'Earth double').replace(/\btarget\b/g, 'site').replace(/\bTarget\b/g, 'Site').replace(/\(\|lat\| > 60\)/g, '(beyond 60° latitude)');
 const prose = (x: unknown) => text(fractions(String(x ?? '—')));
 // A summary's "<country> (<lat>, <lon>): " opening (after the no-match lede, if any), signed to 2 places: the card's head
 // and the detail's Location show the place, its coordinates as the body's convention has them.
@@ -329,10 +332,10 @@ export function missionBlock(r: MatchResult, ops?: Ops) {
     : ' Shadow fit not available: it needs both windows as real elevation.';
   const why: Record<Factor, string> = {
     terrain: ts === null ? 'Not assessed: the engine gave no terrain score' : `The engine’s terrain score, ${num(r.fidelity?.score, 2)}, measured at 200 m. Rock type is not in it.`,
-    climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: cold and dry against the site. A judgment band.` : 'Not assessed: the engine gave no climate for this Earth double',
+    climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: how cold and dry the Earth double is against the site. A judgment band.` : 'Not assessed: the engine gave no climate for this Earth double',
     astro: 'Not assessed: Eidolon holds no biology or biosignature data',
     ops: `${opsMonths}${opsShadow}`,
-    fidelity: 'Doesn’t apply to a field site: gravity, pressure and radiation are the same at every site on Earth. Facilities give them: see Known analogs on the site view.',
+    fidelity: 'Doesn’t apply to a field site: gravity, pressure and radiation are the same everywhere on Earth. Facilities give them: see Known analogs on the site view.',
     human: 'Doesn’t apply to a field site: crew size, duration and confinement belong to a habitat or facility. See Known analogs on the site view.',
     infra: 'Not assessed: Eidolon holds no real logistics, power or cost data',
   };
@@ -381,7 +384,7 @@ export function existingBlock(purpose: unknown, body: unknown, open = false) {
   // One compact row each, like a result card's head: rank, name, kind and cover; the fact and its source open under it.
   const rows = list.map(({ a, cover: c }, i) => `<li><details class="ex"><summary><span class="rk">${pad(i + 1)}</span><span class="nm">${esc(a.name)}</span><span class="cv">${c}<span class="n"> of 100</span></span>
       <span class="sb">${short[a.track]} · ${esc(a.place)}</span></summary><p class="pnote">${esc(a.fact)} Source: ${a.refs.map(link).join('; ')}.</p></details></li>`).join('');
-  return `<details class="drawer grp" data-keep="analogs"${open ? ' open' : ''}><summary><span class="chev" aria-hidden="true"></span>Known analogs<span class="nf">best: ${esc(list[0].a.name)}</span></summary>
+  return `<details class="drawer grp" data-keep="analogs"${open ? ' open' : ''}><summary><span class="chev" aria-hidden="true"></span>Known analogs<span class="nf">Best: ${esc(list[0].a.name)}</span></summary>
     <ol class="exl">${rows}</ol>
     <p class="fine">Established sites${fw >= FACILITY_NEED ? ', and the one facility this mission needs (it puts ' + fw + ' of its 100 weight on gravity, pressure, radiation and crew)' : ''}, ranked by how much of this mission’s weight each stands in for: Eidolon’s judgment from the cited facts. The Earth doubles above are terrain matches for this exact site.</p></details>`;
 }

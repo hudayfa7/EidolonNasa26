@@ -121,7 +121,7 @@ gl.addEventListener('focus', hint); gl.addEventListener('blur', hint);
 
 function updateStatus() {
   const id = state.body;
-  let t = `Sites on the Moon and Mars. ${SITES.earth.length} established analog sites on Earth`;
+  let t = `Sites on the Moon and Mars · ${SITES.earth.length} established analog sites on Earth`;
   const s = (state.view === 'site' || state.view === 'compare') && siteOf(id, state.site ?? undefined);
   const km = state.view === 'compare' ? WINDOW_KM : s && s.t.ext;
   const c = s && state.view === 'compare' ? centreOf(id!, s) : s;   // compare: the window the engine compared
@@ -193,7 +193,7 @@ let lastSec = -1;
 onUpdate(time => {
   const sec = Math.floor(time); if (sec === lastSec) return; lastSec = sec;
   const now = simNow();
-  const u = utcStamp(now); setText(cUtd, u.slice(0, 6)); setText(cUtc, u.slice(6)); setText(cMtc, hms(marsTime(now).mtc).slice(0, 5));   // the date apart: a narrow phone hides it (responsive.css)
+  const u = utcStamp(now), i = u.lastIndexOf(' ') + 1; setText(cUtd, u.slice(0, i)); setText(cUtc, u.slice(i)); setText(cMtc, hms(marsTime(now).mtc).slice(0, 5));   // the date apart: a narrow phone hides it (responsive.css)
   $$('[data-live="owlt"]').forEach(el => setText(el, fmtLight(lightInfo(el.dataset.body as Body, now)!.sec)));
   $$('[data-live="lmst"]').forEach(el => setText(el, lmst(+el.dataset.lon!, now)));
   if (['body', 'site', 'compare', 'overview'].includes(state.view)) updateStatus();

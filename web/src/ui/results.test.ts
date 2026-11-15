@@ -71,7 +71,7 @@ describe('card', () => {
   it('rank, country, coordinates, shape match, notes, hillshade and chips; no percentages', () => {
     const html = card(r0, 'mars/jezero/compare/@34.6750,-105.0750', true);
     for (const s of ['01', 'United States of America', '34.6750° N, 105.0750° W', 'Shape match <b>High</b>', '2 notes', 'loading="lazy" data-thumb="/api/v1/images/site/477151.png"',
-      'aria-current="true"', 'Landform shape', '<span class="su">Shape similarity 0.93 (close); relief 0.9× the target.</span>'])
+      'aria-current="true"', 'Landform shape', '<span class="su">Shape similarity 0.93 (close); relief 0.9× the site.</span>'])
       expect(html).toContain(s);
     expect(html).not.toContain('%');
     expect(html).not.toContain('(34.67, -105.07)');   // the engine's own coordinates: the card shows them at 4 dp
@@ -95,7 +95,7 @@ describe('detail', () => {
     for (const s of ['Raised vs incised</span><span class="ps">Partial', 'Matches: landform shape, relief, slope, roughness · Differs: none',
       ...r0.explanation.caveats!, '12.5 °C', '337 mm/yr', 'Arid <span class="n">0.19</span>', '1,671 m a.s.l.', 'Artemis Accords signatory', 'Barren',
       'Score 0.91', 'a rough estimate: 5 of 5', 'raw.shape_cosine', '<dt>properties.relief</dt><dd>0.953, 1, 200</dd>', 'bc9477e', 'F2s-200m-v1.1',
-      'landform mix at 3 km: flat 0.42, shoulder 0.15 (target flat 0.25).'])
+      'landform mix at 3 km: flat 0.42, shoulder 0.15 (site flat 0.25).'])
       expect(html).toContain(s);
     expect(html).not.toContain('%');
   });
@@ -141,7 +141,7 @@ describe('detail', () => {
     const none = blk(detail(r0, res)), nine = blk(detail(r0, res, undefined, { months: [1, 2, 3, 4, 5, 9, 10, 11, 12], busy: false }));
     for (const s of ['Mission fit of this Earth double: Rover mobility', 'Provisional tier <b>A</b>, strong', 'score 84 of 100', 'Terrain form</span><span class="ps">91 of 100 · weight 45',
       'Climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the Earth double’s climatology is not available',
-      'Gravity, pressure and radiation</span><span class="ps">N/A · weight 10', 'Doesn’t apply to a field site: gravity, pressure and radiation are the same at every site on Earth', 'see Known analogs on the site view',
+      'Gravity, pressure and radiation</span><span class="ps">N/A · weight 10', 'Doesn’t apply to a field site: gravity, pressure and radiation are the same everywhere on Earth', 'see Known analogs on the site view',
       'Infrastructure</span><span class="ps">Not assessed · weight 15', 'A field site can be judged on 90 of this mission’s 100 weight, and 55 of it is assessed', 'never count as zero',
       'does not change the terrain match or the order of the results']) expect(none).toContain(s);
     for (const s of ['score 81 of 100', 'Operations</span><span class="ps">75 of 100', '9 of 12 months sit under this mission’s weather limits', 'and 75 of it is assessed']) expect(nine).toContain(s);
@@ -189,7 +189,7 @@ describe('detail', () => {
   });
   it('existing analogs above the doubles: the three best for the mission on the target\'s world, each sourced; the facility note when the mission leans on one', () => {
     const astro = existingBlock('astrobiology', 'mars'), hab = existingBlock('habitat_ops', 'mars'), moon = existingBlock('drill_isru', 'moon');
-    for (const s of ['<details class="drawer grp" data-keep="analogs">', 'Known analogs<span class="nf">best: Atacama (ARADS)</span>', '<span class="rk">01</span><span class="nm">Atacama (ARADS)</span><span class="cv">84<span class="n"> of 100',
+    for (const s of ['<details class="drawer grp" data-keep="analogs">', 'Known analogs<span class="nf">Best: Atacama (ARADS)</span>', '<span class="rk">01</span><span class="nm">Atacama (ARADS)</span><span class="cv">84<span class="n"> of 100',
       'Field site · Hyperarid core, Atacama Desert, Chile', 'href="https://astrobiology.nasa.gov/news/nasa-tests-life-detection-drill-in-the-atacama-desert/"', 'rel="noopener"', 'The Earth doubles above are terrain matches for this exact site']) expect(astro).toContain(s);
     expect(astro).not.toContain('Facility');                                                           // astrobiology needs no facility
     expect(astro).not.toContain(' open>'); expect(existingBlock('astrobiology', 'mars', true)).toContain('data-keep="analogs" open>');
@@ -197,7 +197,7 @@ describe('detail', () => {
     expect([...hab.matchAll(/<span class="nm">([^<]+)<\/span>/g)].map(m => m[1])).toEqual(['Concordia', 'HI-SEAS', 'CHAPEA']);   // one facility, ranked among the rest
     expect(hab).toContain('and the one facility this mission needs (it puts 60 of its 100 weight on gravity, pressure, radiation and crew)');
     expect(hab.match(/Facility ·/g)).toHaveLength(1);
-    expect(moon).toContain('best: Mauna Kea (PISCES)');
+    expect(moon).toContain('Best: Mauna Kea (PISCES)');
     expect(moon).not.toContain('Atacama');                                                              // a Mars-only analog never for the Moon
     expect(existingBlock('rover_mobility', 'earth')).toBe('');
     expect(astro + hab + moon).not.toContain('%');
@@ -374,21 +374,29 @@ describe('formats', () => {
   });
   it('the judge as 0–5 segments', () => expect([0, .09, .1, .5, .9321, 1, 1.4].map(rough)).toEqual([0, 0, 1, 3, 5, 5, 5]));
   it('percentages as the fractions they stand for', () => {
-    expect(fractions('flat 42%, shoulder 5% (target flat 100 %); 12.5% more')).toBe('flat 0.42, shoulder 0.05 (target flat 1); 0.125 more');
+    expect(fractions('flat 42%, shoulder 5% (target flat 100 %); 12.5% more')).toBe('flat 0.42, shoulder 0.05 (site flat 1); 0.125 more');
     expect(fractions('no numbers here')).toBe('no numbers here');
   });
+  it('the engine\'s words in the page\'s: its target is the site, its site the Earth double, its |lat| in words (engine.py caveats)', () => {
+    expect(fractions('Polar site (|lat| > 60): access is seasonal and ice may border the terrain.')).toBe('Polar Earth double (beyond 60° latitude): access is seasonal and ice may border the terrain.');
+    expect(fractions('Rugged non-barren land (index extension): terrain form matches, but the site is likely vegetated, so surface materials and environment differ from the target.'))
+      .toBe('Rugged non-barren land (index extension): terrain form matches, but the Earth double is likely vegetated, so surface materials and environment differ from the site.');
+    expect(fractions("Target landform type 'Astronaut-named features' is below 200 m resolvability: form-based properties are not measurable."))
+      .toBe("Site landform type 'Astronaut-named features' is below 200 m resolvability: form-based properties are not measurable.");
+    expect(detail({ ...r0, explanation: { ...r0.explanation, caveats: ['Polar site (|lat| > 60): access is seasonal.'] } } as MatchResult, res)).toContain('<li>Polar Earth double (beyond 60° latitude): access is seasonal.</li>');
+  });
   it('a card\'s summary: no country and coordinates, no landform mix, no "No close analog" (the lede says it)', () => {
-    for (const r of [r0, ...res.results]) expect(brief(r.explanation.summary)).toMatch(/^Shape similarity 0\.\d\d \(close\); relief \d\.\d× the target\.$/);
+    for (const r of [r0, ...res.results]) expect(brief(r.explanation.summary)).toMatch(/^Shape similarity 0\.\d\d \(close\); relief \d\.\d× the site\.$/);
     expect(brief('No close analog in this region; best available. Congo (Kinshasa) (-4.30, 15.30): shape similarity 0.71 (weak); relief 2.0x the target; landform mix at 3 km: flat 9% (target flat 25%).'))
-      .toBe('Shape similarity 0.71 (weak); relief 2.0× the target.');
-    expect(brief('Australia (-29.73, 124.03): shape similarity 0.94 (close); relief 1.0x the target.')).toBe('Shape similarity 0.94 (close); relief 1.0× the target.');   // the mock's
+      .toBe('Shape similarity 0.71 (weak); relief 2.0× the site.');
+    expect(brief('Australia (-29.73, 124.03): shape similarity 0.94 (close); relief 1.0x the target.')).toBe('Shape similarity 0.94 (close); relief 1.0× the site.');   // the mock's
     expect(brief('Something else, 30% of it <b>')).toBe('Something else, 0.3 of it &#60;b&#62;');   // another shape: fractions, escaped
     expect(brief(undefined)).toBe('—');
   });
   it('the detail\'s summary: no country and signed coordinates (Location has them), the rest kept', () => {
     const d = (summary: string) => detail({ ...r0, explanation: { ...r0.explanation, summary } } as MatchResult, res).match(/<p class="su">(.*?)<\/p>/)![1];
     expect(d('United States of America (34.67, -105.07): shape similarity 0.93 (close); relief 0.9x the target; landform mix at 3 km: flat 42%.'))
-      .toBe('Shape similarity 0.93 (close); relief 0.9× the target; landform mix at 3 km: flat 0.42.');
+      .toBe('Shape similarity 0.93 (close); relief 0.9× the site; landform mix at 3 km: flat 0.42.');
     expect(d('No close analog in this region; best available. Congo (Kinshasa) (-4.30, 15.30): shape similarity 0.71 (weak).'))
       .toBe('No close analog in this region; best available. Shape similarity 0.71 (weak).');
   });

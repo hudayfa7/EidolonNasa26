@@ -144,7 +144,7 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
   // Its side line names the best known analog for the mission (the list of them sits right under the cards).
   const best = knownAnalogs(query.purpose, id)[0]?.a.name;
   const head = sel ? `<h3 class="sec">Doubles for ${s.name}</h3>` : `<h3 class="dh" id="doubles">${known.length ? 'Established analog sites on Earth' : 'Earth doubles'}${
-    known.length || e.err?.code === 'no_dem' || !best ? '' : `<span class="nf">best known analog: ${esc(best)}</span>`}</h3>`;
+    known.length || e.err?.code === 'no_dem' || !best ? '' : `<span class="nf">Best known analog: ${esc(best)}</span>`}</h3>`;
   const to = (dbl: string) => routeOf({ body: id, site: s.id, dbl });
   const compare = (dbl: string, what = 'the closest double') => sel ? '' : `<div class="actions"><button class="btn primary" data-go="${to(dbl)}">Compare with ${what}</button></div>`;
   if (e.err?.code === 'no_dem') return `${known.length ? compare(known[0], 'an analog site') : ''}${head}${noData(!!s.custom, known.length > 0, creditName(genTerrain(id, s).src))}
@@ -169,7 +169,7 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
     <ul class="results">${list.map(({ r, id: did }) => card(r, to(did), did === sel)).join('')}</ul>${more}
     ${sel ? '' : existingBlock(query.purpose, id, kept.has('analogs'))}
     ${legend}${unlistedNote(list.map(x => x.r))}${tn}${compare(list[0].id)}
-    <p class="fine">${TESTED}${!sel && MOCK ? SAMPLE : ''}</p>`;
+    <p class="fine">${TESTED}${MOCK ? SAMPLE : ''}</p>`;
 }
 const doublesBox = (id: Body, s: Site, sel?: string) => { const e = doublesOf(id, s);
   // Not a live region: the search's state is said in a few words (ui/chrome.ts, #live-s), not its five cards read out.
@@ -306,7 +306,7 @@ function askHTML() {
       ${weights()}
       <label class="fl" for="country">Country</label>
       <select id="country" class="sel"${lists.sovereigns ? '' : ' disabled'}>${opt('', lists.sovereigns ? 'All countries' : listsTried ? 'All countries (list not loaded)' : 'All countries (loading the list…)', !f.sovereigns)}${(lists.sovereigns ?? []).map(c => opt(c, c, f.sovereigns?.[0] === c)).join('')}</select>
-      ${ck('f-partner', !!f.access, 'Artemis Accords partners only')}${ck('f-polar', !!f.exclude_polar, 'Exclude polar sites, beyond 60° latitude')}${ck('f-surf', !!f.surface, wide ? 'Barren land only' : 'Include vegetated land')}
+      ${ck('f-partner', !!f.access, 'Artemis Accords partners only')}${ck('f-polar', !!f.exclude_polar, 'Exclude polar land, beyond 60° latitude')}${ck('f-surf', !!f.surface, wide ? 'Barren land only' : 'Include vegetated land')}
       <div class="area"><span class="fl">Area</span>${b ? `<span class="n">${latStr(b[1], 2)} to ${latStr(b[3], 2)}<br>${lonStr(b[0], 2, 'earth')} to ${lonStr(b[2], 2, 'earth')}</span><button class="btn" data-area-clear aria-label="Clear area">Clear</button>`
         : '<span>Anywhere on Earth</span>'}</div>
       ${b ? '' : '<p class="fine">On the globe comparison, Search this area keeps the search to the part of Earth in view.</p>'}
@@ -469,7 +469,7 @@ function panelHTML() {
   const head = `${backBtn('All worlds', 'system')}<h2 class="title" tabindex="-1">${b.name}</h2>`;
   // The site selector grid (views/grid.ts) opens over the globe from under the lede; while it shows, its own heading leads
   // back, its lede says the 60° line, and the globe the pin hint speaks of is under it.
-  if (b.kind === 'target') return `${head}<p class="lede">Find a named feature, pin any point on the globe, or start from a featured site.${id === 'moon' && !state.grid ? ' Matching reaches 59.5° from the equator, so the south-pole base regions list their established analog sites, unscored, for now.' : ''}</p>
+  if (b.kind === 'target') return `${head}<p class="lede">Find a named feature, pin any point on the globe, or start from a featured site.${id === 'moon' && !state.grid ? ' Matching reaches 59.5° from the equator, so the south-pole base regions list their established analog sites, unscored.' : ''}</p>
     ${state.grid ? '' : `<div class="jump"><button class="back go" data-go="${id}/sites">Featured sites and their doubles<span class="chev" aria-hidden="true"></span></button></div>`}
     ${targetSearchHTML(id)}
     <div class="cform"><label for="cin">Go to coordinates</label>

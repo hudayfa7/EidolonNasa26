@@ -107,6 +107,7 @@ export async function start() {
   // A lost context ends the app for good (main.ts shows the fallback page): its window listeners (Esc, the router's
   // hashchange) stand down, so a key or a link there doesn't route the dead app behind it.
   renderer.domElement.addEventListener('webglcontextlost', () => { state.ready = false; });
+  if (!MOCK) document.querySelectorAll('[data-mock]').forEach(e => e.remove());   // index.html's "results are samples" notes: the hosted site's only
   const r0 = parse(), all = Object.keys(TEX), first = CAPTURE ? all : mapsOf(r0) ?? all;
   // A site or compare deep link opens on its real terrain; its site (a pin's, built by parse() before its world's height
   // map) is built again after the gate (clearPins below).

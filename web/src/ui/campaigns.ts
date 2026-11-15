@@ -31,7 +31,7 @@ function campsHTML() {
     ${cs.length ? `<p class="lede">The test campaigns you requested, soonest first. Each opens its confirmation.</p><ul class="rows">${cs.map(row).join('')}</ul>`
       : box('No campaigns requested yet', '', 'Compare a site on the Moon or Mars with one of its Earth doubles, plan a test campaign there and request it: it is listed here.',
         `<div class="actions"><button class="btn primary" data-go="${b}/sites">Featured sites on ${BODIES[b].name}</button></div>`)}
-    <p class="fine">${lasting ? 'Kept in this browser only.' : 'This browser keeps no site data, so they last until the page is closed.'} A mock-up: nothing was sent and no one was contacted.</p>`;
+    <p class="fine">${lasting ? 'Kept in this browser only.' : 'This browser blocks storage, so they last until the page is closed.'} A mock-up: nothing was sent and no one was contacted.</p>`;
 }
 // Under its button, its right edge on the button's, inside the 12 px gutters (a phone's sheet ignores it: responsive.css).
 function place() {
