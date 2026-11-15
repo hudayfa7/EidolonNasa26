@@ -1,6 +1,6 @@
 # Third-party notices
 
-Eidolon is licensed under the MIT License (`LICENSE`). It uses the open-source software below. Licences are read
+Eidolon is licensed under the Apache License 2.0 (`LICENSE`). It uses the open-source software below. Licences are read
 from each package's own metadata (versions as installed on 2026-11-15). Data, imagery and fonts are credited in
 `web/docs/credits.md`; the fonts' SIL Open Font License texts ship beside them in `web/public/fonts/`.
 
