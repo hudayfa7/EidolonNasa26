@@ -71,7 +71,7 @@ describe('card', () => {
   it('rank, country, coordinates, shape match, notes, hillshade and chips; no percentages', () => {
     const html = card(r0, 'mars/jezero/compare/@34.6750,-105.0750', true);
     for (const s of ['01', 'United States of America', '34.6750° N, 105.0750° W', 'Shape match <b>High</b>', '2 notes', 'loading="lazy" data-thumb="/api/v1/images/site/477151.png"',
-      'aria-current="true"', 'Landform shape', '<span class="su">Shape similarity 0.93 (close); relief 0.9× the site.</span>'])
+      'aria-current="true"', 'Landform shape', '<span class="su">Shape similarity 0.93 (close); relief 0.9× the target.</span>'])
       expect(html).toContain(s);
     expect(html).not.toContain('%');
     expect(html).not.toContain('(34.67, -105.07)');   // the engine's own coordinates: the card shows them at 4 dp
@@ -95,7 +95,7 @@ describe('detail', () => {
     for (const s of ['Raised vs incised</span><span class="ps">Partial', 'Matches: landform shape, relief, slope, roughness · Differs: none',
       ...r0.explanation.caveats!, '12.5 °C', '337 mm/yr', 'Arid <span class="n">0.19</span>', '1,671 m a.s.l.', 'Artemis Accords signatory', 'Barren',
       'Score 0.91', 'a rough estimate: 5 of 5', 'raw.shape_cosine', '<dt>properties.relief</dt><dd>0.953, 1, 200</dd>', 'bc9477e', 'F2s-200m-v1.1',
-      'landform mix at 3 km: flat 0.42, shoulder 0.15 (site flat 0.25).'])
+      'landform mix at 3 km: flat 0.42, shoulder 0.15 (target flat 0.25).'])
       expect(html).toContain(s);
     expect(html).not.toContain('%');
   });
@@ -127,27 +127,27 @@ describe('detail', () => {
   it('the climate fit: a verdict and a row each for temperature and dryness, apart from the terrain match, with its bands and caveat', () => {
     const html = detail(r0, res), fit = html.split('<h3 class="sec">Climate fit</h3>')[1].split('<h3 class="sec">')[0];
     expect(fit).toContain('Climate fit <b>Partial</b>');   // the example is 12.5 °C and an aridity index of 0.19
-    expect(fit).toMatch(/Temperature<\/span><span class="ps">Partial<\/span><span class="pnote">Earth double: 12\.5 °C mean\. Mars surface, −140 to 20 °C\./);
-    expect(fit).toMatch(/Dryness<\/span><span class="ps">Match<\/span><span class="pnote">Earth double: aridity index 0\.19\. Mars has no liquid surface water\./);
+    expect(fit).toMatch(/Temperature<\/span><span class="ps">Partial<\/span><span class="pnote">This site: 12\.5 °C mean\. Mars surface, −140 to 20 °C\./);
+    expect(fit).toMatch(/Dryness<\/span><span class="ps">Match<\/span><span class="pnote">This site: aridity index 0\.19\. Mars has no liquid surface water\./);
     for (const s of ['not a measured distance, and separate from the terrain match', 'NASA POWER climatology', 'Global Aridity Index v3.1', 'air against surface']) expect(fit).toContain(s);
     expect(fit).not.toContain('WorldClim');
     expect(html.indexOf('<h3 class="sec">Climate fit</h3>')).toBeGreaterThan(html.indexOf('<h3 class="sec">Terrain properties</h3>'));
     expect(fit).not.toContain('%');
-    expect(detail({ ...r0, environment: null }, res)).toContain('No climate fit for this Earth double');
-    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).toContain('No climate fit for this Earth double');
+    expect(detail({ ...r0, environment: null }, res)).toContain('No climate fit for this site');
+    expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).toContain('No climate fit for this site');
   });
   it('the mission fit: the mission\'s weighted factors with score, weight and evidence, a provisional tier, and what is not assessed never a zero', () => {
     const blk = (h: string) => h.split('<div class="mfit" data-wx>')[1].split('<div class="vcard">')[0];
     const none = blk(detail(r0, res)), nine = blk(detail(r0, res, undefined, { months: [1, 2, 3, 4, 5, 9, 10, 11, 12], busy: false }));
-    for (const s of ['Mission fit of this Earth double: Rover mobility', 'Provisional tier <b>A</b>, strong', 'score 84 of 100', 'Terrain form</span><span class="ps">91 of 100 · weight 45',
-      'Climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the Earth double’s climatology is not available',
-      'Gravity, pressure and radiation</span><span class="ps">N/A · weight 10', 'Doesn’t apply to a field site: gravity, pressure and radiation are the same everywhere on Earth', 'see Known analogs on the site view',
-      'Infrastructure</span><span class="ps">Not assessed · weight 15', 'A field site can be judged on 90 of this mission’s 100 weight, and 55 of it is assessed', 'never count as zero',
+    for (const s of ['Mission fit of this Earth site: Rover mobility', 'Provisional tier <b>A</b>, strong', 'score 84 of 100', 'Geology and terrain</span><span class="ps">91 of 100 · weight 45',
+      'Environment and climate</span><span class="ps">50 of 100 · weight 10', 'Operations</span><span class="ps">Not assessed · weight 20', 'the site’s climatology is not available',
+      'Target fidelity: gravity, pressure, radiation</span><span class="ps">N/A · weight 10', 'N/A for a field site: gravity, pressure and radiation are the same at every site on Earth',
+      'Infrastructure, data and cost</span><span class="ps">Not assessed · weight 15', 'A field site can be judged on 90 of this mission’s 100 weight, and 55 of it is assessed', 'never count as zero',
       'does not change the terrain match or the order of the results']) expect(none).toContain(s);
     for (const s of ['score 81 of 100', 'Operations</span><span class="ps">75 of 100', '9 of 12 months sit under this mission’s weather limits', 'and 75 of it is assessed']) expect(nine).toContain(s);
-    expect(blk(detail(r0, res, undefined, { busy: true }))).toContain('Loading the Earth double’s climatology');
+    expect(blk(detail(r0, res, undefined, { busy: true }))).toContain('Loading the site’s climatology');
     const hab = blk(detail({ ...r0, purpose: 'habitat_ops' } as MatchResult, res));
-    for (const s of ['Mission fit of this Earth double: Habitat operations', '<b>No tier</b>: a field site reaches only 40 of this mission’s 100 weight: it needs a habitat or facility too', 'Crew</span><span class="ps">N/A · weight 45']) expect(hab).toContain(s);
+    for (const s of ['Mission fit of this Earth site: Habitat operations', '<b>No tier</b>: a field site reaches only 40 of this mission’s 100 weight: it needs a habitat or facility too', 'Human factors</span><span class="ps">N/A · weight 45']) expect(hab).toContain(s);
     expect(hab).not.toContain('Provisional tier');
     expect(none + nine + hab).not.toContain('%');
     const html = detail(r0, res);
@@ -155,23 +155,24 @@ describe('detail', () => {
     for (const g of ['Terrain: Earth double against the site', 'Climate: Earth double against the site', 'Site: measured on Mars', 'Earth double: location and access', 'Earth double’s climate']) expect(html).toContain(g);
     expect(detail(r0, { ...res, target: { ...res.target, body: EVIL as 'mars' } })).not.toContain('Site: measured on');
   });
-  it('the shadow fit inside Operations for the missions that move over the ground: the score and its weight; not for the rest', () => {
+  it('the shadow fit inside Operations for the missions that move over the ground: the score, its weight and the shares behind it; not for the rest', () => {
     const blk = (h: string) => h.split('<div class="mfit" data-wx>')[1].split('<div class="vcard">')[0];
     const shadow = { fit: 82, target: [.14, .06, .01], earth: [.12, .05, 0] }, all = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const rover = blk(detail(r0, res, undefined, { months: all, busy: false, shadow }));
-    for (const s of ['Operations</span><span class="ps">93 of 100', 'Shadow fit 82 of 100: how closely the two windows’ shadows match with the sun 1°, 2° and 4° up', 'It carries 40 of this factor’s 100 weight']) expect(rover).toContain(s);
+    for (const s of ['Operations</span><span class="ps">93 of 100', 'Shadow fit 82 of 100, counting for 40 of this factor’s 100', 'sun heights 1°, 2° and 4° (eight directions)',
+      '0.14, 0.06, 0.01 on the target and 0.12, 0.05, 0.00 on the Earth site', 'A judgment score']) expect(rover).toContain(s);
     expect(blk(detail(r0, res, undefined, { months: all, busy: false, shadow: null }))).toContain('Shadow fit not available: it needs both windows as real elevation');
     expect(blk(detail(r0, res, undefined, { months: all, busy: false }))).toContain('Operations</span><span class="ps">100 of 100');   // none given: the months alone
     const edu = blk(detail({ ...r0, purpose: 'education' } as MatchResult, res, undefined, { months: all, busy: false, shadow }));
     expect(edu).not.toContain('Shadow fit'); expect(edu).toContain('Operations</span><span class="ps">100 of 100');
     const only = blk(detail(r0, res, undefined, { busy: false, shadow }));   // no climatology: the shadow alone, still assessed
-    expect(only).toContain('Operations</span><span class="ps">82 of 100'); expect(only).toContain('The Earth double’s climatology is not available.');
+    expect(only).toContain('Operations</span><span class="ps">82 of 100'); expect(only).toContain('The site’s climatology is not available.');
     expect(rover + edu + only).not.toContain('%');
   });
   it('the booking flow\'s mission fit: a compact tier for the campaign\'s purpose; a warning, never a block, when marginal or worse; a facility to pair when the mission needs one', () => {
     const all = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], base = { body: 'mars', busy: false } as const;
     const good = bookingFit({ ...base, r: r0, purpose: 'rover_mobility', label: 'Rover mobility', months: all });
-    for (const s of ['Mission fit for rover mobility', 'Provisional tier <b>A</b>, strong', 'score 88 of 100', 'Scored on terrain 91, climate partial, operations 100', 'never blocks a request', 'data-wx']) expect(good).toContain(s);
+    for (const s of ['Mission fit for rover mobility', 'Provisional tier <b>S</b>, excellent', 'score 88 of 100', 'Scored on terrain 91, climate partial, operations 100', 'never blocks a request', 'data-wx']) expect(good).toContain(s);
     expect(good).not.toContain('class="banner"');
     const weak = bookingFit({ ...base, r: { fidelity: { score: .3 } } as MatchResult, purpose: 'rover_mobility', label: 'Rover mobility', months: [] });
     for (const s of ['Provisional tier <b>F</b>, unsuitable', 'Rated unsuitable for rover mobility: tier F, score 21 of 100. You can still request this campaign']) expect(weak).toContain(s);
@@ -189,7 +190,7 @@ describe('detail', () => {
   });
   it('existing analogs above the doubles: the three best for the mission on the target\'s world, each sourced; the facility note when the mission leans on one', () => {
     const astro = existingBlock('astrobiology', 'mars'), hab = existingBlock('habitat_ops', 'mars'), moon = existingBlock('drill_isru', 'moon');
-    for (const s of ['<details class="drawer grp" data-keep="analogs">', 'Known analogs<span class="nf">Best: Atacama (ARADS)</span>', '<span class="rk">01</span><span class="nm">Atacama (ARADS)</span><span class="cv">84<span class="n"> of 100',
+    for (const s of ['<details class="drawer grp" data-keep="analogs">', 'Known analogs<span class="nf">best: Atacama (ARADS)</span>', '<span class="rk">01</span><span class="nm">Atacama (ARADS)</span><span class="cv">84<span class="n"> of 100',
       'Field site · Hyperarid core, Atacama Desert, Chile', 'href="https://astrobiology.nasa.gov/news/nasa-tests-life-detection-drill-in-the-atacama-desert/"', 'rel="noopener"', 'The Earth doubles above are terrain matches for this exact site']) expect(astro).toContain(s);
     expect(astro).not.toContain('Facility');                                                           // astrobiology needs no facility
     expect(astro).not.toContain(' open>'); expect(existingBlock('astrobiology', 'mars', true)).toContain('data-keep="analogs" open>');
@@ -197,7 +198,7 @@ describe('detail', () => {
     expect([...hab.matchAll(/<span class="nm">([^<]+)<\/span>/g)].map(m => m[1])).toEqual(['Concordia', 'HI-SEAS', 'CHAPEA']);   // one facility, ranked among the rest
     expect(hab).toContain('and the one facility this mission needs (it puts 60 of its 100 weight on gravity, pressure, radiation and crew)');
     expect(hab.match(/Facility ·/g)).toHaveLength(1);
-    expect(moon).toContain('Best: Mauna Kea (PISCES)');
+    expect(moon).toContain('best: Mauna Kea (PISCES)');
     expect(moon).not.toContain('Atacama');                                                              // a Mars-only analog never for the Moon
     expect(existingBlock('rover_mobility', 'earth')).toBe('');
     expect(astro + hab + moon).not.toContain('%');
@@ -377,29 +378,21 @@ describe('formats', () => {
   });
   it('the judge as 0–5 segments', () => expect([0, .09, .1, .5, .9321, 1, 1.4].map(rough)).toEqual([0, 0, 1, 3, 5, 5, 5]));
   it('percentages as the fractions they stand for', () => {
-    expect(fractions('flat 42%, shoulder 5% (target flat 100 %); 12.5% more')).toBe('flat 0.42, shoulder 0.05 (site flat 1); 0.125 more');
+    expect(fractions('flat 42%, shoulder 5% (target flat 100 %); 12.5% more')).toBe('flat 0.42, shoulder 0.05 (target flat 1); 0.125 more');
     expect(fractions('no numbers here')).toBe('no numbers here');
   });
-  it('the engine\'s words in the page\'s: its target is the site, its site the Earth double, its |lat| in words (engine.py caveats)', () => {
-    expect(fractions('Polar site (|lat| > 60): access is seasonal and ice may border the terrain.')).toBe('Polar Earth double (beyond 60° latitude): access is seasonal and ice may border the terrain.');
-    expect(fractions('Rugged non-barren land (index extension): terrain form matches, but the site is likely vegetated, so surface materials and environment differ from the target.'))
-      .toBe('Rugged non-barren land (index extension): terrain form matches, but the Earth double is likely vegetated, so surface materials and environment differ from the site.');
-    expect(fractions("Target landform type 'Astronaut-named features' is below 200 m resolvability: form-based properties are not measurable."))
-      .toBe("Site landform type 'Astronaut-named features' is below 200 m resolvability: form-based properties are not measurable.");
-    expect(detail({ ...r0, explanation: { ...r0.explanation, caveats: ['Polar site (|lat| > 60): access is seasonal.'] } } as MatchResult, res)).toContain('<li>Polar Earth double (beyond 60° latitude): access is seasonal.</li>');
-  });
   it('a card\'s summary: no country and coordinates, no landform mix, no "No close analog" (the lede says it)', () => {
-    for (const r of [r0, ...res.results]) expect(brief(r.explanation.summary)).toMatch(/^Shape similarity 0\.\d\d \(close\); relief \d\.\d× the site\.$/);
+    for (const r of [r0, ...res.results]) expect(brief(r.explanation.summary)).toMatch(/^Shape similarity 0\.\d\d \(close\); relief \d\.\d× the target\.$/);
     expect(brief('No close analog in this region; best available. Congo (Kinshasa) (-4.30, 15.30): shape similarity 0.71 (weak); relief 2.0x the target; landform mix at 3 km: flat 9% (target flat 25%).'))
-      .toBe('Shape similarity 0.71 (weak); relief 2.0× the site.');
-    expect(brief('Australia (-29.73, 124.03): shape similarity 0.94 (close); relief 1.0x the target.')).toBe('Shape similarity 0.94 (close); relief 1.0× the site.');   // the mock's
+      .toBe('Shape similarity 0.71 (weak); relief 2.0× the target.');
+    expect(brief('Australia (-29.73, 124.03): shape similarity 0.94 (close); relief 1.0x the target.')).toBe('Shape similarity 0.94 (close); relief 1.0× the target.');   // the mock's
     expect(brief('Something else, 30% of it <b>')).toBe('Something else, 0.3 of it &#60;b&#62;');   // another shape: fractions, escaped
     expect(brief(undefined)).toBe('—');
   });
   it('the detail\'s summary: no country and signed coordinates (Location has them), the rest kept', () => {
     const d = (summary: string) => detail({ ...r0, explanation: { ...r0.explanation, summary } } as MatchResult, res).match(/<p class="su">(.*?)<\/p>/)![1];
     expect(d('United States of America (34.67, -105.07): shape similarity 0.93 (close); relief 0.9x the target; landform mix at 3 km: flat 42%.'))
-      .toBe('Shape similarity 0.93 (close); relief 0.9× the site; landform mix at 3 km: flat 0.42.');
+      .toBe('Shape similarity 0.93 (close); relief 0.9× the target; landform mix at 3 km: flat 0.42.');
     expect(d('No close analog in this region; best available. Congo (Kinshasa) (-4.30, 15.30): shape similarity 0.71 (weak).'))
       .toBe('No close analog in this region; best available. Shape similarity 0.71 (weak).');
   });

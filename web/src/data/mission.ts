@@ -14,8 +14,8 @@ export type Factor = 'terrain' | 'climate' | 'astro' | 'ops' | 'fidelity' | 'hum
 export type Track = 'field' | 'facility' | 'hybrid';
 export const FACTOR_ORDER: Factor[] = ['terrain', 'climate', 'astro', 'ops', 'fidelity', 'human', 'infra'];
 export const FACTOR_LABEL: Record<Factor, string> = {
-  terrain: 'Terrain form', climate: 'Climate', astro: 'Astrobiology', ops: 'Operations',
-  fidelity: 'Gravity, pressure and radiation', human: 'Crew', infra: 'Infrastructure',
+  terrain: 'Geology and terrain', climate: 'Environment and climate', astro: 'Astrobiology baseline', ops: 'Operations',
+  fidelity: 'Target fidelity: gravity, pressure, radiation', human: 'Human factors', infra: 'Infrastructure, data and cost',
 };
 /** Which factors each track is judged on. */
 export const APPLIES: Record<Track, Factor[]> = {
@@ -43,10 +43,10 @@ export const applicableWeight = (purpose: unknown, track: Track) => APPLIES[trac
 export const facilityWeight = (purpose: unknown) => profileOf(purpose).fidelity + profileOf(purpose).human;
 
 const ok = (x: unknown): x is number => typeof x === 'number' && Number.isFinite(x);
-/** Terrain form, 0–100: the engine's terrain score (0–1, measured at 200 m). Rock type is not in it. */
+/** Geology and terrain, 0–100: the engine's terrain score (0–1, measured at 200 m). Rock type is not in it. */
 export const terrainScore = (score: unknown) => ok(score) ? Math.max(0, Math.min(100, score * 100)) : null;
-/** Climate, 0–100: the climate fit's verdict (data/climate.ts), a judgment band. */
-export const climateScore = (v: Verdict | undefined) => v === 'Match' ? 100 : v === 'Partial' ? 50 : v === 'Gap' ? 0 : null;
+/** Environment and climate, 0–100: the climate fit's verdict (data/climate.ts), a judgment band. */
+export const climateScore = (v: Verdict | undefined) => v === 'Close' ? 100 : v === 'Partial' ? 50 : v === 'Weak' ? 0 : null;
 /** Operations, 0–100: the share of the year's months under the mission's weather limits (data/weather.ts bestMonths). */
 export const opsScore = (months: number[] | undefined) => months ? Math.round(months.length / 12 * 100) : null;
 
@@ -71,9 +71,9 @@ export function operationsScore(purpose: unknown, months: number[] | undefined, 
   return t ? Math.round(parts.reduce((n, [x, v]) => n + x * v, 0) / t) : null;
 }
 
-export type Tier = 'A' | 'B' | 'C' | 'D' | 'F';
-export const TIER_WORD: Record<Tier, string> = { A: 'Strong', B: 'Usable with caveats', C: 'Marginal', D: 'Poor', F: 'Unsuitable' };
-export const tierOf = (score: number): Tier => score >= 70 ? 'A' : score >= 55 ? 'B' : score >= 40 ? 'C' : score >= 25 ? 'D' : 'F';
+export type Tier = 'S' | 'A' | 'B' | 'C' | 'D' | 'F';
+export const TIER_WORD: Record<Tier, string> = { S: 'Excellent', A: 'Strong', B: 'Usable with caveats', C: 'Marginal', D: 'Poor', F: 'Unsuitable' };
+export const tierOf = (score: number): Tier => score >= 85 ? 'S' : score >= 70 ? 'A' : score >= 55 ? 'B' : score >= 40 ? 'C' : score >= 25 ? 'D' : 'F';
 /** A tier needs the track to reach at least this much of the mission's 100 weight, and half of that reached weight to be assessed. */
 export const MIN_APPLICABLE = 50;
 

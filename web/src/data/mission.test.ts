@@ -25,7 +25,7 @@ describe('the profiles', () => {
 describe('the factor scores', () => {
   it('terrain from the engine\'s 0–1 score, clamped; climate from the fit\'s word; operations from the months; none without the input', () => {
     expect([terrainScore(.91), terrainScore(1.2), terrainScore(-1), terrainScore(null), terrainScore(NaN)]).toEqual([91, 100, 0, null, null]);
-    expect([climateScore('Match'), climateScore('Partial'), climateScore('Gap'), climateScore(undefined)]).toEqual([100, 50, 0, null]);
+    expect([climateScore('Close'), climateScore('Partial'), climateScore('Weak'), climateScore(undefined)]).toEqual([100, 50, 0, null]);
     expect([opsScore([1, 2, 3, 4, 5, 6]), opsScore([]), opsScore(undefined)]).toEqual([50, 0, null]);
   });
 });
@@ -67,11 +67,11 @@ describe('missionFit', () => {
   it('no tier when a field site reaches under half the mission (habitation), or under half its reach is assessed', () => {
     expect(missionFit('habitat_ops', { terrain: 90, climate: 100, ops: 100 })).toMatchObject({ applicable: 40, tier: null });
     expect(missionFit('astrobiology', { terrain: 90, climate: 100 })).toMatchObject({ applicable: 100, assessed: 40, tier: null });
-    expect(missionFit('astrobiology', { terrain: 90, climate: 100, ops: 50 })).toMatchObject({ assessed: 50, tier: 'A' });
+    expect(missionFit('astrobiology', { terrain: 90, climate: 100, ops: 50 })).toMatchObject({ assessed: 50, tier: 'S' });
     expect(missionFit('rover_mobility', {})).toMatchObject({ score: null, assessed: 0, tier: null });
   });
   it('the tiers\' cutoffs', () => {
-    expect([100, 85, 84, 70, 69, 55, 54, 40, 39, 25, 24, 0].map(tierOf)).toEqual(['A', 'A', 'A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'F', 'F']);
+    expect([100, 85, 84, 70, 69, 55, 54, 40, 39, 25, 24, 0].map(tierOf)).toEqual(['S', 'S', 'A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'F', 'F']);
   });
 });
 

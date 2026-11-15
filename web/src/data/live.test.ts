@@ -1,7 +1,6 @@
 // The seam against a running engine (`npm run test:live`, mode `live`): every call in http.ts answers, and what it answers
-// validates against the engine's JSON Schemas. Skipped in `npm test`. Start the engine first (README.md, Run it with the
-// real model); run it once right after it starts (the warming path) and once warm. VITE_API points at it if it
-// isn't on :8000.
+// validates against the engine's JSON Schemas. Skipped in `npm test`. Start the engine first (MERGE.md, step 2); run it
+// once right after it starts (the warming path) and once warm. VITE_API points at it if it isn't on :8000.
 import Ajv2020 from 'ajv/dist/2020';
 import { describe, expect, it } from 'vitest';
 import { EngineError } from './api';
