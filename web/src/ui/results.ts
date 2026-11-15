@@ -27,11 +27,8 @@ export const text = (x: unknown) => esc(String(x ?? '—'));
 // Engine prose (engine.py) carries percentages: "…; landform mix at 3 km: flat 42%, shoulder 15% (target flat 25%).",
 // and the capability caveat's "for 53% of targets". No percentages on the page, so each becomes the fraction it stands
 // for ("flat 0.42"): the engine prints whole percents, so nothing is lost.
-// Its ratios ("relief 0.9x the target") take the page's multiplication sign. Its "target" is the site on the Moon or Mars
-// and its "site" the Earth cell, so the cell becomes the Earth double first ("the site is likely vegetated, so … differ
-// from the target"), then the target the site; its polar note's "|lat| > 60" is said in words.
-export const fractions = (s: string) => s.replace(/(\d+(?:\.\d+)?)\s?%/g, (_, n: string) => String(+(+n / 100).toFixed(4))).replace(/(\d)x\b/g, '$1×')
-  .replace(/\bsite\b/g, 'Earth double').replace(/\btarget\b/g, 'site').replace(/\bTarget\b/g, 'Site').replace(/\(\|lat\| > 60\)/g, '(beyond 60° latitude)');
+// Its ratios ("relief 0.9x the target") take the page's multiplication sign.
+export const fractions = (s: string) => s.replace(/(\d+(?:\.\d+)?)\s?%/g, (_, n: string) => String(+(+n / 100).toFixed(4))).replace(/(\d)x\b/g, '$1×');
 const prose = (x: unknown) => text(fractions(String(x ?? '—')));
 // A summary's "<country> (<lat>, <lon>): " opening (after the no-match lede, if any), signed to 2 places: the card's head
 // and the detail's Location show the place, its coordinates as the body's convention has them.
@@ -228,11 +225,11 @@ export function windowNote(id: Body, s: { lat: number; lon: number; iau?: string
 const FIT_WORD = { match: 'Match', partial: 'Partial', gap: 'Gap' };
 export function climateFitBlock(e: MatchResult['environment'] | undefined, body: unknown) {
   const f = climateFit(e), w = body === 'moon' || body === 'mars' ? BODIES[body] : undefined;
-  if (!f || !w) return '<p class="fine">No climate fit for this Earth double: its NASA POWER climatology isn’t available.</p>';
+  if (!f || !w) return '<p class="fine">No climate fit for this site: its NASA POWER climatology isn’t available.</p>';
   const target = { temperature: `${w.name} surface, ${Object.fromEntries(w.stats).Temperature}`, dryness: `${w.name} has no liquid surface water` };
   return `<div class="rhead"><span class="sm">Climate fit <b>${f.verdict}</b></span></div>
-    <ul class="props">${f.rows.map(r => `<li class="s-${r.status}"><i class="mk mk-${r.status}" aria-hidden="true"></i><span class="pl">${r.key === 'temperature' ? 'Temperature' : 'Dryness'}</span><span class="ps">${FIT_WORD[r.status]}</span><span class="pnote">Earth double: ${r.earth}. ${target[r.key]}.</span></li>`).join('')}</ul>
-    <p class="fine">A coarse cold-and-dry band, not a measured distance, and separate from the terrain match. Temperature matches at a mean of ${COLD_C} °C or below and is partial up to ${COOL_C} °C; dryness matches below an aridity index of ${ARID} and is partial below ${SEMI_ARID}. The Earth side is mean annual air temperature (NASA POWER climatology) and aridity (Global Aridity Index v3.1) at the Earth double’s centre; ${w.name}’s temperatures are surface values, so air against surface is only a rough comparison.</p>`;
+    <ul class="props">${f.rows.map(r => `<li class="s-${r.status}"><i class="mk mk-${r.status}" aria-hidden="true"></i><span class="pl">${r.key === 'temperature' ? 'Temperature' : 'Dryness'}</span><span class="ps">${FIT_WORD[r.status]}</span><span class="pnote">This site: ${r.earth}. ${target[r.key]}.</span></li>`).join('')}</ul>
+    <p class="fine">A coarse cold-and-dry band, not a measured distance, and separate from the terrain match. Temperature matches at a mean of ${COLD_C} °C or below and is partial up to ${COOL_C} °C; dryness matches below an aridity index of ${ARID} and is partial below ${SEMI_ARID}. The Earth side is mean annual air temperature (NASA POWER climatology) and aridity (Global Aridity Index v3.1) at the site centre; ${w.name}’s temperatures are surface values, so air against surface is only a rough comparison.</p>`;
 }
 
 /**
@@ -325,28 +322,29 @@ export interface Ops { months?: number[]; busy: boolean; shadow?: ShadowResult |
 export function missionBlock(r: MatchResult, ops?: Ops) {
   const cf = climateFit(r.environment), ts = terrainScore(r.fidelity?.score), months = ops?.months;
   const sw = shadowWeight(r.purpose), sh = ops?.shadow, fit = missionFit(r.purpose, { terrain: ts, climate: climateScore(cf?.verdict), ops: operationsScore(r.purpose, months, sh?.fit) });
-  const opsMonths = months ? `${months.length} of 12 months sit under this mission’s weather limits (NASA POWER climatology). Planning limits, a judgment.` : ops?.busy ? 'Loading the Earth double’s climatology…'
-    : sh ? 'The Earth double’s climatology is not available.' : 'Not assessed: the Earth double’s climatology is not available.';
+  const share = (a: number[]) => a.map(v => v.toFixed(2)).join(', ');
+  const opsMonths = months ? `${months.length} of 12 months sit under this mission’s weather limits (NASA POWER climatology). Planning limits, a judgment.` : ops?.busy ? 'Loading the site’s climatology…'
+    : sh ? 'The site’s climatology is not available.' : 'Not assessed: the site’s climatology is not available.';
   // The shadow fit counts only for the missions that move over the ground (data/mission.ts SHADOW_W): the share of each window in shadow.
-  const opsShadow = sw <= 0 ? '' : sh ? ` Shadow fit ${sh.fit} of 100: how closely the two windows’ shadows match with the sun ${SUN_HEIGHTS.slice(0, -1).join('°, ')}° and ${SUN_HEIGHTS[SUN_HEIGHTS.length - 1]}° up. It carries ${Math.round(sw * 100)} of this factor’s 100 weight.`
+  const opsShadow = sw <= 0 ? '' : sh ? ` Shadow fit ${sh.fit} of 100, counting for ${Math.round(sw * 100)} of this factor’s 100: the share of each window in shadow at sun heights ${SUN_HEIGHTS.slice(0, -1).join('°, ')}° and ${SUN_HEIGHTS[SUN_HEIGHTS.length - 1]}° (eight directions) is ${share(sh.target)} on the target and ${share(sh.earth)} on the Earth site. A judgment score.`
     : ' Shadow fit not available: it needs both windows as real elevation.';
   const why: Record<Factor, string> = {
     terrain: ts === null ? 'Not assessed: the engine gave no terrain score' : `The engine’s terrain score, ${num(r.fidelity?.score, 2)}, measured at 200 m. Rock type is not in it.`,
-    climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: how cold and dry the Earth double is against the site. A judgment band.` : 'Not assessed: the engine gave no climate for this Earth double',
+    climate: cf ? `Climate fit ${cf.verdict.toLowerCase()}: cold and dry against the target. A judgment band.` : 'Not assessed: the engine gave no climate for this site',
     astro: 'Not assessed: Eidolon holds no biology or biosignature data',
     ops: `${opsMonths}${opsShadow}`,
-    fidelity: 'Doesn’t apply to a field site: gravity, pressure and radiation are the same everywhere on Earth. Facilities give them: see Known analogs on the site view.',
-    human: 'Doesn’t apply to a field site: crew size, duration and confinement belong to a habitat or facility. See Known analogs on the site view.',
+    fidelity: 'N/A for a field site: gravity, pressure and radiation are the same at every site on Earth. Facilities give them: see Existing analogs above the results.',
+    human: 'N/A for a field site: crew size, duration and confinement belong to a habitat or facility. See Existing analogs above the results.',
     infra: 'Not assessed: Eidolon holds no real logistics, power or cost data',
   };
   const st = (s: number | null, na: boolean) => na || s === null ? 'not_measurable' : s >= 70 ? 'match' : s >= 40 ? 'partial' : 'gap';
   const tierless = fit.applicable < MIN_APPLICABLE ? `a field site reaches only ${fit.applicable} of this mission’s 100 weight: it needs a habitat or facility too` : 'too little of what a field site can be judged on is assessed';
   const head = fit.tier ? `<span class="tier" aria-hidden="true">${fit.tier}</span><span class="sm">Provisional tier <b>${fit.tier}</b>, ${TIER_WORD[fit.tier].toLowerCase()} <span class="n2">score ${fit.score} of 100</span></span>`
     : `<span class="tier" aria-hidden="true">–</span><span class="sm"><b>No tier</b>: ${tierless}${fit.score === null ? '' : ` <span class="n2">score ${fit.score} of 100 on what is assessed</span>`}</span>`;
-  return `<div class="mfit" data-wx><h3 class="sec">Mission fit of this Earth double: ${text(purposeLabel(String(r.purpose ?? 'rover_mobility')))}</h3>
+  return `<div class="mfit" data-wx><h3 class="sec">Mission fit of this Earth site: ${text(purposeLabel(String(r.purpose ?? 'rover_mobility')))}</h3>
     <div class="rhead">${head}</div>
     <ul class="props">${fit.rows.map(x => `<li class="s-${st(x.score, x.na)}"><i class="mk mk-${st(x.score, x.na)}" aria-hidden="true"></i><span class="pl">${FACTOR_LABEL[x.key]}</span><span class="ps">${x.na ? 'N/A' : x.score === null ? 'Not assessed' : `${Math.round(x.score)} of 100`} · weight ${x.weight}</span><span class="pnote">${why[x.key]}</span></li>`).join('')}</ul>
-    <p class="fine">A field site can be judged on ${fit.applicable} of this mission’s 100 weight, and ${fit.assessed} of it is assessed. N/A and unassessed factors drop out and never count as zero. The weights are Eidolon’s judgment; no published source gives numeric weights. Safety and permitting are not assessed, so a tier is provisional. This does not change the terrain match or the order of the results.</p></div>`;
+    <p class="fine">A field site can be judged on ${fit.applicable} of this mission’s 100 weight, and ${fit.assessed} of it is assessed. N/A and unassessed factors drop out and never count as zero. The weights are Eidolon’s judgment, reasoned with sources in the project’s analog-weights document; safety and permitting are not assessed, so a tier is provisional. This does not change the terrain match or the order of the results.</p></div>`;
 }
 
 export interface BookingFit { r?: Pick<MatchResult, 'fidelity' | 'environment'>; purpose: string; label: string; body: unknown; months?: number[]; busy: boolean; shadow?: ShadowResult | null }
@@ -384,7 +382,7 @@ export function existingBlock(purpose: unknown, body: unknown, open = false) {
   // One compact row each, like a result card's head: rank, name, kind and cover; the fact and its source open under it.
   const rows = list.map(({ a, cover: c }, i) => `<li><details class="ex"><summary><span class="rk">${pad(i + 1)}</span><span class="nm">${esc(a.name)}</span><span class="cv">${c}<span class="n"> of 100</span></span>
       <span class="sb">${short[a.track]} · ${esc(a.place)}</span></summary><p class="pnote">${esc(a.fact)} Source: ${a.refs.map(link).join('; ')}.</p></details></li>`).join('');
-  return `<details class="drawer grp" data-keep="analogs"${open ? ' open' : ''}><summary><span class="chev" aria-hidden="true"></span>Known analogs<span class="nf">Best: ${esc(list[0].a.name)}</span></summary>
+  return `<details class="drawer grp" data-keep="analogs"${open ? ' open' : ''}><summary><span class="chev" aria-hidden="true"></span>Known analogs<span class="nf">best: ${esc(list[0].a.name)}</span></summary>
     <ol class="exl">${rows}</ol>
     <p class="fine">Established sites${fw >= FACILITY_NEED ? ', and the one facility this mission needs (it puts ' + fw + ' of its 100 weight on gravity, pressure, radiation and crew)' : ''}, ranked by how much of this mission’s weight each stands in for: Eidolon’s judgment from the cited facts. The Earth doubles above are terrain matches for this exact site.</p></details>`;
 }

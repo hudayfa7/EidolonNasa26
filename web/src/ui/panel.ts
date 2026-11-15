@@ -11,7 +11,7 @@ import { EngineError } from '../data/api';
 import { bestMonths, daysAt, onWeather, over, skinAt, todayAt, wxAt } from '../data/weather';
 import { $, $$, copyText, esc, setHTML } from '../dom';
 import { CAPTURE, fillBar, RM, simNow, TOUCH, wallNow } from '../motion';
-import { FACTOR_LABEL, FACTOR_ORDER, profileOf } from '../data/mission';
+import { FACTOR_ORDER, profileOf, type Factor } from '../data/mission';
 import { buildScenes, go, routeOf, state, type Route } from '../router';
 import { focusPanel } from '../scene/frame';
 import { earthInView, keyed } from '../scene/input';
@@ -319,6 +319,7 @@ const askBox = (id: Body, s: Site) => `<div class="ask" data-ask tabindex="-1"${
 // The mission's weights (data/mission.ts PROFILES; docs/analog-weights.md) as one bar of shares out of 100: a thin one in the Filters
 // and purpose header, always in view, and a labelled one inside it. All seven segments are always there (zero-width when unweighted),
 // so a new purpose slides the shares from the old ones (asked).
+const WSHORT: Record<Factor, string> = { terrain: 'Terrain', climate: 'Climate', astro: 'Astrobiology', ops: 'Operations', fidelity: 'Gravity, pressure, radiation', human: 'Crew', infra: 'Infrastructure' };
 const wbar = (cls: string) => { const P = profileOf(query.purpose);
   return `<span class="wbar ${cls}" aria-hidden="true">${FACTOR_ORDER.map(k => `<i class="wf-${k}" style="flex-grow:${P[k]}"></i>`).join('')}</span>`; };
 // All seven legend items are always there, the unweighted ones collapsed (`off`), so a purpose that gains or drops a factor opens or
@@ -326,8 +327,8 @@ const wbar = (cls: string) => { const P = profileOf(query.purpose);
 function weights() {
   const P = profileOf(query.purpose);
   return `<p class="fl">How ${esc(lc(purposeLabel(query.purpose)))} weighs an analog, out of 100</p>${wbar('full')}
-    <ul class="wleg">${FACTOR_ORDER.map(k => `<li class="${P[k] ? '' : 'off'}"><i class="wf-${k}" aria-hidden="true"></i>${FACTOR_LABEL[k]} <b>${P[k]}</b></li>`).join('')}</ul>
-    <p class="fine">Eidolon’s judgment for this mission; no published source gives numeric weights. It sets each result’s mission fit; it does not change the terrain match or the order of the results.</p>`;
+    <ul class="wleg">${FACTOR_ORDER.map(k => `<li class="${P[k] ? '' : 'off'}"><i class="wf-${k}" aria-hidden="true"></i>${WSHORT[k]} <b>${P[k]}</b></li>`).join('')}</ul>
+    <p class="fine">Eidolon’s judgment for this mission, reasoned with sources in the project’s analog-weights document. It sets each result’s mission fit; it does not change the terrain match or the order of the results.</p>`;
 }
 // Asked anew: the form shows the new query (the focus stays on its control), the doubles the new search.
 function asked() {

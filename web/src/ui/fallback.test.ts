@@ -22,7 +22,7 @@ describe('a featured site\'s doubles in words', () => {
     expect(h.match(/<li>/g)).toHaveLength(3);
     expect(h).toContain(`<a href="#/mars/jezero/compare/@${l.lat!.toFixed(4)},${l.lon!.toFixed(4)}">United States of America</a>`);
     expect(h).toContain('34.6750° N, 105.0750° W');
-    expect(h).toContain('Shape match high. Shape similarity 0.93 (close); relief 0.9× the site.');
+    expect(h).toContain('Shape match high. Shape similarity 0.93 (close); relief 0.9× the target.');
     expect(h).not.toMatch(/\d\s?%/);
   });
   it('the IAU feature, the capability banner and the results\' notes once (spec §3.4, §5.2; caveats never hidden)', () => {
@@ -33,10 +33,10 @@ describe('a featured site\'s doubles in words', () => {
     expect(h).toContain('Notes on all three: ');
   });
   it('a note on some of the three stays on its own row (spec §4, §5: caveats belong to their result)', () => {
-    const rs = res.results.slice(0, 3).map((r, i) => i < 2 ? { ...r, explanation: { ...r.explanation, caveats: [...r.explanation.caveats ?? [], 'Polar site (|lat| > 60): access is seasonal.'] } } : r);
+    const rs = res.results.slice(0, 3).map((r, i) => i < 2 ? { ...r, explanation: { ...r.explanation, caveats: [...r.explanation.caveats ?? [], 'Polar site: access is seasonal.'] } } : r);
     const h = fbDoubles('mars', jezero, d({ res: { ...res, results: rs } })), rows = h.split('<li>').slice(1);
-    expect(rows.map(r => r.includes('Note: Polar Earth double (beyond 60° latitude): access is seasonal.'))).toEqual([true, true, false]);   // the engine's words in the page's
-    expect(h.match(/Polar Earth double/g)).toHaveLength(2);
+    expect(rows.map(r => r.includes('Note: Polar site: access is seasonal.'))).toEqual([true, true, false]);
+    expect(h.match(/Polar site/g)).toHaveLength(2);
     expect(h.match(/Terrain form only, matched at 200 m/g)).toHaveLength(1);
   });
   it('what differs, the no-match wording, engine strings escaped', () => {

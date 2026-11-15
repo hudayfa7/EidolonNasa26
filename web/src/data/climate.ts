@@ -13,7 +13,7 @@ import type { MatchResult } from './types.gen';
 import type { Weather } from './weather';
 
 export type Fit = 'match' | 'partial' | 'gap';
-export type Verdict = 'Match' | 'Partial' | 'Gap';
+export type Verdict = 'Close' | 'Partial' | 'Weak';
 export interface ClimateRow { key: 'temperature' | 'dryness'; status: Fit; earth: string }
 
 /** Mean annual air temperature (°C) at or below which an Earth site is cold like the targets, and below which it is cool. */
@@ -25,7 +25,7 @@ const ok = (x: unknown): x is number => typeof x === 'number' && Number.isFinite
 const signed = (x: number, d: number) => `${x < 0 ? '−' : ''}${Math.abs(x).toFixed(d)}`;
 
 /** Where an Earth site's climate comes from, as the result detail and the listing print it. */
-export const CLIMATE_SRC = 'Temperature and precipitation: NASA POWER climatology (T2M, PRECTOTCORR), NASA Langley Research Center. Aridity: Global Aridity Index v3.1 (Zomer, Xu and Trabucco 2022, CC BY 4.0), at the Earth double’s centre.';
+export const CLIMATE_SRC = 'Temperature and precipitation: NASA POWER climatology (T2M, PRECTOTCORR), NASA Langley Research Center. Aridity: Global Aridity Index v3.1 (Zomer, Xu and Trabucco 2022, CC BY 4.0), at the site centre.';
 const DAYS = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /**
  * The engine's `environment` with its WorldClim 2.1 temperature and precipitation replaced by NASA POWER's (the site's
@@ -49,7 +49,7 @@ export function climateFit(e: MatchResult['environment'] | undefined): { rows: C
     { key: 'dryness', status: ai < ARID ? 'match' : ai < SEMI_ARID ? 'partial' : 'gap', earth: `aridity index ${ai.toFixed(2)}` },
   ];
   const pts = rows.reduce((n, r) => n + (r.status === 'match' ? 2 : r.status === 'partial' ? 1 : 0), 0);
-  return { rows, verdict: pts >= 4 ? 'Match' : pts >= 2 ? 'Partial' : 'Gap' };
+  return { rows, verdict: pts >= 4 ? 'Close' : pts >= 2 ? 'Partial' : 'Weak' };
 }
 
 const D2R = Math.PI / 180;
