@@ -8,7 +8,7 @@ import { rng } from '../coords';
 
 /** A day's weather: its strongest wind at 10 m (m/s), rain (mm), high and low (°C). A value the feed lacks is NaN. */
 export interface Day { iso: string; wind: number; rain: number; hi: number; lo: number }
-type Weather = Omit<Day, 'iso'>;
+export type Weather = Omit<Day, 'iso'>;
 type Place = { id: string; lat: number; lon: number };
 
 /**

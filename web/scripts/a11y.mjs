@@ -62,7 +62,8 @@ async function serveBuild() {
   const isEidolon = () => fetch(url).then(r => r.text()).then(t => /<title>Eidolon<\/title>/.test(t), () => false);
   if (await isEidolon()) return { url, close() {} };
   if (args.url) fail(`${url} is not serving Eidolon`);
-  const child = spawn(path.join(ROOT, 'node_modules/.bin/vite'), ['--port', '5173', '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
+  // Vite's own entry run by node: node_modules/.bin/vite is a shell script that Windows can't spawn.
+  const child = spawn(process.execPath, [path.join(ROOT, 'node_modules/vite/bin/vite.js'), '--port', '5173', '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
   for (let i = 0; i < 100; i++) { if (await isEidolon()) return { url, close: () => child.kill() }; await sleep(300); }
   child.kill(); fail('vite dev server did not come up on :5173');
 }

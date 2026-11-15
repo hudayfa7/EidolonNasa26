@@ -49,7 +49,7 @@ describe('a featured site\'s doubles in words', () => {
   });
   it('no elevation data: the site\'s established analog sites, linked, unscored', () => {
     const h = fbDoubles('moon', malapert, d({ err: new EngineError(422, 'no_dem') }));
-    expect(h).toContain('only within 60° of the equator, so these established analog sites are unscored'); expect(h).toContain('<a href="#/moon/malapert/compare/haughton">Haughton Crater</a>, Devon Island, Canada');
+    expect(h).toContain('only within 59.5° of the equator, so these established analog sites are unscored'); expect(h).toContain('<a href="#/moon/malapert/compare/haughton">Haughton Crater</a>, Devon Island, Canada');
     expect(h).not.toContain('Shape match');
   });
   it('every state of the search in words', () => {

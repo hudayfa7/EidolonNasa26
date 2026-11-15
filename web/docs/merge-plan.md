@@ -35,7 +35,7 @@ Names used below. **E** is the engine bundle, a sibling folder of this repo on t
 
 **Repo.**
 - Local `main`: 94 commits, about 37 MB packed, largest tracked file 4.7 MB, no remote.
-- GitHub `hudayfa7/nasahackathon2026`: private, empty, description "Moonbnb". 1509Chamma and IsaamSyy have write access.
+- GitHub `hudayfa7/nasahackathon2026`: private, empty. 1509Chamma and IsaamSyy have write access.
 
 ## Decisions for the team
 
@@ -49,7 +49,7 @@ Names used below. **E** is the engine bundle, a sibling folder of this repo on t
 | D6 | Visibility and licence at submission | Stay private and share the demo link and video / go public | Public at submission, because judges can't open a private repo. Licence: MIT for `web/`. `engine/` goes public only with its owner's OK, under the licence he picks (MIT suggested). D3 b's assets go public with the repo: check the data's source terms first. Keep the history as it is: the author email shows on all 94 commits, and rewriting it would break the SHAs that progress.md cites |
 | D7 | South-pole Moon matching | Ask the engine owner now for a south-pole loader for pins only (`moon_window` falls back to a LOLA polar DEM; no new named targets or index) / pitch it as the next step | Ask today for a scoping answer. Build it only if it fits in a day and a COG of the polar DEM is readable over HTTPS (not checked). Otherwise pitch it. plan.md leaned "ask now"; all three drafts leaned "live with it" |
 | D8 | How teammates work | Push straight to `main` / branches and PRs with CI | PRs, with CI as the gate. Never force-push `main` (a free private repo can't enforce this, so it is a convention) |
-| D9 | Repo name and description | The description says "Moonbnb"; the product is Eidolon (the build's copy check fails on the word) | Set the description to Eidolon's one-liner before the repo goes public. The repo name can stay |
+| D9 | Repo name and description | The product is Eidolon | Set the description to Eidolon's one-liner before the repo goes public. The repo name can stay |
 | D10 | Who records the live-engine video, and by when | Any teammate with the D4 machine | Whoever runs Phase 8's first clean rehearsal records it then, before the freeze. D5 a, offline fallback 4 and the run-of-show depend on it |
 | D11 | Submission deadline and judging window | Fill in | Lay the Timeline's estimates against them. Freeze (Phase 8) at least 24 h before judging |
 
@@ -197,7 +197,6 @@ This Mac is the only machine with the data linked, so the first boot is here. D4
   - **Fallback page:** the `no-webgl-*` and `context-lost-*` states, in the subset above.
   - **Progressive textures:** Jezero's caption reads 18.4082° N, 77.6873° E before and after the search lands.
   - **Purpose and filters, round 2:** the live suite checks the site_ids. In the UI, a country filter on Jezero (rank 1 may move).
-  - **Product name:** "moonbnb" appears nowhere in the responses.
   - **Results rework 1/4, engine side:** summaries go through `brief`, `unplace` and `fractions`; `capability` is on every response's target. A null judge shows 0 bars without breaking.
   - **States by source:** aborted pins show up in the engine log.
   - **Compare window (Results rework 2/4: wired):** watch the swap from illustrative to real terrain, which has no curtain (the jump is bigger than the mock's), and decide whether to add one. Check that an Earth window with nulls draws them at its lowest height without a false pit.
@@ -253,7 +252,6 @@ Code patches, each its own commit on top of the import commit:
 **Not changed (we live with these):**
 - schemas for health, purposes, sovereigns and elevation (the live suite checks their shape instead);
 - percent phrasing in summaries (`fractions` rewrites it);
-- "MoonBnb" in docstrings;
 - `capability` null for pins;
 - no place names and no `site_listing`;
 - the 59.5° cutoff (the web copy is fixed instead);
@@ -302,7 +300,7 @@ Code patches, each its own commit on top of the import commit:
 | `/elevation/target`, `/point` (Mars and Moon), `/site` | `size_px` 94, `pixel_m` 200, `z` 94×94 of numbers or null |
 | `/images/target/…png` (with `Utopia%20Planitia` and `Taurus%20Littrow%20Valley`), `/images/site/{cell}.png` | `image/png`, 188 px |
 | Mock vs live | Every field `mock.ts` emits exists live with the same type. This catches null judges, the landform clause and key drift |
-| Copy | No "moonbnb" in summaries or caveats; percentages match what `fractions` rewrites |
+| Copy | Percentages in summaries and caveats match what `fractions` rewrites |
 
 **Must fail with:**
 - `unknown_target`, for a made-up name;

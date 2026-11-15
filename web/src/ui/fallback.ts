@@ -12,7 +12,7 @@ import { EARTH_BY, SITES, type Site } from '../data/sites';
 import { esc, setHTML } from '../dom';
 import { RM } from '../motion';
 import { parseHash, routeOf, type Route } from '../routes';
-import { banner, brief, conf, failHead, fractions, noAnalog, placeTag, purposeLabel, SAMPLE, strs, targetNote, TESTED, text } from './results';
+import { banner, brief, conf, failHead, fractions, noAnalog, placeTag, purposeLabel, strs, targetNote, TESTED, text } from './results';
 
 const TOP = 3, WORLDS: Body[] = ['moon', 'mars'];   // Moon bases first, as the intro has it
 const href = (r: Partial<Route>) => `#/${routeOf(r)}`;
@@ -29,7 +29,7 @@ export function fbDoubles(id: Body, s: Site, e?: Doubles) {
   const known = (lead: string, ids: string[]) => `<p>${lead}</p>
     <ul>${ids.map(d => `<li><a href="${to(d)}">${EARTH_BY[d].name}</a>, ${esc(EARTH_BY[d].place!)}</li>`).join('')}</ul>`;
   // The engine's no_dem is the Moon beyond 60° (plan, Gaps 2): said where it applies, so it goes when the engine reads there.
-  if (kn.length) return known('The search engine reads Moon terrain only within 60° of the equator, so these established analog sites are unscored:', kn);
+  if (kn.length) return known('The search engine reads Moon terrain only within 59.5° of the equator, so these established analog sites are unscored:', kn);
   const res = e?.res, list = res ? cellsOf(res).slice(0, TOP) : [];
   if (res && list.length) {
     const cav = list.map(({ r }) => [...new Set(strs(r.explanation?.caveats))]), shared = cav[0].filter(c => cav.every(x => x.includes(c)));
@@ -67,7 +67,7 @@ export function showFallback(msg = 'This view needs WebGL. Turn on hardware acce
     <div class="meta-row" aria-hidden="true"><span>NASA Space Apps Challenge 2026</span><span>Earth, low orbit</span><span>Scroll for featured sites</span></div></div>
   <section class="fb" aria-labelledby="fb-h"><h2 class="title" id="fb-h" tabindex="-1">Featured sites</h2>
     <p class="lede">Each site on the Moon and Mars with its closest doubles on Earth, from the site’s own search. Every name links to its view in Eidolon, which opens wherever WebGL runs.</p>
-    <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}. ${TESTED}${MOCK ? SAMPLE : ''}</p>
+    <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}. ${TESTED}${MOCK ? ' Sample results until the search engine is connected.' : ''}</p>
     <div class="fb-cols">${WORLDS.map(id => `<div><h3>${BODIES[id].name}</h3><ul>${SITES[id].map(s => entry(id, s)).join('')}</ul></div>`).join('')}</div>
     <p class="fine">The poster is Eidolon’s title view, drawn from NASA’s Blue Marble and Black Marble maps of Earth, the Blue Marble clouds, NOAA’s ETOPO1 relief and the MODIS water mask.</p></section>`;
   // shortcut: the default purpose only, no picker here; add one if this page is ever used to plan.

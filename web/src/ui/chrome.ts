@@ -20,7 +20,7 @@ import { ghost } from '../terrain/mesh';
 import { WINDOW_KM } from '../terrain/procedural';
 import { sameScale } from '../views/compare';
 import { holding } from '../views/site';
-import { mixText, searchSay } from './results';
+import { mixText, searchSay, windowNote } from './results';
 import { setSnap, sheetCovers } from './sheet';
 
 const crumbs = $('#crumbs'), toggle = $('#toggle'), stR = $('#st-r'), stL = $('#st-l'), stM = $('#st-m'), live = $('#live');
@@ -125,7 +125,7 @@ function updateStatus() {
   const s = (state.view === 'site' || state.view === 'compare') && siteOf(id, state.site ?? undefined);
   const km = state.view === 'compare' ? WINDOW_KM : s && s.t.ext;
   const c = s && state.view === 'compare' ? centreOf(id!, s) : s;   // compare: the window the engine compared
-  if (s && c) t = `${s.custom && !s.iau ? 'Pinned site' : s.name}, ${fmtLL(c.lat, c.lon, id!, 4)}, ${km} × ${km} km`;
+  if (s && c) t = `${s.custom && !s.iau ? 'Pinned site' : s.name}, ${fmtLL(c.lat, c.lon, id!, 4)}, ${km} × ${km} km${s !== c ? windowNote(id!, s, c) : ''}`;
   else if (id === 'earth') t = `${SITES.earth.length} established analog sites`;
   else if (id) { const li = lightInfo(id, simNow())!; t = `Earth to ${BODIES[id].name}: one-way light <span class="v">${fmtLight(li.sec)}</span>, range <span class="v">${li.range}</span>`; }
   // A search by coordinates (5–10 s) and a cold engine say so here at once: the doubles box with their progress is

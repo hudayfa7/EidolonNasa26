@@ -6,7 +6,7 @@ git and `gh` preinstalled. Node 22 runs everything in `web/`: typecheck, all tes
 
 ## One-time setup
 
-1. **Give Claude access to the repo.** Install the Claude GitHub App on `hudayfa7/EidolonNasa26`:
+1. **Give Claude access to the repo.** Install the Claude GitHub App on `hudayfa7/nasahackathon2026`:
    https://github.com/apps/claude (or, from a terminal signed in with `gh`, run `/web-setup` in Claude Code).
 2. **Create the environment** at claude.ai/code: open the environment selector under the message box, then
    New environment:
@@ -37,7 +37,7 @@ nothing.
 
 - Git and `gh` go through GitHub's proxy, already signed in. Don't add a GitHub token to the environment: everyone who
   uses the environment can read its variables.
-- The proxy doesn't stop pushes to `main`. Follow `AGENTS.md`: work on a branch and open a PR.
+- The proxy doesn't stop pushes to `main`. Work on a branch and open a PR.
 - GraphQL is blocked, so `gh pr create` fails. Open the PR from the session's PR button, or with
-  `gh api repos/hudayfa7/EidolonNasa26/pulls -f title=... -f head=<branch> -f base=main -f body=...`.
+  `gh api repos/hudayfa7/nasahackathon2026/pulls -f title=... -f head=<branch> -f base=main -f body=...`.
 - The VM pauses when idle and a reopened session may get a fresh one: anything not pushed can be lost. Push often.

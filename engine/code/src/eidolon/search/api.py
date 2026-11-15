@@ -19,7 +19,26 @@ def get_index():
     return Index()
 
 
+_WINDOWS = {}          # (body, lat, lon, px) -> z; found windows only, the 64 most recent
+_WINDOWS_MAX = 64
+
+
 def target_window(body, lat, lon, tries=3, wait_s=5.0, px=200.0):
+    """Memoised by body, lat/lon to 4 places and px (at most 64): a repeat search at the same pin skips the remote read.
+    A miss (None) is never kept, so a transient failure isn't remembered. See _target_window for the read itself."""
+    key = (body, round(float(lat), 4), round(float(lon), 4), float(px))
+    z = _WINDOWS.pop(key, None)
+    if z is None:
+        z = _target_window(body, lat, lon, tries, wait_s, px)
+        if z is None:
+            return None
+    _WINDOWS[key] = z                                     # most recent last
+    while len(_WINDOWS) > _WINDOWS_MAX:
+        _WINDOWS.pop(next(iter(_WINDOWS)))
+    return z.copy()
+
+
+def _target_window(body, lat, lon, tries=3, wait_s=5.0, px=200.0):
     """Remote DEM read (USGS/AWS). The loaders return None both for 'no coverage' and for transient network failures,
     so retry a few times before concluding there is no DEM here."""
     import time

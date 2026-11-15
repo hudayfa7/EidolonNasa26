@@ -33,7 +33,9 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => { const [k, ...v]
 const ONLY = new Set(String(args.only ?? 'bundle,paint,memory,fps').split(','));
 const RUNS = Number(args.runs ?? 3);
 const PORT = 4173, URL = `http://localhost:${PORT}/`;
-const GPU_ARGS = ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'];
+// The GPU's own backend: Metal on macOS, Direct3D 11 on Windows, else Chrome's default (Vulkan/GL).
+const ANGLE = { darwin: ['--use-angle=metal'], win32: ['--use-angle=d3d11'] }[process.platform] ?? [];
+const GPU_ARGS = [...ANGLE, '--enable-gpu', '--ignore-gpu-blocklist'];
 const BUDGET = { js: 350, paint: 1500, gpu: 300 };   // KB gzip, ms, MB; frame rates per device in fps()
 const FAST_4G = { offline: false, latency: 60 * 2.75, downloadThroughput: 9e6 / 8 * .9, uploadThroughput: 1.5e6 / 8 * .9 };
 const LAPTOP = { viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2 };
@@ -125,7 +127,8 @@ const STARTED = `(() => { const f = () => { const p = document.getElementById('p
 async function preview() {
   const up = () => fetch(URL).then(r => r.ok, () => false);
   if (await up()) throw new Error(`:${PORT} is already in use; stop that server first`);
-  const child = spawn(path.join(ROOT, 'node_modules/.bin/vite'), ['preview', '--port', String(PORT), '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
+  // Vite's own entry run by node: node_modules/.bin/vite is a shell script that Windows can't spawn.
+  const child = spawn(process.execPath, [path.join(ROOT, 'node_modules/vite/bin/vite.js'), 'preview', '--port', String(PORT), '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
   for (let i = 0; i < 100; i++) { if (await up()) return () => child.kill(); await sleep(200); }
   child.kill(); throw new Error('vite preview did not come up');
 }
