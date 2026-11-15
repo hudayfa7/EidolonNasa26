@@ -24,8 +24,7 @@ VITE_DATA=engine npm run dev          # PowerShell: $env:VITE_DATA='engine'; npm
 ```
 
 `npm run build && npm run preview` serves the production build at http://localhost:4173/. Both ports are strict (the
-command fails rather than move to another port); the repo root's `.claude/launch.json` starts either, and the engine on
-:8000, from the Claude desktop preview.
+command fails rather than move to another port).
 
 ## Scripts
 
