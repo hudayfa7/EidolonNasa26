@@ -11,7 +11,7 @@ vec2 ray(vec3 o, vec3 d, float r){ float b=dot(o,d), h=b*b-dot(o,o)+r*r; if(h<0.
 float chapman(float X, float x, float c){
   float s=sqrt(X+x);
   if(c>=0.0) return s/(s*c+1.0)*exp(-x);
-  float x0=sqrt(1.0-c*c)*(X+x);
+  float x0=sqrt(max(1.0-c*c,0.0))*(X+x);   // c rounds a hair past -1 on the antisolar axis: one NaN, bloomed, blacks out the frame
   return 2.0*sqrt(x0)*exp(min(X-x0,60.0))-s/(1.0-s*c)*exp(-x);
 }
 void main(){
