@@ -385,5 +385,88 @@
   "EIDOLON_TARGET_STORE": "targets"
  },
  "git_commit": "ec4e20b7203bdda79acb06f1ccadea2b4dbcb342",
- "total_bytes": 2838344578
+ "total_bytes": 2838344578,
+ "provenance": {
+  "note": "Which outside sources each data file derives from, and under which licence (added 2026-11-15; web/docs/credits.md has the full credits). Not part of the sha256 list in \"files\".",
+  "files": {
+   "index/index_*.npz, index/emb_*.npz, index/jemb_all.npy, index/cr_*.npz": [
+    "glo30",
+    "team"
+   ],
+   "index/ext_grid.npz": [
+    "glo30"
+   ],
+   "index/site_attrs.npz": [
+    "etopo",
+    "worldclim",
+    "aridity"
+   ],
+   "grid/earth_grid.npz": [
+    "glo30",
+    "unknown"
+   ],
+   "grid/cell_country.npz": [
+    "naturalearth"
+   ],
+   "weights/e016_cnn_s*.pt": [
+    "team"
+   ],
+   "judge/pair1_final.pt": [
+    "team"
+   ],
+   "targets/targets.json, targets/targets.npz, targets/results.sqlite": [
+    "iau",
+    "planetary",
+    "glo30",
+    "team"
+   ]
+  },
+  "sources": {
+   "glo30": {
+    "source": "Copernicus DEM GLO-30 / GLO-90",
+    "licence": "Copernicus DEM licence: free use with attribution",
+    "credit": "© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA"
+   },
+   "etopo": {
+    "source": "ETOPO 2022 (60″), NOAA NCEI",
+    "licence": "Public domain (NOAA; US Government work)",
+    "credit": "NOAA NCEI (2022), ETOPO 2022 15 Arc-Second Global Relief Model, doi:10.25921/fd45-gt74"
+   },
+   "worldclim": {
+    "source": "WorldClim 2.1 BIO1, BIO12 (5′)",
+    "licence": "No licence stated (\"provided for use in research and related activities\", © worldclim.org); the app does not show these values",
+    "credit": "Fick, S.E. and Hijmans, R.J. (2017), Int. J. Climatol. 37, 4302–4315, doi:10.1002/joc.5086"
+   },
+   "aridity": {
+    "source": "Global Aridity Index v3.1 (30″)",
+    "licence": "CC BY 4.0",
+    "credit": "Zomer, R.J., Xu, J. and Trabucco, A. (2022), Scientific Data 9, 409, doi:10.1038/s41597-022-01493-1; dataset doi:10.6084/m9.figshare.7504448.v7"
+   },
+   "naturalearth": {
+    "source": "Natural Earth admin-0 boundaries (SOVEREIGNT)",
+    "licence": "Public domain",
+    "credit": "Made with Natural Earth"
+   },
+   "iau": {
+    "source": "IAU Gazetteer of Planetary Nomenclature",
+    "licence": "Public domain (USGS)",
+    "credit": "Gazetteer of Planetary Nomenclature, IAU WGPSN / USGS Astrogeology Science Center"
+   },
+   "planetary": {
+    "source": "Mars MOLA–HRSC blended DEM 200 m v2 (USGS); UCLA Exploration Zone CTX DEMs (NASA PDS); SLDEM2015 (NASA GSFC, JAXA)",
+    "licence": "Public domain (USGS, NASA); NASA PDS open data",
+    "credit": "Fergason et al. (2018); Day et al. (2023); Barker et al. (2016)"
+   },
+   "team": {
+    "source": "Trained by the team on elevation patches (Copernicus GLO-30/GLO-90, MOLA, LOLA)",
+    "licence": "The team's own",
+    "credit": "None needed"
+   },
+   "unknown": {
+    "source": "Barren-land mask: source not recorded in this repo (experiments/INDEX/README.md is not here); ask the engine owner",
+    "licence": "To confirm",
+    "credit": "To confirm"
+   }
+  }
+ }
 }

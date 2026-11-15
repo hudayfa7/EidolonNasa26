@@ -44,7 +44,7 @@ function show(ts: TargetSummary[], total: number, q: string) {
       <span class="sb">${esc(r.sb)}</span></li>`).join('');
   list.hidden = !opts.length; input.setAttribute('aria-expanded', String(!!opts.length)); mark();
   const n = opts.length, all = total + fs.length;
-  say(!n ? `No named feature on ${BODIES[b].name} matches “${q}”.${b === 'moon' ? ' The search engine lists Moon features only within 60° of the equator; the south-pole sites are under Featured sites.' : ''}`
+  say(!n ? `No named feature on ${BODIES[b].name} matches “${q}”.${b === 'moon' ? ' The search engine lists Moon features only within 59.5° of the equator; the south-pole sites are under Featured sites.' : ''}`
     : `${all > n ? `${n} of ${all.toLocaleString('en-GB')}` : n} named feature${all === 1 ? '' : 's'}. Arrow keys choose, Enter opens.`);
 }
 function mark(scroll = false) {

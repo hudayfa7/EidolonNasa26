@@ -1,0 +1,75 @@
+{
+ "fetched": "2026-10-23",
+ "sources": {
+  "mdim": {
+   "name": "Viking MDIM 2.1 colourised global mosaic",
+   "provider": "USGS Astrogeology Science Center; NASA Ames",
+   "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/wms_basemaps/Mars/MDIM21_AMESColor/",
+   "licence": "Public domain (USGS; US Government work)",
+   "citation": "NASA/JPL Viking Orbiters; USGS Astrogeology Science Center (MDIM 2.1); colour by NASA Ames Research Center"
+  },
+  "tes": {
+   "name": "MGS TES Albedo Global Mosaic, 7,410 m",
+   "provider": "NASA/JPL/Arizona State University; USGS Astrogeology",
+   "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/Mars_MGS_TES_Albedo_mosaic_global_7410m.tif",
+   "licence": "Public domain (USGS; US Government work)",
+   "citation": "Christensen, P.R. et al. (2001), Mars Global Surveyor Thermal Emission Spectrometer experiment, JGR 106, 23823–23871"
+  },
+  "mola": {
+   "name": "MGS MOLA MEGDR 128/64 px/° merge",
+   "provider": "NASA/GSFC MOLA Science Team; USGS Astrogeology",
+   "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/wms_basemaps/Mars/MOLA/",
+   "licence": "Public domain (NASA; US Government work)",
+   "citation": "Smith, D.E. et al. (2001), Mars Orbiter Laser Altimeter, JGR 106, 23689–23722"
+  },
+  "clem": {
+   "name": "Clementine UVVIS 750 nm global mosaic v2",
+   "provider": "NASA and the US Department of Defense; USGS Astrogeology",
+   "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/wms_basemaps/Moon/Clem_UVVIS_Mosaic_Global_256ppd_v02.tif.ovr",
+   "licence": "Public domain (USGS; US Government work)",
+   "citation": "NASA and the US Department of Defense (Clementine); USGS Astrogeology Science Center (mosaic)"
+  },
+  "wac": {
+   "name": "LROC WAC global and south polar morphologic mosaics",
+   "provider": "NASA/GSFC/Arizona State University (NASA PDS)",
+   "url": "https://pds.lroc.asu.edu/data/LRO-L-LROC-5-RDR-V1.0/LROLRC_2001/DATA/BDR/WAC_GLOBAL/",
+   "licence": "NASA PDS open data: any use without permission, credit requested",
+   "citation": "Robinson, M.S. et al. (2010), Lunar Reconnaissance Orbiter Camera (LROC) instrument overview, Space Sci. Rev. 150, 81–124; NASA PDS"
+  },
+  "lola": {
+   "name": "LRO LOLA LDEM_16 and LDEM_75S_240M",
+   "provider": "NASA/GSFC LOLA Science Team (NASA PDS Geosciences Node)",
+   "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/",
+   "licence": "NASA PDS open data: any use without permission, credit requested",
+   "citation": "Smith, D.E. et al. (2010), The Lunar Orbiter Laser Altimeter investigation on the Lunar Reconnaissance Orbiter mission, Space Sci. Rev. 150, 209–241; NASA PDS"
+  },
+  "gibs": {
+   "name": "NASA GIBS WMS: Blue Marble (shaded relief, Next Generation), Black Marble 2016, MODIS water mask, Landsat WELD 1999",
+   "provider": "NASA Global Imagery Browse Services (NASA Earth Observatory, NASA LP DAAC, USGS/NASA Landsat, South Dakota State University WELD)",
+   "url": "https://gibs.earthdata.nasa.gov/wms/",
+   "licence": "Public domain (NASA; USGS/NASA Landsat; WELD, NASA MEaSUREs, no restrictions)",
+   "citation": "NASA Earth Observatory (Blue Marble, Reto Stöckli; Black Marble); NASA LP DAAC (MODIS MOD44W); NASA/USGS Landsat and Roy, D.P. et al., Web-Enabled Landsat Data (WELD); served by NASA GIBS"
+  },
+  "clouds": {
+   "name": "Blue Marble: Clouds",
+   "provider": "NASA Goddard Space Flight Center (Visible Earth)",
+   "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/",
+   "licence": "Public domain (NASA; US Government work)",
+   "citation": "NASA Goddard Space Flight Center image by Reto Stöckli (Blue Marble, 2002); clouds from MODIS"
+  },
+  "etopo1": {
+   "name": "ETOPO1 Ice Surface",
+   "provider": "NOAA National Centers for Environmental Information",
+   "url": "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/ETOPO1_ice_surface/",
+   "licence": "Public domain (NOAA; US Government work)",
+   "citation": "Amante, C. and B.W. Eakins (2009), ETOPO1 1 Arc-Minute Global Relief Model, NOAA Technical Memorandum NESDIS NGDC-24, doi:10.7289/V5C8276M"
+  },
+  "nasaImages": {
+   "name": "NASA Image and Video Library (surface photographs, Beyond images)",
+   "provider": "NASA",
+   "url": "https://images-assets.nasa.gov/",
+   "licence": "NASA imagery: not protected by copyright in the US (NASA Images and Media Usage Guidelines); JPL PIA images: any purpose with credit (JPL image use policy)",
+   "citation": "Each image's own credit line (docs/credits.md, Surface photographs and Beyond)"
+  }
+ }
+}

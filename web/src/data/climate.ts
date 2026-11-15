@@ -1,13 +1,16 @@
 // The climate fit and the NASA surface values read at a target (README: "How the climate fit works"). Pure: no DOM.
 //
 // The fit is a coarse cold-and-dry band, never a measured distance and never part of the terrain match. The Earth side is
-// the engine's `environment` block (WorldClim 2.1 mean annual air temperature, Global Aridity Index v3.1). The Moon and Mars
+// mean annual air temperature from NASA POWER's climatology (`powerClimate`) and the engine's aridity index (Global Aridity
+// Index v3.1, CC BY 4.0). The engine's own temperature and precipitation (WorldClim 2.1) are not shown: WorldClim states no
+// licence, so it can't be shown to be "freely available without restriction" (Space Apps participant terms). The Moon and Mars
 // have no air-temperature or aridity map comparable to those, so the bands are fixed: both worlds are far below freezing
 // on average (data/bodies.ts) and have no liquid surface water. What NASA's orbiters measured at the target (Diviner,
 // THEMIS) is shown beside it (surface.gen.json, scripts/fetch-surface.mjs) and is not scored: Earth has no like-for-like
 // value to compare it with.
 import surface from './surface.gen.json';
 import type { MatchResult } from './types.gen';
+import type { Weather } from './weather';
 
 export type Fit = 'match' | 'partial' | 'gap';
 export type Verdict = 'Match' | 'Partial' | 'Gap';
@@ -21,7 +24,23 @@ export const ARID = .2, SEMI_ARID = .5;
 const ok = (x: unknown): x is number => typeof x === 'number' && Number.isFinite(x);
 const signed = (x: number, d: number) => `${x < 0 ? '−' : ''}${Math.abs(x).toFixed(d)}`;
 
-/** An Earth site's climate against the targets' cold and dry; null when the engine gave no climate for it. */
+/** Where an Earth site's climate comes from, as the result detail and the listing print it. */
+export const CLIMATE_SRC = 'Temperature and precipitation: NASA POWER climatology (T2M, PRECTOTCORR), NASA Langley Research Center. Aridity: Global Aridity Index v3.1 (Zomer, Xu and Trabucco 2022, CC BY 4.0), at the site centre.';
+const DAYS = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+/**
+ * The engine's `environment` with its WorldClim 2.1 temperature and precipitation replaced by NASA POWER's (the site's
+ * monthly climatology, data/weather.ts wxAt(place).cl): the mean of the twelve months' mean temperature, and the twelve
+ * months' rain (mm/day) times their days. The aridity index stays the engine's. Until the climatology lands (or when it
+ * fails, or under ?capture without ?wx=feed) temperature and precipitation are null, so the fit says it has no climate.
+ */
+export function powerClimate(e: MatchResult['environment'] | undefined, months: Weather[] | undefined): MatchResult['environment'] | undefined {
+  if (!e) return e;
+  const full = months?.length === 12 && months.every(m => ok(m.hi) && ok(m.lo) && ok(m.rain));
+  return { ...e, t_mean_c: full ? months!.reduce((s, m) => s + (m.hi + m.lo) / 2, 0) / 12 : null, precip_mm: full ? months!.reduce((s, m, i) => s + m.rain * DAYS[i], 0) : null,
+    source: CLIMATE_SRC } as MatchResult['environment'];
+}
+
+/** An Earth site's climate against the targets' cold and dry; null when there is no climate for it (yet). */
 export function climateFit(e: MatchResult['environment'] | undefined): { rows: ClimateRow[]; verdict: Verdict } | null {
   if (!e || !ok(e.t_mean_c) || !ok(e.aridity_index)) return null;
   const t = e.t_mean_c, ai = e.aridity_index;

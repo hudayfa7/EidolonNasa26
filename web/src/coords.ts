@@ -132,6 +132,11 @@ export function capToLL(qx: number, qz: number, lon0: number): [number, number] 
   return [Math.asin((s - 1) / (s + 1)) / D2R, wrap180(Math.atan2(Z, -X) / D2R + lon0)];
 }
 /** An azimuth (degrees clockwise from north) as one of eight compass words. */
+/** How far (km) and which way a point lies from another, on a sphere of radius R km: true distance and bearing. */
+export function offsetOf(R: number, lat0: number, lon0: number, lat: number, lon: number) {
+  const [x, y] = llToLocal(R, lat0, lon0, lat, lon);
+  return { km: Math.hypot(x, y), dir: compass(Math.atan2(x, y) / D2R) };
+}
 export const compass = (az: number) => ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'][Math.round((((az % 360) + 360) % 360) / 45) % 8];
 export const fmtM = (x: number) => `${x < 0 ? '−' : ''}${Math.abs(Math.round(x)).toLocaleString('en-GB')} m`;
 export const fmtKm = (x: number) => `${Math.round(x).toLocaleString('en-GB')} km`;

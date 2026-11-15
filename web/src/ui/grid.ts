@@ -8,7 +8,7 @@ import { EARTH_BY, SITES, type Site } from '../data/sites';
 import { esc } from '../dom';
 import { routeOf } from '../routes';
 import { credit } from '../terrain/dem';
-import { backBtn, banner, cardHead, failHead, failure, noAnalog, purposeLabel, SAMPLE, targetNote, TESTED, thumb } from './results';
+import { backBtn, banner, cardHead, failHead, failure, noAnalog, purposeLabel, targetNote, TESTED, thumb } from './results';
 
 const TOP = 3;   // doubles per card: the head of the site's five
 // An established analog site as a row: its hillshade from Eidolon's own elevation, its name and place.
@@ -65,9 +65,9 @@ export function gridHTML(id: Body) {
     : 'the elevation models the search engine reads where Eidolon has them; elsewhere illustrative';
   return `<div class="gh"><div>${backBtn(b.name, id)}<h2 class="title" tabindex="-1">Featured sites</h2></div>
       <div class="tabs" role="group" aria-label="World">${PICKABLE.map(w => `<button data-go="${w}/sites" aria-pressed="${w === id}"><i style="--c:${BODIES[w].color}"></i>${BODIES[w].name}</button>`).join('')}</div></div>
-    <p class="lede">Each site’s 18.8&nbsp;km window beside its closest doubles on Earth. Open a site, or compare it with a double.${id === 'moon' ? ' Matching reaches 60° from the equator, so the south-pole regions list their established analog sites, unscored.' : ''}</p>
+    <p class="lede">Each site’s 18.8&nbsp;km window beside its closest doubles on Earth. Open a site, or compare it with a double.${id === 'moon' ? ' Matching reaches 59.5° from the equator, so the south-pole regions list their established analog sites, unscored.' : ''}</p>
     <p class="fine">Test purpose: ${esc(purposeLabel(query.purpose))}${nf ? `, with ${nf} filter${nf > 1 ? 's' : ''} on` : ''}. Change it on any site.</p>
     <div data-gfail tabindex="-1" aria-live="polite"></div><div class="gcards">${SITES[id].map(s => gridCard(id, s)).join('')}</div>
-    <p class="fine">${TESTED}${MOCK ? SAMPLE : ''} Hillshades of each 18.8&nbsp;km window, lit from the north-west, each at its own contrast, drawn from ${shade}.</p>
+    <p class="fine">${TESTED}${MOCK ? ' These are sample results.' : ''} Hillshades of each 18.8&nbsp;km window, lit from the north-west, each at its own contrast, drawn from ${shade}.</p>
     ${src.length ? `<p class="fine credit">Elevation: ${src.map(esc).join('. ')}.</p>` : ''}`;
 }

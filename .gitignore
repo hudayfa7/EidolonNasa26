@@ -14,3 +14,5 @@ __pycache__/
 .env*.local
 engine/SHA256SUMS.tmp
 engine/**/*.part
+# the v10 prototype: its 11 embedded textures have no recorded provenance (web/docs/credits.md, Other); local only, for npm run capture:ref
+web/reference/eidolon.html

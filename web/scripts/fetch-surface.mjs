@@ -7,6 +7,7 @@
 // A value is the median of the valid pixels in a window of about 2 km centred on the site; the window, the valid count and
 // the min and max are kept so the page can say how it was read. Run: `npm run fetch:surface` (network).
 import { writeFileSync } from 'node:fs';
+import { provenance } from './sources.mjs';
 
 // The featured sites the engine can match (src/data/real-sites.ts TARGETS: the same ids and centres; real-sites.test.ts
 // compares them). The Moon's south-pole sites are left out: the engine has no Moon elevation beyond 59.5°, and the
@@ -166,5 +167,7 @@ const sources = {
     moon: { dataset: 'Lunar Pit Atlas (about 280 pits)', provider: 'LROC, Arizona State University, NASA PDS (LRO-L-LROC-5-RDR-V1.0); Wagner and Robinson 2021', url: 'https://data.lroc.im-ldi.com/lroc/view_rdr/SHAPEFILE_LUNAR_PIT_LOCATIONS' },
   },
 };
-writeFileSync(new URL('../src/data/surface.gen.json', import.meta.url), JSON.stringify({ fetched: new Date().toISOString().slice(0, 10), sources, sites: out }, null, 1) + '\n');
+// Provenance (scripts/sources.mjs): each source's URL, licence and citation, and the date of this run.
+const prov = provenance(['diviner', 'themis', 'caves', 'pits', 'grs']);
+writeFileSync(new URL('../src/data/surface.gen.json', import.meta.url), JSON.stringify({ fetched: prov.fetched, provenance: prov.sources, sources, sites: out }, null, 1) + '\n');
 console.log('wrote src/data/surface.gen.json');

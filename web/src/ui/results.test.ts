@@ -5,7 +5,18 @@ import type { MatchResult, SearchResponse } from '../data/types.gen';
 import cachedRes from '../../contracts/examples/api/search_named_cached.response.json';
 
 vi.mock('../terrain/sample', () => ({ BUMP: {}, ALB: {}, sampleMap: () => .5 }));
-const { aridity, banner, brief, card, chips, detail, eidolon, ENGINE_SRC, failure, fractions, legend, matchLine, mixText, noAnalog, noData, NO_SHADE, placeTag, existingBlock, bookingFit, purposeLabel, purposeText, reading, rough, searchSay, skeleton, targetNote, terrainNote, text, twins, unlistedNote, warming } = await import('./results');
+const { aridity, banner, brief, card, chips, detail, ENGINE_SRC, failure, fractions, legend, matchLine, mixText, noAnalog, noData, NO_SHADE, placeTag, existingBlock, bookingFit, purposeLabel, purposeText, reading, rough, searchSay, skeleton, targetNote, terrainNote, text, twins, unlistedNote, warming, windowNote } = await import('./results');
+
+describe('windowNote (the compare caption when the window leaves out the site)', () => {
+  it('Hadley: the window on Rima Hadley, about 18 km south-west of the Apollo 15 landing site', () => {
+    expect(windowNote('moon', { lat: 26.13, lon: 3.63, iau: 'Rima Hadley', note: 'Apollo 15 landing site' }, { lat: 25.7159, lon: 3.1467 }))
+      .toBe(', centred on Rima Hadley, about 18 km south-west of the Apollo 15 landing site');
+  });
+  it('nothing within 10 km (Jezero\'s 6.6 km), and nothing for a pin or a site without an IAU name', () => {
+    expect(windowNote('mars', { lat: 18.38, lon: 77.58, iau: 'Jezero', note: 'Perseverance landing site' }, { lat: 18.4082, lon: 77.6873 })).toBe('');
+    expect(windowNote('moon', { lat: 26.13, lon: 3.63 }, { lat: 25.7159, lon: 3.1467 })).toBe('');
+  });
+});
 const { EngineError } = await import('../data/api');
 
 const res = cachedRes as unknown as SearchResponse, r0 = res.results[0];
@@ -118,7 +129,8 @@ describe('detail', () => {
     expect(fit).toContain('Climate fit <b>Partial</b>');   // the example is 12.5 °C and an aridity index of 0.19
     expect(fit).toMatch(/Temperature<\/span><span class="ps">Partial<\/span><span class="pnote">This site: 12\.5 °C mean\. Mars surface, −140 to 20 °C\./);
     expect(fit).toMatch(/Dryness<\/span><span class="ps">Match<\/span><span class="pnote">This site: aridity index 0\.19\. Mars has no liquid surface water\./);
-    for (const s of ['not a measured distance, and separate from the terrain match', 'WorldClim 2.1', 'Global Aridity Index v3.1', 'air against surface']) expect(fit).toContain(s);
+    for (const s of ['not a measured distance, and separate from the terrain match', 'NASA POWER climatology', 'Global Aridity Index v3.1', 'air against surface']) expect(fit).toContain(s);
+    expect(fit).not.toContain('WorldClim');
     expect(html.indexOf('<h3 class="sec">Climate fit</h3>')).toBeGreaterThan(html.indexOf('<h3 class="sec">Terrain properties</h3>'));
     expect(fit).not.toContain('%');
     expect(detail({ ...r0, environment: null }, res)).toContain('No climate fit for this site');
@@ -383,17 +395,14 @@ describe('formats', () => {
 });
 
 describe('copy', () => {
-  it('the engine spec\'s product name shows as Eidolon (plan, Gaps for the merge 5), escaped', () => {
-    expect(eidolon('MoonBnb ranks, moonbnb and Moon Bnb too; Moon base')).toBe('Eidolon ranks, Eidolon and Eidolon too; Moon base');
-    expect(text('<b>MoonBnb</b>')).toBe('&#60;b&#62;Eidolon&#60;/b&#62;');
-    expect(brief('MOONBNB: 40% close')).toBe('Eidolon: 0.4 close');
-    const r = { ...r0, explanation: { ...r0.explanation, summary: 'MoonBnb found it', strengths: ['MoonBnb relief'], gaps: ['MoonBnb slope'], caveats: ['MoonBnb caveat'] } } as MatchResult;
-    expect(card(r, 'x', false) + detail(r, res)).not.toMatch(/moon ?bnb/i);
+  it('engine strings are escaped for the page, and a summary’s percentages written as fractions', () => {
+    expect(text('<b>x</b>')).toBe('&#60;b&#62;x&#60;/b&#62;');
+    expect(brief('Close: 40% close')).toBe('Close: 0.4 close');
   });
   it('purposes in Eidolon\'s words by key, the engine\'s for any other, never the prototype keys', () => {
     expect(purposeLabel('drill_isru', 'Drilling / ISRU')).toBe('Drilling and ISRU');
     expect(purposeText('education', 'x')).toBe('Look-alike landforms anywhere on land, vegetated ground included.');
-    expect([purposeLabel('new_one', 'New one'), purposeText('new_one', 'MoonBnb tests.')]).toEqual(['New one', 'Eidolon tests.']);
+    expect([purposeLabel('new_one', 'New one'), purposeText('new_one', 'Field tests.')]).toEqual(['New one', 'Field tests.']);
     expect(purposeLabel('polar_lighting_geometry')).toBe('Polar lighting geometry');   // no label: from the key
     expect([purposeLabel('constructor'), purposeText('constructor')]).toEqual(['Constructor', '']);
   });
@@ -407,7 +416,7 @@ describe('search states', () => {
     expect(skeleton(false).match(/<li>/g)).toHaveLength(5);
     expect(skeleton(false)).toContain('<p class="sr">Searching Earth…</p>');
     expect(reading(d({ busy: true }), 'Mars')).toContain('Reading Mars terrain…</p><span class="pbar"><i data-t0="4.500" data-s="10"></i>');
-    expect(warming(d({ up: -12.5 }))).toContain('Starting up…</p><span class="pbar"><i data-t0="-12.500" data-s="40"></i>');
+    expect(warming(d({ up: -12.5 }))).toContain('Starting up…</p><span class="pbar"><i data-t0="-12.500" data-s="90"></i>');
     expect(warming(d({}))).toContain('data-t0="4.500"');   // the warm-up's start unknown: from the ask
   });
   it('failures keyed on the code, anything unknown as no answer, the buttons inside', () => {
@@ -418,7 +427,7 @@ describe('search states', () => {
     expect(failure('unsupported_purpose')).toContain('separate lighting study');
   });
   it('no elevation data, for a point or a site with its known analog sites', () => {
-    expect(noData(true, false)).toContain('The search engine has no data for this point</p><p class="fine">The search engine reads Moon terrain only within 60° of the equator, so it can’t score Earth sites against it.');
+    expect(noData(true, false)).toContain('The search engine has no data for this point</p><p class="fine">The search engine reads Moon terrain only within 59.5° of the equator, so it can’t score Earth sites against it.');
     expect(noData(false, true)).toContain('so it can’t score these established analog sites');
   });
   it('the detection frame\'s Matching line', () => {
@@ -439,7 +448,7 @@ describe('search states', () => {
     expect(searchSay(err('network'), 'Mars', false)).toBe('The search engine didn’t answer.');
     expect(searchSay(err('network', { res }), 'Mars', false)).toBe('The search engine didn’t answer.');   // Show more failed: the cards stand
     expect(searchSay(err('aborted'), 'Mars', true)).toBe('');
-    expect(searchSay(err('no_dem'), 'Moon', true)).toContain('only within 60° of the equator');
+    expect(searchSay(err('no_dem'), 'Moon', true)).toContain('only within 59.5° of the equator');
     // a warm-up asked again (busy, its start carried over) is still the one state, not "Searching Earth…" every 3 s
     expect(searchSay(err('warming_up', { up: 2 }), 'Mars', false)).toBe(searchSay(d({ busy: true, up: 2 }), 'Mars', false));
     expect(searchSay(d({}), 'Mars', false)).toBe('');

@@ -4,48 +4,58 @@ NASA Space Apps Challenge 2026: *Identify Earth locations that analog the perman
 Pick a site on the Moon or Mars and Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, shows
 them side by side, and helps plan a test campaign at one.
 
-This folder, `web/`, is the frontend (Vite, TypeScript, three.js 0.186, GSAP, postprocessing; no UI framework). The
-search engine joins the repo as `engine/` (see `docs/merge-plan.md`); until it is connected the frontend runs on a mock
-that replays the engine's own example responses, so everything works offline with no engine. Run every command below
-from `web/`.
+This folder, `web/`, is the frontend (Vite, TypeScript, three.js 0.186, GSAP, postprocessing; no UI framework). It runs
+two ways: on a mock that replays the search engine's own example responses (the default: everything works offline), or
+on the live search engine in `../engine/` (`VITE_DATA=engine`). Run every command below from `web/`.
 
 ## Quick start
 
 ```sh
 cd web
-npm install
-npm run dev            # http://localhost:5173/
+npm ci                 # not npm install: it keeps package-lock.json from churning
+npm run dev            # http://localhost:5173/, on the mock
+```
+
+On the live engine: start it first (the repo's `README.md`, Setup: its data, a conda environment, then
+`engine/run_server.bat` or `run_server.sh`, ready in about 35–75 s), then
+
+```sh
+VITE_DATA=engine npm run dev          # PowerShell: $env:VITE_DATA='engine'; npm run dev
 ```
 
 `npm run build && npm run preview` serves the production build at http://localhost:4173/. Both ports are strict (the
-command fails rather than move to another port); the repo root's `.claude/launch.json` starts either from the Claude
-desktop preview.
+command fails rather than move to another port); the repo root's `.claude/launch.json` starts either, and the engine on
+:8000, from the Claude desktop preview.
 
 ## Scripts
 
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | Vite dev server on :5173 |
-| `npm run build` | Typecheck, build to `dist/`, then check the bundle's copy (`scripts/check-copy.mjs`) |
+| `npm run build` | Typecheck, build to `dist/`, then the two gates: the bundle's copy (`scripts/check-copy.mjs`) and the data licences (`scripts/check-credits.mjs`) |
 | `npm run preview` | Serve `dist/` on :4173 |
-| `npm test` | Unit tests (Vitest, `src/**/*.test.ts`) |
+| `npm test` | Unit tests (Vitest, `src/**/*.test.ts`), always on the mock |
+| `npm run test:live` | The data seam against the running engine: every call, answers checked against the schemas (run once while it warms up, once warm) |
 | `npm run typecheck` | TypeScript, no emit |
 | `npm run types` | Regenerate `src/data/types.gen.ts` from the engine's JSON Schemas in `contracts/` |
-| `npm run capture` | Screenshots of every state at desktop and phone size into `captures/build/` (`--states=a,b`, `--viewports=…`); reuses or starts the dev server on :5173 |
-| `npm run capture:ref` | The same states from the prototype, `reference/eidolon.html`, into `captures/reference/` |
+| `npm run check:credits` | Fails if a source the data scripts read has no entry in `scripts/sources.mjs`, no licence, or no row in `docs/credits.md` |
+| `npm run capture` | Screenshots of every state at desktop and phone size into `captures/build/` (`--states=a,b`, `--viewports=…`); reuses or starts the dev server on :5173. With `VITE_DATA=engine` the mock-only states are skipped |
+| `npm run capture:ref` | The same states from the prototype into `captures/reference/`; needs your own local `reference/eidolon.html` (not in git) |
 | `npm run a11y` | axe (WCAG 2.1 A/AA) over the main routes at both sizes |
-| `npm run perf` | Build, then measure the budget: gzipped JS, first paint, GPU memory, frame rate |
+| `npm run perf` | Build, then measure the budget: gzipped JS, first paint, GPU memory, frame rate. Needs a real GPU (Metal on macOS, Direct3D 11 on Windows) |
 | `npm run poster` | Remake `public/poster.jpg`, `poster-tall.jpg` (the no-WebGL page) and `og.jpg` (link preview) from captures |
-| `npm run fetch:surface` | Networked: read the Diviner and THEMIS values at the featured sites into `src/data/surface.gen.json` (range requests, nothing large downloaded) |
-| `npm run fetch:real` | Networked: fetch the real maps, elevation patches, crops and photos into `public/` (`-- --only=globes\|sites\|…`) |
+| `npm run fetch:surface` | Networked: read the Diviner, THEMIS, cave, pit and GRS values at the featured sites into `src/data/surface.gen.json`, with each source's provenance (range requests, nothing large downloaded) |
+| `npm run fetch:real` | Networked: fetch the real maps, elevation patches, crops and photos into `public/`, with provenance (`-- --only=globes\|sites\|…`; `--only=provenance` rewrites just the provenance records, downloading nothing) |
 
-Run one of capture, a11y, perf or poster at a time.
+Run one of capture, a11y, perf or poster at a time. The harness scripts run on macOS and Windows.
 
 ## Configuration
 
 Build-time variables (`.env`):
 
-- `VITE_DATA`: `mock` (default) replays the engine's examples in the browser; `engine` calls the engine over HTTP.
+- `VITE_DATA`: `mock` (default) replays the engine's examples in the browser; `engine` calls the engine over HTTP. Set
+  `engine` on the command line only, never in `.env` (Vite loads it in tests too). In an engine build, `?mock=on` falls
+  back to the mock.
 - `VITE_API`: the engine's base URL in engine mode, default `http://127.0.0.1:8000/api/v1`.
 - `VITE_SITE_URL`: the deployed origin, no trailing slash; makes `og:url` and `og:image` absolute. Empty in development.
 
@@ -55,7 +65,7 @@ URL switches (before the hash or after it, `/?mock=slow#/mars` or `#/mars?mock=s
   `warming` (503 warming_up for 35 s), `noimage` (no Earth hillshades), `asengine` (label the mock's images as the
   engine's).
 - `?capture`: deterministic mode for the harness: frozen clock, fixed sim epoch, no transitions, `window.__eidolon`
-  to seek time and wait for readiness (docs/progress.md, "The ?capture contract"). `?wx=feed` lets captures answer the
+  to seek time and wait for readiness. `?wx=feed` lets captures answer the
   weather feeds from `scripts/fixtures/`.
 
 ## Routes
@@ -90,17 +100,30 @@ URL switches (before the hash or after it, `/?mock=slow#/mars` or `#/mars?mock=s
 | `contracts/` | The engine's schemas and example responses (a copy of `engine/code/contracts`; engine commit in `contracts/ENGINE_COMMIT`). The spec is `engine/code/docs/frontend_spec.md` |
 | `public/` | Textures, elevation patches and crops, photos, fonts, posters |
 | `scripts/` | Capture, a11y and perf harnesses, copy check, type generation, real-data fetch |
-| `reference/eidolon.html` | The original prototype (visual reference only; very large single file) |
+| `reference/eidolon.html` | The original prototype (visual reference only; very large single file). Local only, not in git: its textures have no recorded provenance |
 
-## Data seam and the engine merge
+## Data seam and the engine
 
 The UI reads engine data only through `src/data/client.ts`, which picks `mock.ts` or `http.ts` by `VITE_DATA`. Both
 implement the same `Engine` interface (`src/data/api.ts`) on the engine's contract in `contracts/`. Booking listings,
-plans, weather, photos and featured sites are frontend-owned in both modes.
+plans, weather, photos and featured sites are frontend-owned in both modes. The mock and its example responses load
+after the start (a chunk of their own), so they cost nothing on the title screen and an engine build never fetches them.
 
-Step 2 plugs in here: start the engine, set `VITE_DATA=engine` (and `VITE_API` if it is not on the default address),
-then run `npm run capture` and the probe flows. `http.ts` has only been tested against a stubbed `fetch`. Everything the
-merge must check is in docs/progress.md, "Merge notes".
+The engine is connected: `npm run test:live` passes during warm-up and warm, the 99 engine capture states pass at both
+sizes, and a11y and perf pass on the engine build. What the connection changed:
+
+- **Warm-up.** The engine takes about 35 s to start warm and 56–74 s from a cold disk (its spec says 30–40 s). The
+  "Starting up…" bar fills over 90 s, and an elevation window is asked again for 90 s; searches retry until it is ready.
+- **No elevation where the body has data.** A search by coordinates the engine answers `no_dem` inside the Moon's 59.5°
+  (or anywhere on Mars) is a network failure, not "no data"; beyond 59.5° on the Moon the client refuses it at once.
+- **The Moon's cutoff is 59.5°**, the engine's, in every line of copy. The "Exclude polar sites, beyond 60° latitude"
+  filter stays at 60, as the engine filters.
+- **Hadley's compare caption** says its window is centred on Rima Hadley, about 18 km south-west of the Apollo 15 landing
+  site (any named target whose window is over 10 km from its site says so).
+- **Engine patches** (in `../engine/code`): a failed elevation read is no longer cached (E1), a repeat pin search reuses
+  its window (E2), and the card hillshades are contrast-stretched (E5, which needs the engine owner's OK).
+- **Known engine behaviour** (for its owner): an area filter round the first double can drop it (it merges sites under
+  20 km to a different representative), and Arcadia, Meridiani and Elysium's live cells have no real image crops yet.
 
 ## How the climate fit works
 
@@ -110,13 +133,17 @@ re-rank, filter or weight anything.
 
 **The two rows** (`src/data/climate.ts`, `climateFit`), each a coarse band, not a measured distance:
 
-| Row | Earth side (the engine's `environment` block) | Match | Partial | Gap |
+| Row | Earth side | Match | Partial | Gap |
 | --- | --- | --- | --- | --- |
-| Temperature | Mean annual air temperature, WorldClim 2.1 | 0 °C or below | up to 15 °C | above 15 °C |
-| Dryness | Aridity index, Global Aridity Index v3.1 | below 0.2 (arid) | below 0.5 (semi-arid) | 0.5 or more |
+| Temperature | Mean annual air temperature, NASA POWER climatology (`T2M`; `powerClimate`) | 0 °C or below | up to 15 °C | above 15 °C |
+| Dryness | Aridity index, Global Aridity Index v3.1 (the engine's `environment` block) | below 0.2 (arid) | below 0.5 (semi-arid) | 0.5 or more |
+
+The engine also sends WorldClim 2.1 temperature and precipitation; Eidolon doesn't show them. WorldClim states no
+licence, so it can't be shown to be "freely available without restriction", as the Space Apps participant terms require
+of non-NASA data. NASA POWER's climatology, which the app already asks for each site, takes their place.
 
 Match is 2 points, partial 1, gap 0. Both rows matching is **Close** (4 points), 2 or 3 points is **Partial**, fewer is
-**Weak**. A site with no climate from the engine has no fit; it is never shown as a zero. The bands are fixed because the
+**Weak**. A site with no climate (its climatology not loaded or unavailable) has no fit; it is never shown as a zero. The bands are fixed because the
 Moon and Mars are far below freezing on average (`src/data/bodies.ts`) and have no liquid surface water; the thresholds are
 our choice, set once at the top of `climate.ts`.
 
@@ -184,11 +211,12 @@ engine's score, the order of the results, or which land is searched.
 - **Known analogs.** A collapsed dropdown above the Earth doubles: the three established sites that stand in for most of the mission's
   weight, as compact ranked rows that open to their fact and source (`existingBlock`, `knownAnalogs` in `src/data/analogs.ts`). Field
   sites and hybrids rank together; one facility joins them only when the mission puts at least 25 of its 100 weight on fidelity and crew.
-- **The site panel's dropdowns.** Tools (measure, sunlight, slope hazard, landing ellipse), Imagery and credits, and Known analogs;
-  Tools opens by itself while a tool is on.
+- **View tools and the site panel.** Sunlight, slope hazard and landing ellipse, which change how the block and the map
+  look, sit in a **View tools** window over the stage (`src/ui/vtools.ts`), collapsed to its title until opened and open
+  while a tool is on. Measure stays under the map it draws on. The panel keeps Imagery and credits and Known analogs as
+  dropdowns, and the mission's weights as a bar in the "Filters and purpose" header.
 
-This is a deliberate departure from `docs/plan.md`'s rule never to blend terrain fidelity and practical suitability into one number
-(`docs/progress.md`, Decision 207 and Deviations): the terrain score stays on its own line beside it, and the fit shows every factor's own score.
+This is a deliberate departure from `docs/plan.md`'s rule never to blend terrain fidelity and practical suitability into one number: the terrain score stays on its own line beside it, and the fit shows every factor's own score.
 
 **The detail's layout.** The two answers first (Mission fit, Analog verdict), then one group each, named for whose values it holds:
 "Terrain: Earth site against the target", "Climate: Earth site against the target", "Target: measured on Mars" (or the Moon), and
@@ -207,12 +235,30 @@ Three additions to the result detail and the cards, all derived from data we alr
   so it means "a candidate for a site not yet characterised here", never "undiscovered": the literature may know the place.
 - **Surface temperature** (`skinAt` in `src/data/weather.ts`, `skinBlock`): the Earth site's night-time and day-time *skin* temperature
   from NASA POWER's climatology (TS_MIN and TS_MAX, 2001 to 2025, asked from the browser, no login), beside the Moon's local-midnight surface
-  temperature from Diviner. The engine's climate block is air temperature, so this is the like-for-like of the two (surface, night-time).
+  temperature from Diviner. The climate fit's temperature is air temperature, so this is the like-for-like of the two (surface, night-time).
   It is not part of the climate fit, and it is not asked under `?capture`; if the feed fails the block says "Not available".
+
+## Data licences and provenance
+
+Space Apps asks that every non-NASA dataset be freely available without restriction (or OSI open source) and every
+source be cited. How this folder meets that:
+
+- **One registry.** `scripts/sources.mjs` lists every source the data scripts read, with its provider, URL, licence and
+  citation. `npm run build` fails if a source has no entry or licence, or no row in `docs/credits.md`, or a row whose
+  licence is left unchecked (`scripts/check-credits.mjs`).
+- **Provenance in the data.** The generated files record each source's URL, licence, citation and fetch date:
+  `public/sites/manifest.json` (`provenance`), `public/textures/provenance.json` (a file of its own: the app loads every
+  key of `textures/manifest.json` as a texture) and `src/data/surface.gen.json`.
+- **WorldClim 2.1 is not shown.** It states no licence, so the climate's temperature and rainfall come from NASA POWER
+  (How the climate fit works, above).
+- **Software.** Eidolon is MIT-licensed (`../LICENSE`); the packages it uses and their licences are in
+  `../THIRD_PARTY_NOTICES.md`. GSAP is the one non-OSI package, under its free Standard License, stated there.
+- **The prototype**, `reference/eidolon.html`, is not in git: its textures have no recorded provenance.
 
 ## Docs
 
 - `docs/plan.md`: what step 1 set out to build.
+- `docs/merge-plan.md`: connecting the engine (step 2), its decisions and phases.
 - `docs/analog-weights.md`: the mission fit's tracks, weights and existing analogs, with the reasoning and sources for each.
-- `docs/progress.md`: final state, status, decisions, deviations, known limits and the merge notes.
-- `docs/credits.md`: every data source, image and font, with its licence.
+- `docs/credits.md`: every data source, image and font, with its provider, licence and citation.
+- `../README.md`: the licence, the data and the AI-use disclosure.

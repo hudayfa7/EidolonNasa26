@@ -28,7 +28,8 @@ import { buildMarkers } from './markers';
 import { buildTUI, redoCaptions } from './terrain-ui';
 import { bookHTML, bookKey, purposeOptions } from './booking';
 import { monthsText } from './listing';
-import { backBtn, banner, card, detail, fact, failure, legend, noAnalog, noData, NO_SHADE, placeTag, purposeLabel, purposeText, reading, SAMPLE, skeleton, targetNote, TESTED, twins, unlistedNote, warming, existingBlock } from './results';
+import { backBtn, banner, card, detail, fact, failure, legend, noAnalog, noData, NO_SHADE, placeTag, purposeLabel, purposeText, reading, skeleton, targetNote, TESTED, twins, unlistedNote, warming, existingBlock } from './results';
+import { powerClimate } from '../data/climate';
 import { targetSearchHTML } from './target-search';
 import { peeked, setSnap } from './sheet';
 import { barH, dayText, lc, limitsText, marks, monthsSrc, srcText } from './weather';
@@ -168,7 +169,7 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
     <ul class="results">${list.map(({ r, id: did }) => card(r, to(did), did === sel)).join('')}</ul>${more}
     ${sel ? '' : existingBlock(query.purpose, id, kept.has('analogs'))}
     ${legend}${unlistedNote(list.map(x => x.r))}${tn}${compare(list[0].id)}
-    <p class="fine">${TESTED}${!sel && MOCK ? SAMPLE : ''}</p>`;
+    <p class="fine">${TESTED}${!sel && MOCK ? ' These are sample results.' : ''}</p>`;
 }
 const doublesBox = (id: Body, s: Site, sel?: string) => { const e = doublesOf(id, s);
   // Not a live region: the search's state is said in a few words (ui/chrome.ts, #live-s), not its five cards read out.
@@ -449,7 +450,7 @@ function compareTop(id: Body, s: Site, d: Site) {
       <div class="pa"><span class="dot" style="--c:${BODIES.earth.color}"></span><div><div class="pn">${esc(d.name)}</div>${d.place === d.name ? '' : `<div class="ps">${esc(d.place!)}</div>`}${d.custom ? placeTag(d.lat, d.lon) : ''}</div></div></div>
     <div class="minis">${map(id, s)}${map('earth', d)}</div>${sunSet.on ? '<p class="mcap">Both lit from the north-west, as the search engine’s hillshades are: the sun you set lights the site view only.</p>' : ''}
     ${hit || !d.custom ? `<div class="jump"><button class="btn primary" data-go="${routeOf({ body: id, site: s.id, dbl: d.id, book: 'listing' })}">Plan a test campaign here</button>${hit ? '<button class="back" data-jump>Other doubles<span class="chev" aria-hidden="true"></span></button>' : ''}</div>` : ''}
-    ${hit ? `${twins(hit, s.name, `${id}|${s.id}`, AS_ENGINE, !!(terrainOf(id, s).T.src && terrainOf('earth', d).T.src))}${detail(hit, e.res!, hit.location && Number.isFinite(hit.location.lat) && Number.isFinite(hit.location.lon) ? skinAt({ lat: hit.location.lat!, lon: hit.location.lon! }) : undefined,
+    ${hit ? `${twins(hit, s.name, `${id}|${s.id}`, AS_ENGINE, !!(terrainOf(id, s).T.src && terrainOf('earth', d).T.src))}${detail({ ...hit, environment: powerClimate(hit.environment, wxAt(d).cl.v) }, e.res!, hit.location && Number.isFinite(hit.location.lat) && Number.isFinite(hit.location.lon) ? skinAt({ lat: hit.location.lat!, lon: hit.location.lon! }) : undefined,
       { months: bestMonths(d, String(hit.purpose ?? query.purpose)), busy: wxAt(d).cl.busy, shadow: shadowOf(terrainOf(id, s).T, BODIES[id].R, terrainOf('earth', d).T) })}` : ''}
     <div data-terr="${winOf(id, s, d)}">${terrHTML(id, s, d)}</div>${cmpSlopeHTML()}`;
 }
@@ -468,7 +469,7 @@ function panelHTML() {
   const head = `${backBtn('All worlds', 'system')}<h2 class="title" tabindex="-1">${b.name}</h2>`;
   // The site selector grid (views/grid.ts) opens over the globe from under the lede; while it shows, its own heading leads
   // back, its lede says the 60° line, and the globe the pin hint speaks of is under it.
-  if (b.kind === 'target') return `${head}<p class="lede">Find a named feature, pin any point on the globe, or start from a featured site.${id === 'moon' && !state.grid ? ' Matching reaches 60° from the equator, so the south-pole base regions list their established analog sites, unscored, for now.' : ''}</p>
+  if (b.kind === 'target') return `${head}<p class="lede">Find a named feature, pin any point on the globe, or start from a featured site.${id === 'moon' && !state.grid ? ' Matching reaches 59.5° from the equator, so the south-pole base regions list their established analog sites, unscored, for now.' : ''}</p>
     ${state.grid ? '' : `<div class="jump"><button class="back go" data-go="${id}/sites">Featured sites and their doubles<span class="chev" aria-hidden="true"></span></button></div>`}
     ${targetSearchHTML(id)}
     <div class="cform"><label for="cin">Go to coordinates</label>

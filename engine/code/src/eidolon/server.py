@@ -1,4 +1,4 @@
-"""MoonBnb reference HTTP server: the contract between the Eidolon search engine and the front end.
+"""Eidolon reference HTTP server: the contract between the Eidolon search engine and the front end.
 
 Spec: docs/frontend_spec.md. Schemas: contracts/api/*.json (+ contracts/match_result.json for each result).
 
@@ -233,7 +233,12 @@ def search(req: SearchRequest):
 def _png(z, scale=2):
     from PIL import Image
     from eidolon.search.judge import hillshade
-    h = (hillshade(np.asarray(z, dtype=np.float64)) * 255).astype(np.uint8)
+    s = np.asarray(hillshade(np.asarray(z, dtype=np.float64)), dtype=np.float64)
+    # Stretch to the 2nd-98th percentile so gentle terrain isn't flat grey; a flat window is left as it is.
+    lo, hi = (np.nanpercentile(s, 2), np.nanpercentile(s, 98)) if np.isfinite(s).any() else (0.0, 1.0)
+    if hi - lo > 1e-6:
+        s = np.clip((s - lo) / (hi - lo), 0.0, 1.0)
+    h = (np.nan_to_num(s) * 255).astype(np.uint8)
     im = Image.fromarray(h).resize((h.shape[1] * scale, h.shape[0] * scale), Image.BILINEAR)
     buf = io.BytesIO(); im.save(buf, format="PNG")
     return buf.getvalue()
@@ -249,7 +254,30 @@ def target_image(body: Literal["mars", "moon"], name: str):
     return Response(_png(T["z"]), media_type="image/png", headers={"Cache-Control": "public, max-age=86400"})
 
 
-@lru_cache(maxsize=4096)
+def _cache_found(maxsize):
+    """Like lru_cache, but a miss (None, a failed remote read) is never kept, so one blip doesn't stick until a restart."""
+    def deco(fn):
+        store = {}
+        lock = threading.Lock()
+
+        def wrapper(*args):
+            with lock:
+                if args in store:
+                    store[args] = store.pop(args)        # most recent last
+                    return store[args]
+            val = fn(*args)
+            if val is not None:
+                with lock:
+                    store[args] = val
+                    while len(store) > maxsize:
+                        store.pop(next(iter(store)))
+            return val
+        wrapper.cache_clear = store.clear
+        return wrapper
+    return deco
+
+
+@_cache_found(4096)
 def _site_z(cell):
     from eidolon.loaders.windows import earth_window
     from eidolon.search.api import get_index
@@ -287,7 +315,7 @@ def target_elevation(body: Literal["mars", "moon"], name: str):
     return _elev(T["z"])
 
 
-@lru_cache(maxsize=256)
+@_cache_found(256)
 def _point_z(body, lat, lon):
     from eidolon.search.api import target_window
     return target_window(body, lat, lon)
