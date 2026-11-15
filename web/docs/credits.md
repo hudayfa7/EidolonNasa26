@@ -169,18 +169,15 @@ under "Other" below) and these values only as context: they are not scored (READ
 
 ## Fonts (`public/fonts/`)
 
-The design system's three faces, self-hosted (Share and meta): Google Fonts' own woff2 files, as its CSS API serves them
-to Chrome for `https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap`
-(downloaded 2026-10-21 from https://fonts.gstatic.com/ : Newsreader v26, Geist v5, Geist Mono v6), the latin and
-latin-ext subsets only, with Google's unicode ranges (`src/tokens.css`). Each is a variable font (Newsreader with its
-optical-size axis). The licence ships beside them: `OFL-Newsreader.txt` and `OFL-Geist.txt` (Geist and Geist Mono share
-one text), from https://github.com/google/fonts (`ofl/newsreader/OFL.txt`, `ofl/geist/OFL.txt`, `ofl/geistmono/OFL.txt`).
+The design system's one face, Geist (all text, wordmarks included), self-hosted (Share and meta): Google Fonts' own
+woff2 files, as its CSS API serves them to Chrome for `https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap`
+(downloaded 2026-10-21 from https://fonts.gstatic.com/ : Geist v5), the latin and latin-ext subsets only, with Google's
+unicode ranges (`src/tokens.css`). Both files carry the variable font's whole weight axis, 100 to 900. The licence ships
+beside them: `OFL-Geist.txt`, from https://github.com/google/fonts (`ofl/geist/OFL.txt`).
 
 | Asset | Source | Licence | Credit |
 | --- | --- | --- | --- |
-| `newsreader-latin.woff2`, `newsreader-latin-ext.woff2` (132 and 87 KB) | Newsreader, Google Fonts | SIL Open Font License 1.1 | Copyright 2020 The Newsreader Project Authors (Production Type), https://github.com/productiontype/Newsreader |
-| `geist-latin.woff2`, `geist-latin-ext.woff2` (29 and 17 KB) | Geist, Google Fonts | SIL Open Font License 1.1 | Copyright 2024 The Geist Project Authors (Vercel), https://github.com/vercel/geist-font |
-| `geist-mono-latin.woff2`, `geist-mono-latin-ext.woff2` (10 and 7 KB) | Geist Mono, Google Fonts | SIL Open Font License 1.1 | Copyright 2024 The Geist Project Authors (Vercel), https://github.com/vercel/geist-font |
+| `geist-latin.woff2`, `geist-latin-ext.woff2` (29 and 17 KB) | Geist, Google Fonts | SIL Open Font License 1.1 (text: `OFL-Geist.txt`) | Copyright 2024 The Geist Project Authors (Vercel), https://github.com/vercel/geist-font |
 
 ## The search engine's elevation data and models (`engine/`)
 
