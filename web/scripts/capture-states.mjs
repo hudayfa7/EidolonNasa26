@@ -149,7 +149,7 @@ export const STATES = [
   // Body views.
   { name: 'body-mars', seq: 'mars', route: '#/mars', steps: [{ seek: 2.5 }], check: 'HUD, graticule labels' },
   { name: 'body-mars-zoomed', seq: 'mars', steps: [{ wheel: { dx: 0, dy: -500 }, at: '#gl' }, { seek: 4 }], check: '10° grid when zoomed; the HUD\'s brackets clamped inside the viewport, the tape below the top bar, a side\'s readouts gone where they have no room; the graticule labels inside the brackets, none on the hint or the tape' },
-  { name: 'body-moon', route: '#/moon', steps: [{ seek: 2.5 }, { expect: '#hud:not(:has(dd[style*="--fl: 0."]))' }], check: 'HUD (its readouts white: the sub-observer\'s and sub-solar\'s ~1.1 s ticks at ×600 are drift, never flashed), graticule labels; the lede: "Matching reaches 59.5° from the equator, so the south-pole base regions list their established analog sites, unscored, for now."' },
+  { name: 'body-moon', route: '#/moon', steps: [{ seek: 2.5 }, { expect: '#hud:not(:has(dd[style*="--fl: 0."]))' }], check: 'HUD (its readouts white: the sub-observer\'s and sub-solar\'s ~1.1 s ticks at ×600 are drift, never flashed), graticule labels; the lede: "Matching reaches 59.5° from the equator, so the south-pole base regions list their established analog sites, unscored."' },
   { name: 'body-earth', route: '#/earth', steps: [{ seek: 2.5 }], check: 'Earth lede "The 14 established analog sites, and the worlds they stand in for." over "Established analog sites"' },
   // A world whose colour map hasn't landed (outside ?capture the maps after the route's load after start; both its tiers
   // blocked here, so neither lands): it draws in its map's mean colour until the map turns it over .9 s (app.ts
@@ -756,7 +756,7 @@ export const STATES = [
     { scroll: '#panel', to: '.days' }, { seek: 4.4 }, { expect: '.days li:nth-child(4) .day[aria-pressed="true"]' }],
     check: 'Days 2 to 6 picked (coral outline), the summary line "… to … · 5 days, n under the limits"; errors still shown until Review is pressed again' },
   { name: 'book-review', seq: 'book', refNA: true, steps: [{ scroll: '#panel', to: '.bform .actions' }, { tap: '.bform button[type="submit"]' }, { seek: 4.6 }],
-    check: 'Step 3: site United States of America with coordinates, purpose, dates "Tue 6 Oct 2026 to …" with days under the limits, team size 6 people, 5 days (sans), rover, the notes' },
+    check: 'Step 3: field site United States of America with coordinates, purpose, dates "Tue 6 Oct 2026 to …" with days under the limits, team size 6 people, 5 days (sans), rover, the notes' },
   { name: 'book-review-foot', seq: 'book', refNA: true, steps: [{ scroll: '#panel' }, { seek: 4.7 }], check: 'Indicative cost for 6 people over 5 days, permits, Edit the plan and Request the campaign, the mock line' },
   { name: 'book-done', seq: 'book', refNA: true, steps: [{ tap: '[data-request]' }, { seek: 5 }], check: 'Step 4: "Campaign requested", the reference EID-…, the summary, Back to the comparison and Edit the plan on one row; "It’s listed in My campaigns (underlined). A mock-up: nothing was sent…"' },
   // My campaigns (Stretch 5) from the confirmation: the campaign just requested, selected; the focus on the heading.
@@ -777,7 +777,7 @@ export const STATES = [
     { fill: '#b-team', text: '5' }, { expect: '#b-team:not([aria-invalid])' }, { fill: '#b-team', text: '' }, { press: 'Enter' }, { seek: 3.15 },
     { expect: '#b-team-e' }, { expect: '#b-team[aria-invalid="true"][aria-describedby~="b-team-e"]:focus' },
     { fill: '#b-team', text: '4' }, { scroll: '#panel', to: '.days' }, { seek: 3.2 }],
-    check: 'The month on the first day ("Oct"); summary "… · 3 days, n under the limits. Outside the site’s best months (Jun to Aug). Sample months: the climatology couldn’t be loaded. Reachable in the local summer only."' },
+    check: 'The month on the first day ("Oct"); summary "… · 3 days, n under the limits. Outside the field site’s best months (Jun to Aug). Sample months: the climatology couldn’t be loaded. Reachable in the local summer only."' },
   { name: 'book-offseason-review', seq: 'book-off', refNA: true, steps: [{ scroll: '#panel', to: '.bform .actions' }, { tap: '.bform button[type="submit"]' }, { seek: 3.4 }],
     check: 'Review: site Haughton Crater; under Dates the best-months caveat' },
   // Antarctica: the Antarctic Treaty's permits copy.
@@ -833,8 +833,8 @@ export const STATES = [
     { tap: '.days li:nth-child(3) .day' }, { tap: '.days li:nth-child(5) .day' }, { fill: '#b-team', text: '6' }, { scroll: '#panel', to: '.bform .actions' },
     { tap: '.bform button[type="submit"]' }, { seek: 3.2 }, { scroll: '#panel' }, { tap: '[data-request]' }, { seek: 3.4 }, { expect: '#pin .ref' },
     { scroll: '#panel' }, { tap: '#pin [data-camps]' }, { seek: 3.5 }, { expect: '#camps .row.is-sel' }, { expect: '#camps-btn[aria-label="My campaigns, 1 requested"]' },
-    { eval: "{ const t = document.querySelector('#camps .fine').textContent; if (!t.startsWith('This browser keeps no site data')) throw new Error(t); }" }],
-    check: 'One row, Haughton Crater for Malapert Massif, Moon, selected; the fine print "This browser keeps no site data, so they last until the page is closed. A mock-up: …"; the count 1' },
+    { eval: "{ const t = document.querySelector('#camps .fine').textContent; if (!t.startsWith('This browser blocks storage')) throw new Error(t); }" }],
+    check: 'One row, Haughton Crater for Malapert Massif, Moon, selected; the fine print "This browser blocks storage, so they last until the page is closed. A mock-up: …"; the count 1' },
 
   // A target searched by coordinates (6 s): the listing waits for the search that found its cell, then fills in place.
   { name: 'book-pin-wait', seq: 'book-pin', route: '#/mars/arcadia/compare/@38.4250,-110.7750/book', refNA: true, steps: [{ seek: 3 }], check: '"Reading Mars terrain…" with its bar' },

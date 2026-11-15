@@ -1,6 +1,7 @@
 // The booking flow's site listing (ui/booking.ts) as pure templates on the engine's schema (contracts/site_listing.json):
 // its lede, then below the strip practical suitability (apart from the terrain match), access and the permits copy it
 // drives, surface and climate, season and an indicative cost. Tested on the engine's own example (listing.test.ts).
+import { MONTHS } from '../astro';
 import { fmtM } from '../coords';
 import { dayRate } from '../data/booking';
 import { inCountry } from '../data/listing';
@@ -10,7 +11,6 @@ import { ic } from './icons';
 import { ACCESS, climate, fact, SURFACE, text, word } from './results';
 
 type Loc = MatchResult['location'];
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const FOOTPRINT: Record<string, string> = { very_low: 'Very low', low: 'Low', moderate: 'Moderate', high: 'High' };
 /** Months (1–12) as 'Mar, Apr, Oct', 'Nov to May, Aug' (a run of three or more, across the new year too, by its ends),
  *  'All year but Jul', 'All year' or 'None'. */
@@ -33,7 +33,7 @@ export function permits(l: Loc, L: SiteListing) {
   const t = a === 'partner' ? `${who} is an Artemis Accords signatory. A field test still needs the land manager’s permission; plan on a research permit.`
     : a === 'non_partner' ? `${who} isn’t an Artemis Accords signatory: a campaign usually goes through a host institution there, as well as the land manager’s permission.`
     : a === 'antarctic_treaty' ? 'Antarctica, under the Antarctic Treaty: field work needs a permit from a national Antarctic programme and an environmental impact assessment.'
-    : 'Access isn’t known for this site: check the host country’s rules for field research before planning.';
+    : 'Access isn’t known for this field site: check the host country’s rules for field research before planning.';
   return `<p class="note">${t}</p>${pa?.is_protected ? `<p class="fine">${text(pa.permit_note ?? 'Inside a protected area: a permit from its managing authority is needed.')}</p>` : ''}`;
 }
 
@@ -61,10 +61,10 @@ export function listingBody(L: SiteListing, l: Loc, env: MatchResult['environmen
       ${fact('Protected area', !pa ? '—' : !pa.is_protected ? 'No' : pa.name ? esc(pa.name) : 'Yes', 'wide w')}</dl>${permits(l, L)}
     <h3 class="sec">${ic('surface')}Surface and climate</h3><dl class="facts">
       ${fact('Surface', word(SURFACE, l?.surface), 'w')}${fact('Elevation', l?.elevation_m == null ? '—' : fmtM(l.elevation_m))}</dl>
-    ${cell ? `<div data-wx>${climate(env)}</div>` : '<p class="fine">No surface class or climate: the search engine measures them for its own cells, and an established site isn’t one of its results.</p>'}
+    ${cell ? `<div data-wx>${climate(env)}</div>` : '<p class="fine">No surface class or climate: the search engine measures them for its own cells, and an established analog site isn’t one of its results.</p>'}
     <div data-wx><h3 class="sec">${ic('season')}Season</h3><dl class="facts">${fact(best, busy ? 'Loading…' : months(L) || '—', 'wide w')}</dl>
     ${P.season_note ? `<p class="fine">${text(P.season_note)}</p>` : ''}</div>
     <h3 class="sec">${ic('cost')}Indicative cost</h3><dl class="facts">${fact('Field costs on site, per person-day', `US$&nbsp;${usd(lo)}–${usd(hi)}`, 'wide')}</dl>
-    <p class="fine">Lodging, vehicles and local support, estimated from how remote the site is. Flights not included; not a quote.</p>
-    <p class="fine">Sample site facts: practical values are planning estimates, not survey data.</p>`;
+    <p class="fine">Lodging, vehicles and local support, estimated from how remote the field site is. Flights not included; not a quote.</p>
+    <p class="fine">Sample facts for this field site: practical values are planning estimates, not survey data.</p>`;
 }

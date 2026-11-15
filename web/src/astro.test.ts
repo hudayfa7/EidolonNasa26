@@ -173,8 +173,9 @@ describe('HUD and status-bar formatters', () => {
     expect(hudLocalTime('earth', 0, new Date('2026-10-04T12:34:00Z'), 0)).toBe('12:33');
     expect(hms(12 + 34 / 60)).toBe('12:33:59');
   });
-  it('utcStamp is "MM/DD HH:MM" in UTC', () => {
-    expect(utcStamp(EPOCH)).toBe('10/04 12:00');
-    expect(utcStamp(new Date('2026-01-02T03:04:59Z'))).toBe('01/02 03:04');
+  it('utcStamp is "DD Mon HH:MM" in UTC, the day first', () => {
+    expect(utcStamp(EPOCH)).toBe('04 Oct 12:00');
+    expect(utcStamp(new Date('2026-01-02T03:04:59Z'))).toBe('02 Jan 03:04');
+    expect(utcStamp(new Date('2026-09-30T23:59:00Z'))).toBe('30 Sep 23:59');
   });
 });
