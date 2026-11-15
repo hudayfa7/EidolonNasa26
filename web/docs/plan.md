@@ -70,26 +70,27 @@ Carry these over exactly; they are what keeps the build from drifting back to a 
 
 | Face | Weights | Use |
 | --- | --- | --- |
-| Geist, one variable file (100–900) | 300, 400, 500, 600 | Everything: wordmarks at 600; titles, names and leads at 300–400; interface, data and HUD at 400–500. Tabular figures site-wide (`base.css`) |
+| Newsreader | 300, 400 | World and site names, titles, intro lines, big lockups |
+| Geist | 400, 500, 600 | Interface text; the title wordmark at 600 |
+| Geist Mono | 400 | Numbers, coordinates, telemetry; HUD labels in caps at 10.5–11 px, tracked .06–.1 em |
 
 **Type scale**
 
 | Role | Face and size | Notes |
 | --- | --- | --- |
 | Title wordmark | Geist 600, 76–212 px (13.5 vw) | Tracking −.05 em, line height .86, coral |
-| Info sheet lockup | Geist 600, 84–260 px (17 vw) | Tracking −.05 em |
-| Other wordmarks: top bar, title lockup, poster, credits footer | Geist 600, 21–58 px | Tracking −.02 em; the credits footer's −.04 em |
-| Info sheet lead | Geist 300, 28–44 px (3.4 vw) |  |
-| Intro lines | Geist 300, 22–32 px (2.8 vw) | Line height 1.42, 36 px between lines |
-| View and panel titles | Geist 300–400, 34 px (28 on phones) | Tracking −.012 em |
-| Compare pair names | Geist 400, 22 px |  |
-| Terrain captions | Geist 400, 20 px |  |
-| World labels | Geist 400, 19 px |  |
+| Info sheet lockup | Newsreader 300, 84–260 px (17 vw) | Tracking −.035 em |
+| Info sheet lead | Newsreader 300, 28–44 px (3.4 vw) |  |
+| Intro lines | Newsreader 300, 22–32 px (2.8 vw) | Line height 1.42, 36 px between lines |
+| View and panel titles | Newsreader 300–400, 34 px (28 on phones) | Tracking −.012 em |
+| Compare pair names | Newsreader 400, 22 px |  |
+| Terrain captions | Newsreader 400, 20 px |  |
+| World labels, top-bar wordmark | Newsreader 400, 19–21 px |  |
 | Body and panel text | Geist 400, 14 px | Line height 1.5–1.55 |
 | Section heads | Geist 500, 12.5 px | Sentence case |
 | Labels and captions | Geist 400, 11.5–12.5 px |  |
-| Data | Geist 400, 12–13 px | Tabular figures |
-| HUD and telemetry | Geist 400, 10–11 px | Caps, tracking .06–.1 em |
+| Data | Geist Mono 400, 12–13 px | Tabular figures |
+| HUD and telemetry | Geist Mono 400, 10–11 px | Caps, tracking .06–.1 em |
 
 **Motion.** One GSAP clock drives the camera, shader uniforms and DOM together; never a second animation loop.
 
@@ -114,7 +115,7 @@ With `prefers-reduced-motion`, every move above becomes instant or a crossfade.
 
 - Colour belongs to the bodies; coral is the only interface accent.
 - Sentence case everywhere. JPL ops words (site, campaign, window, traverse, sol), never game words (loadout, deploy, lock on).
-- One face, Geist. Tabular figures, not a monospace face, keep numbers, coordinates and telemetry steady.
+- Mono only for numbers, coordinates and telemetry.
 - HUD lives in corners and around the globe, never as a background pattern or ornament.
 - Every number carries its unit; coordinates follow the body's convention, to 4 decimal places wherever a site is identified.
 - Panels are solid, with 1 px lines and 8–14 px radii; no glass, no glow on interface chrome.
