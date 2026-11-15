@@ -1,0 +1,14 @@
+{
+  "target_id": "mars-jezero",
+  "body": "mars",
+  "name": "Jezero crater (Perseverance landing point)",
+  "lat": 18.44462715,
+  "lon": 77.45088572,
+  "scope": "site",
+  "radius_km": 10,
+  "preset_group": "Mars exploration zones",
+  "coordinate_source": "NASA MMGIS M20_waypoints.json, first waypoint (sol 13)",
+  "coordinate_approximate": false,
+  "data_available": {"terrain_dem": "CTX 18 m; MOLA-HRSC blend 200 m", "thermal": true, "mineralogy": true, "ground_ice": true, "illumination": false},
+  "notes": "EXAMPLE for front-end/back-end development."
+}

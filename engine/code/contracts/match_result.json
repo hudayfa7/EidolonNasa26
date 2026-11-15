@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eidolon.local/contracts/match_result.json",
+  "title": "MatchResult",
+  "description": "One ranked Earth site for a (target, purpose) query. Physical fidelity is per property and purpose-weighted; practical suitability comes from the site listing and is shown alongside, never blended.",
+  "type": "object",
+  "required": ["target_id", "purpose", "site_id", "rank", "fidelity", "properties", "explanation"],
+  "properties": {
+    "target_id": {"type": "string"},
+    "purpose": {"enum": ["rover_mobility", "drill_isru", "eva_training", "habitat_ops", "astrobiology", "education", "polar_lighting_geometry", "thermal"]},
+    "site_id": {"type": "string"},
+    "rank": {"type": "integer", "minimum": 1},
+    "fidelity": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0, "maximum": 1, "description": "Purpose-weighted mean of property scores."},
+        "percentile_earth": {"type": "number", "minimum": 0, "maximum": 1, "description": "Area-weighted share of Earth candidates scoring lower (1 = best)."},
+        "matcher": {"type": "string", "examples": ["handcrafted-200m-v1", "ssl-byol-200m-v1"]},
+        "confidence": {"enum": ["low", "medium", "high"], "description": "Landform-shape similarity tier (form cosine >= 0.90 high, >= 0.80 medium, else low; forced low for sub-resolution targets). NOT a calibrated probability: blind reviewer tests (CAL1/CAL2) found it does not predict expert analog grades. Show it as 'shape match'."}
+      },
+      "additionalProperties": false
+    },
+    "properties": {
+      "type": "array",
+      "description": "Per-property breakdown (the bars on the card).",
+      "items": {
+        "type": "object",
+        "required": ["key", "score", "status"],
+        "properties": {
+          "key": {"type": "string", "examples": ["slope", "roughness", "terrain_texture", "lithology", "mineralogy", "ground_ice", "thermal", "aridity_cold", "vegetation_absence", "lighting_geometry"]},
+          "label": {"type": "string"},
+          "score": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "null when not measurable for this pair."},
+          "percentile_earth": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+          "weight": {"type": "number", "minimum": 0, "description": "Purpose weight used (0-3 prior, user-adjustable)."},
+          "status": {"enum": ["match", "partial", "gap", "not_measurable"],
+                     "description": "gap = coverage gap ('lacks ground ice'); not_measurable = below data resolution or no layer."},
+          "baseline_m": {"type": ["number", "null"], "description": "Measurement baseline (e.g. 200 for slope at 200 m)."},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "explanation": {
+      "type": "object",
+      "required": ["summary"],
+      "properties": {
+        "summary": {"type": "string", "examples": ["Matches Jezero on slope (top 3%) and rock type; weaker on temperature (top 40%)."]},
+        "strengths": {"type": "array", "items": {"type": "string"}},
+        "gaps": {"type": "array", "items": {"type": "string"}},
+        "caveats": {"type": "array", "items": {"type": "string"},
+                    "examples": [["Lighting match is geometry-only: Earth's atmosphere fills shadows.", "Hazard-scale rocks are not resolvable from global data."]]}
+      },
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object", "description": "Structured site location (optional; index v1.1+).",
+      "properties": {"lat": {"type": "number"}, "lon": {"type": "number"}, "elevation_m": {"type": ["number", "null"]},
+                     "country": {"type": ["string", "null"]}, "sovereign": {"type": ["string", "null"]},
+                     "access": {"type": ["string", "null"], "description": "partner | non_partner | antarctic_treaty | unknown"},
+                     "surface": {"enum": ["barren", "rugged_extension"]}},
+      "additionalProperties": false
+    },
+    "raw": {
+      "type": "object", "description": "Unranked physical values for downstream decision layers (e.g. TOPSIS). Mismatches are target minus site; 0 = identical.",
+      "properties": {"ranking_score": {"type": "number"}, "shape_cosine": {"type": "number"}, "relief_ratio": {"type": "number"},
+                     "relief_mismatch_oct": {"type": "number"}, "polarity_mismatch": {"type": "number"},
+                     "scale_mismatch_oct": {"type": "number"}, "terrain_properties_pct": {"type": "number"},
+                     "judge_p_good": {"type": ["number", "null"], "description": "PAIR1 pair-judge P(partial-or-better analog); results are ordered by it"},
+                     "f2s_rank": {"type": "integer", "description": "rank before the pair judge reordered the top 20"}},
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": ["object", "null"], "description": "Site climate at the centre point (optional).",
+      "properties": {"t_mean_c": {"type": ["number", "null"]}, "precip_mm": {"type": ["number", "null"]},
+                     "aridity_index": {"type": ["number", "null"]}, "source": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "terrain_twins": {
+      "type": "array",
+      "description": "Optional side-by-side patches (Earth vs target) for the UI.",
+      "items": {"type": "object", "properties": {"earth_url": {"type": "string"}, "target_url": {"type": "string"}}, "additionalProperties": false}
+    }
+  },
+  "additionalProperties": false
+}

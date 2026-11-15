@@ -1,0 +1,9 @@
+{
+ "target": {
+  "body": "mars",
+  "lat": -4.59,
+  "lon": 137.44
+ },
+ "purpose": "astrobiology",
+ "k": 5
+}

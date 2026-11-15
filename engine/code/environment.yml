@@ -1,0 +1,59 @@
+# Create with:  conda env create -f environment.yml   (Miniforge recommended on Windows)
+# If a user-level ~/.condarc adds the Anaconda `defaults` channel, the solve can hang for a long time.
+# Workaround: `conda create -n eidolon --override-channels -c conda-forge --strict-channel-priority <conda deps>`
+# then `conda run -n eidolon pip install --extra-index-url https://download.pytorch.org/whl/cpu torch torchvision -e .`
+# Machine note: AMD Ryzen AI 5 340 (x86-64) -> conda-forge GDAL/rasterio builds work normally.
+name: eidolon
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # geospatial core
+  - gdal
+  - libcurl=8.19          # must match the curl GDAL 3.12.3 was built with; 8.22 deadlocks on process exit after /vsicurl/
+  - libgdal-jp2openjpeg  # JPEG2000 (HiRISE ortho, SLDEM JP2)
+  - libgdal-netcdf       # EMIT, climate NetCDF
+  - libgdal-hdf5         # ASTER GED
+  - rasterio
+  - rioxarray
+  - xarray
+  - netcdf4
+  - h5netcdf
+  - geopandas
+  - shapely
+  - pyproj
+  - pystac-client
+  - earthengine-api
+  - pyhdf             # native HDF4 reads (MODIS CMG); GDAL HDF4 is very slow on 3-D SDS
+  - earthaccess       # NASA Earthdata (EMIT, ASTER GED); login via ~/.netrc
+  # numerics / ML (classical)
+  - numpy
+  - libblas=*=*openblas    # MKL 2026.1 LAPACK crashes (0xc06d007f) on this AMD laptop; use OpenBLAS
+  - liblapack=*=*openblas
+  - scipy
+  - pandas
+  - pyarrow
+  - scikit-learn
+  - pot              # optimal transport: multivariate distribution distances
+  - skyfield         # solar ephemeris for lighting analog modelling
+  # viz / notebooks
+  - matplotlib
+  - jupyterlab
+  - ipykernel
+  # dev
+  - pytest
+  - jsonschema
+  - python-dotenv
+  - tqdm
+  - pip
+  - pip:
+      # CPU-only torch locally (smoke tests); Colab/Kaggle use their own CUDA torch.
+      - --extra-index-url https://download.pytorch.org/whl/cpu
+      - torch
+      - torchvision
+      - kaggle            # CLI for free Kaggle GPU kernels (auth: ~/.kaggle/access_token)
+      - fastapi>=0.115    # reference HTTP server for the frontend (src/eidolon/server.py, docs/frontend_spec.md)
+      - uvicorn>=0.30
+      - -e .
+# Deliberately not included yet: faiss-cpu (brute-force search is fast enough at
+# our candidate-set size; add if the two-tower index outgrows numpy).

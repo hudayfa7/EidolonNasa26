@@ -1,0 +1,60 @@
+{
+ "purposes": [
+  {
+   "key": "rover_mobility",
+   "label": "Rover mobility",
+   "surface": "barren",
+   "description": "Drive and navigation tests over terrain of the same form and roughness.",
+   "supported": true
+  },
+  {
+   "key": "drill_isru",
+   "label": "Drilling / ISRU",
+   "surface": "barren",
+   "description": "Drill, excavation and resource-extraction trials on bare ground.",
+   "supported": true
+  },
+  {
+   "key": "eva_training",
+   "label": "EVA training",
+   "surface": "barren",
+   "description": "Astronaut field training in a look-alike landscape.",
+   "supported": true
+  },
+  {
+   "key": "habitat_ops",
+   "label": "Habitat operations",
+   "surface": "barren",
+   "description": "Habitat and long-duration operations in a barren setting.",
+   "supported": true
+  },
+  {
+   "key": "astrobiology",
+   "label": "Astrobiology",
+   "surface": "barren",
+   "description": "Field science in barren, extreme environments.",
+   "supported": true
+  },
+  {
+   "key": "thermal",
+   "label": "Thermal testing",
+   "surface": "barren",
+   "description": "Equipment trials in barren terrain (thermal context from environment).",
+   "supported": true
+  },
+  {
+   "key": "education",
+   "label": "Education / outreach",
+   "surface": "any",
+   "description": "Landform look-alikes anywhere on land (vegetated rugged terrain allowed).",
+   "supported": true
+  },
+  {
+   "key": "polar_lighting_geometry",
+   "label": "Polar lighting geometry",
+   "surface": null,
+   "description": "Served by the lighting-geometry module (experiments/E007), not the terrain search.",
+   "supported": false
+  }
+ ]
+}

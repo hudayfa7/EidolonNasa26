@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eidolon.local/contracts/target.json",
+  "title": "Target",
+  "description": "A Moon or Mars location a user wants an Earth analog for (preset or user-picked).",
+  "type": "object",
+  "required": ["target_id", "body", "name", "lat", "lon", "scope"],
+  "properties": {
+    "target_id": {"type": "string", "description": "Stable id, e.g. 'mars-jezero' or 'moon-artemis-haworth'."},
+    "body": {"enum": ["moon", "mars"]},
+    "name": {"type": "string"},
+    "lat": {"type": "number", "minimum": -90, "maximum": 90},
+    "lon": {"type": "number", "minimum": -180, "maximum": 180, "description": "Planetocentric, east-positive, -180..180."},
+    "scope": {"enum": ["site", "region"], "description": "site = a landing point or feature; region = a broad area."},
+    "radius_km": {"type": "number", "minimum": 0, "description": "Extent used to sample target terrain."},
+    "preset_group": {"type": "string", "description": "e.g. 'Artemis candidate regions', 'Mars exploration zones'."},
+    "coordinate_source": {"type": "string", "description": "Citation or URL the coordinate was taken from. Never guessed."},
+    "coordinate_approximate": {"type": "boolean", "default": false},
+    "data_available": {
+      "type": "object",
+      "description": "Which target-side layers exist at this location (drives which properties can be scored).",
+      "properties": {
+        "terrain_dem": {"type": "string", "examples": ["MOLA-HRSC blend 200 m", "CTX 18 m", "SLDEM2015 59 m", "LOLA polar 5 m"]},
+        "thermal": {"type": "boolean"},
+        "mineralogy": {"type": "boolean"},
+        "ground_ice": {"type": "boolean"},
+        "illumination": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

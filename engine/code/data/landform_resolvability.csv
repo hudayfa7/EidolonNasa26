@@ -1,0 +1,55 @@
+landform_type,resolvable_200m,typical_diagnostic_width,note
+alluvial_fan,yes,km,
+amphitheater_headed_canyon,yes,km,
+cinder_cone,yes,0.5-1.5 km base,borderline; base usually >=3 px
+complex_crater,yes,>4 km,
+concretions,no,mm-cm,not topographic at 200 m
+deep_seated_gravitational_slope_deformation,yes,km,
+flood_carved_canyon,yes,km,
+fluvial_delta,yes,km,
+glacial_cirque,yes,km,
+glacier_like_form,yes,km,
+gullies,no,10-100s m wide,channels sub-pixel
+gypsum_dunes,yes,dune field km,field-scale texture
+hourglass_landform,yes,km,
+hummocky_lava_surface,no,m-10s m,surface texture
+impact_crater,yes,km,
+impact_structure,yes,km,
+inverted_channel,yes,100s m-km,ridge networks span km
+inverted_channels,yes,100s m-km,
+landslide_deposit,yes,km,
+large_ripples,no,m-10s m,
+lava_channel,yes,100s m-km,
+lava_flow_channel,yes,100s m-km,
+lava_flow_folds,no,m-10s m,pressure ridges
+lava_flow_morphology,yes,km flow fields,
+lava_tube,no,10s m,sub-surface; skylights 10-100 m
+lava_tubes,no,10s m,
+long_runout_landslide,yes,km,
+low_shield_volcano,yes,km,
+molards,no,m-10s m,
+mountain_front,yes,km,
+mud_volcano,no,10s-100s m,Earth examples mostly <1 km
+multiring_basin,yes,>100 km,window sees only part
+outflow_channels,yes,km,
+paleochannel_ridge,yes,100s m-km,
+paleolake,yes,km,
+pingos,no,100-600 m,
+pit_crater_chain,yes,100s m-km chains,
+platy_ridged_lava,no,m-10s m,surface texture
+playa,yes,km,flatness is the property
+polygonal_ground,no,m-100s m,
+ring_moat_structure,no,100s m,
+sand_dunes,yes,dune field km,
+scalloped_depressions,yes,100s m-km,
+silica_sinter,no,m,composition not topography
+simple_crater,yes,km,
+sinuous_rille,yes,km,
+small_simple_crater_field,no,10s-100s m,
+source_vent,yes,km fissures,
+sublimation_basins,yes,km,
+valley_networks,yes,km,
+volcanic_crater,yes,km,
+wind_streaks,no,albedo,not topographic
+wrinkle_ridge,yes,km,
+yardangs,yes,100s m-km fields,

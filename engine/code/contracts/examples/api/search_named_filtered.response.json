@@ -1,0 +1,623 @@
+{
+ "query": {
+  "target": {
+   "body": "moon",
+   "name": "Rima Hadley",
+   "lat": null,
+   "lon": null
+  },
+  "purpose": "eva_training",
+  "k": 5,
+  "filters": {
+   "sovereigns": [
+    "United States of America"
+   ]
+  }
+ },
+ "target": {
+  "target_id": "moon:Rima Hadley",
+  "body": "moon",
+  "name": "Rima Hadley",
+  "type": "Rima",
+  "code": "RI",
+  "family": "linear",
+  "lat": 25.7159,
+  "lon": 3.1467,
+  "diameter_km": 116.08555,
+  "coordinate_source": "IAU Gazetteer of Planetary Nomenclature (center point)",
+  "capability": {
+   "tier": "fair",
+   "p_target_top3": 0.56,
+   "n_targets": 16,
+   "landform_class": "rille"
+  },
+  "image_url": "/api/v1/images/target/moon/Rima Hadley.png"
+ },
+ "source": "live",
+ "timing_ms": 141.5,
+ "model": {
+  "api_version": "1.0.0",
+  "matcher": "F2s-200m-v1.1",
+  "judge": "PAIR1",
+  "engine_commit": "bc9477e"
+ },
+ "results": [
+  {
+   "target_id": "Rima Hadley",
+   "purpose": "eva_training",
+   "site_id": "earth_cell_170640",
+   "rank": 1,
+   "fidelity": {
+    "score": 0.833,
+    "percentile_earth": 0.9996,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.971,
+     "percentile_earth": 0.971,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.974,
+     "percentile_earth": 0.974,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.939,
+     "percentile_earth": 0.939,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.855,
+     "percentile_earth": 0.855,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.47,
+     "percentile_earth": 0.47,
+     "weight": 1.0,
+     "status": "gap",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.789,
+     "percentile_earth": 0.789,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 62.375,
+    "lon": -142.775,
+    "elevation_m": 1247.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.68,
+    "shape_cosine": 0.9534,
+    "relief_ratio": 1.073,
+    "relief_mismatch_oct": -0.101,
+    "polarity_mismatch": -0.85,
+    "scale_mismatch_oct": 0.28,
+    "terrain_properties_pct": 0.7753,
+    "judge_p_good": 0.8108,
+    "f2s_rank": 5
+   },
+   "environment": {
+    "t_mean_c": -5.4,
+    "precip_mm": 447.0,
+    "aridity_index": 0.9604,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (62.38, -142.77): shape similarity 0.95 (close); relief 1.1x the target; landform mix at 3 km: slope 29%, valley 20% (target slope 28%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope"
+    ],
+    "gaps": [
+     "raised vs incised"
+    ],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable.",
+     "Polar site (|lat| > 60): access is seasonal and ice may border the terrain."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/170640.png",
+     "target_url": "/api/v1/images/target/moon/Rima Hadley.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Rima Hadley",
+   "purpose": "eva_training",
+   "site_id": "earth_cell_175805",
+   "rank": 2,
+   "fidelity": {
+    "score": 0.741,
+    "percentile_earth": 0.9991,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.989,
+     "percentile_earth": 0.989,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.942,
+     "percentile_earth": 0.942,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.99,
+     "percentile_earth": 0.99,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.264,
+     "percentile_earth": 0.264,
+     "weight": 1.0,
+     "status": "gap",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.462,
+     "percentile_earth": 0.462,
+     "weight": 1.0,
+     "status": "gap",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.8,
+     "percentile_earth": 0.8,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 61.075,
+    "lon": -142.275,
+    "elevation_m": 465.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.6598,
+    "shape_cosine": 0.9614,
+    "relief_ratio": 0.849,
+    "relief_mismatch_oct": 0.236,
+    "polarity_mismatch": -0.864,
+    "scale_mismatch_oct": -0.266,
+    "terrain_properties_pct": 0.7506,
+    "judge_p_good": 0.7803,
+    "f2s_rank": 10
+   },
+   "environment": {
+    "t_mean_c": -3.1,
+    "precip_mm": 1176.0,
+    "aridity_index": 2.8432,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (61.08, -142.27): shape similarity 0.96 (close); relief 0.8x the target; landform mix at 3 km: slope 37%, footslope 19% (target slope 28%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope"
+    ],
+    "gaps": [
+     "roughness",
+     "raised vs incised"
+    ],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable.",
+     "Polar site (|lat| > 60): access is seasonal and ice may border the terrain."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/175805.png",
+     "target_url": "/api/v1/images/target/moon/Rima Hadley.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Rima Hadley",
+   "purpose": "eva_training",
+   "site_id": "earth_cell_372251",
+   "rank": 3,
+   "fidelity": {
+    "score": 0.824,
+    "percentile_earth": 0.9992,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.998,
+     "percentile_earth": 0.998,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.91,
+     "percentile_earth": 0.91,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.999,
+     "percentile_earth": 0.999,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.58,
+     "percentile_earth": 0.58,
+     "weight": 1.0,
+     "status": "gap",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.595,
+     "percentile_earth": 0.595,
+     "weight": 1.0,
+     "status": "gap",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.86,
+     "percentile_earth": 0.86,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 39.075,
+    "lon": -117.175,
+    "elevation_m": 1828.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.6601,
+    "shape_cosine": 0.9684,
+    "relief_ratio": 0.766,
+    "relief_mismatch_oct": 0.385,
+    "polarity_mismatch": -0.62,
+    "scale_mismatch_oct": 0.191,
+    "terrain_properties_pct": 0.7332,
+    "judge_p_good": 0.7589,
+    "f2s_rank": 9
+   },
+   "environment": {
+    "t_mean_c": 8.0,
+    "precip_mm": 262.0,
+    "aridity_index": 0.1514,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (39.08, -117.18): shape similarity 0.97 (close); relief 0.8x the target; landform mix at 3 km: slope 33%, flat 28% (target slope 28%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope"
+    ],
+    "gaps": [
+     "roughness",
+     "raised vs incised"
+    ],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/372251.png",
+     "target_url": "/api/v1/images/target/moon/Rima Hadley.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Rima Hadley",
+   "purpose": "eva_training",
+   "site_id": "earth_cell_176431",
+   "rank": 4,
+   "fidelity": {
+    "score": 0.828,
+    "percentile_earth": 0.9983,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.95,
+     "percentile_earth": 0.95,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.976,
+     "percentile_earth": 0.976,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.897,
+     "percentile_earth": 0.897,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.798,
+     "percentile_earth": 0.798,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.459,
+     "percentile_earth": 0.459,
+     "weight": 1.0,
+     "status": "gap",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.886,
+     "percentile_earth": 0.886,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 60.875,
+    "lon": -144.575,
+    "elevation_m": 56.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.6301,
+    "shape_cosine": 0.946,
+    "relief_ratio": 1.067,
+    "relief_mismatch_oct": -0.093,
+    "polarity_mismatch": -0.868,
+    "scale_mismatch_oct": -0.158,
+    "terrain_properties_pct": 0.7456,
+    "judge_p_good": 0.7139,
+    "f2s_rank": 18
+   },
+   "environment": {
+    "t_mean_c": 0.9,
+    "precip_mm": 1426.0,
+    "aridity_index": 3.3614,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (60.88, -144.57): shape similarity 0.95 (close); relief 1.1x the target; landform mix at 3 km: slope 22%, flat 19% (target slope 28%).",
+    "strengths": [
+     "landform shape",
+     "relief"
+    ],
+    "gaps": [
+     "raised vs incised"
+    ],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable.",
+     "Polar site (|lat| > 60): access is seasonal and ice may border the terrain."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/176431.png",
+     "target_url": "/api/v1/images/target/moon/Rima Hadley.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Rima Hadley",
+   "purpose": "eva_training",
+   "site_id": "earth_cell_412252",
+   "rank": 5,
+   "fidelity": {
+    "score": 0.854,
+    "percentile_earth": 0.9976,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.901,
+     "percentile_earth": 0.901,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.913,
+     "percentile_earth": 0.913,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.962,
+     "percentile_earth": 0.962,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.74,
+     "percentile_earth": 0.74,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.861,
+     "percentile_earth": 0.861,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.75,
+     "percentile_earth": 0.75,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 37.275,
+    "lon": -118.075,
+    "elevation_m": 1529.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.6068,
+    "shape_cosine": 0.9288,
+    "relief_ratio": 0.773,
+    "relief_mismatch_oct": 0.371,
+    "polarity_mismatch": -0.2,
+    "scale_mismatch_oct": -0.334,
+    "terrain_properties_pct": 0.7495,
+    "judge_p_good": 0.7137,
+    "f2s_rank": 20
+   },
+   "environment": {
+    "t_mean_c": 11.5,
+    "precip_mm": 154.0,
+    "aridity_index": 0.0749,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (37.28, -118.07): shape similarity 0.93 (close); relief 0.8x the target; landform mix at 3 km: slope 28%, hollow 20% (target slope 28%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/412252.png",
+     "target_url": "/api/v1/images/target/moon/Rima Hadley.png"
+    }
+   ]
+  }
+ ]
+}

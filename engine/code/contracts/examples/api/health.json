@@ -1,0 +1,12 @@
+{
+ "status": "ready",
+ "error": null,
+ "uptime_s": 90.5,
+ "api_version": "1.0.0",
+ "matcher": "F2s-200m-v1.1",
+ "judge": "PAIR1",
+ "engine_commit": "bc9477e",
+ "index_sites": 500127,
+ "named_targets": 10100,
+ "cached_queries": 7000
+}

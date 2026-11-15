@@ -1,0 +1,7 @@
+{
+ "status": 503,
+ "detail": {
+  "code": "warming_up",
+  "message": "engine is loading (~30-40 s)"
+ }
+}

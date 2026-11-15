@@ -1,0 +1,613 @@
+{
+ "query": {
+  "target": {
+   "body": "mars",
+   "name": "Jezero",
+   "lat": null,
+   "lon": null
+  },
+  "purpose": "rover_mobility",
+  "k": 5,
+  "filters": {}
+ },
+ "target": {
+  "target_id": "mars:Jezero",
+  "body": "mars",
+  "name": "Jezero",
+  "type": "Crater",
+  "code": "AA",
+  "family": "depression",
+  "lat": 18.4082,
+  "lon": 77.6873,
+  "diameter_km": 47.5212,
+  "coordinate_source": "IAU Gazetteer of Planetary Nomenclature (center point)",
+  "capability": {
+   "tier": "fair",
+   "p_target_top3": 0.53,
+   "n_targets": 17,
+   "landform_class": "crater"
+  },
+  "image_url": "/api/v1/images/target/mars/Jezero.png"
+ },
+ "source": "cache",
+ "timing_ms": 23.6,
+ "model": {
+  "api_version": "1.0.0",
+  "matcher": "F2s-200m-v1.1",
+  "judge": "PAIR1",
+  "engine_commit": "bc9477e"
+ },
+ "results": [
+  {
+   "target_id": "Jezero",
+   "purpose": "rover_mobility",
+   "site_id": "earth_cell_477151",
+   "rank": 1,
+   "fidelity": {
+    "score": 0.912,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.992,
+     "percentile_earth": 0.992,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.953,
+     "percentile_earth": 0.953,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.93,
+     "percentile_earth": 0.93,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.979,
+     "percentile_earth": 0.979,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.804,
+     "percentile_earth": 0.804,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.811,
+     "percentile_earth": 0.811,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 34.675,
+    "lon": -105.075,
+    "elevation_m": 1671.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.9393,
+    "shape_cosine": 0.927,
+    "relief_ratio": 0.918,
+    "relief_mismatch_oct": 0.123,
+    "polarity_mismatch": -0.171,
+    "scale_mismatch_oct": 0.181,
+    "terrain_properties_pct": 0.9552,
+    "judge_p_good": 0.9321,
+    "f2s_rank": 2
+   },
+   "environment": {
+    "t_mean_c": 12.5,
+    "precip_mm": 337.0,
+    "aridity_index": 0.1861,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (34.67, -105.07): shape similarity 0.93 (close); relief 0.9x the target; landform mix at 3 km: flat 42%, shoulder 15% (target flat 25%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope",
+     "roughness"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/477151.png",
+     "target_url": "/api/v1/images/target/mars/Jezero.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Jezero",
+   "purpose": "rover_mobility",
+   "site_id": "earth_cell_1252546",
+   "rank": 2,
+   "fidelity": {
+    "score": 0.929,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.996,
+     "percentile_earth": 0.996,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.989,
+     "percentile_earth": 0.989,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.858,
+     "percentile_earth": 0.858,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.984,
+     "percentile_earth": 0.984,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.93,
+     "percentile_earth": 0.93,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.82,
+     "percentile_earth": 0.82,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": -29.725,
+    "lon": 124.025,
+    "elevation_m": 396.0,
+    "country": "Australia",
+    "sovereign": "Australia",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.9173,
+    "shape_cosine": 0.9397,
+    "relief_ratio": 0.981,
+    "relief_mismatch_oct": 0.027,
+    "polarity_mismatch": 0.061,
+    "scale_mismatch_oct": -0.172,
+    "terrain_properties_pct": 0.923,
+    "judge_p_good": 0.9174,
+    "f2s_rank": 6
+   },
+   "environment": {
+    "t_mean_c": 18.7,
+    "precip_mm": 225.0,
+    "aridity_index": 0.1044,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "Australia (-29.73, 124.03): shape similarity 0.94 (close); relief 1.0x the target; landform mix at 3 km: flat 61%, shoulder 13% (target flat 25%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "roughness",
+     "raised vs incised"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/1252546.png",
+     "target_url": "/api/v1/images/target/mars/Jezero.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Jezero",
+   "purpose": "rover_mobility",
+   "site_id": "earth_cell_1223382",
+   "rank": 3,
+   "fidelity": {
+    "score": 0.947,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.986,
+     "percentile_earth": 0.986,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.967,
+     "percentile_earth": 0.967,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.872,
+     "percentile_earth": 0.872,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.953,
+     "percentile_earth": 0.953,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.982,
+     "percentile_earth": 0.982,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.92,
+     "percentile_earth": 0.92,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": -27.825,
+    "lon": 127.125,
+    "elevation_m": 448.0,
+    "country": "Australia",
+    "sovereign": "Australia",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.9054,
+    "shape_cosine": 0.9187,
+    "relief_ratio": 1.062,
+    "relief_mismatch_oct": -0.087,
+    "polarity_mismatch": 0.016,
+    "scale_mismatch_oct": 0.075,
+    "terrain_properties_pct": 0.9219,
+    "judge_p_good": 0.9046,
+    "f2s_rank": 11
+   },
+   "environment": {
+    "t_mean_c": 20.2,
+    "precip_mm": 216.0,
+    "aridity_index": 0.0853,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "Australia (-27.83, 127.12): shape similarity 0.92 (close); relief 1.1x the target; landform mix at 3 km: flat 58%, shoulder 14% (target flat 25%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "roughness",
+     "raised vs incised",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/1223382.png",
+     "target_url": "/api/v1/images/target/mars/Jezero.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Jezero",
+   "purpose": "rover_mobility",
+   "site_id": "earth_cell_496742",
+   "rank": 4,
+   "fidelity": {
+    "score": 0.94,
+    "percentile_earth": 0.9999,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.984,
+     "percentile_earth": 0.984,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.96,
+     "percentile_earth": 0.96,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.869,
+     "percentile_earth": 0.869,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.933,
+     "percentile_earth": 0.933,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.937,
+     "percentile_earth": 0.937,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.957,
+     "percentile_earth": 0.957,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 33.975,
+    "lon": 3.925,
+    "elevation_m": 626.0,
+    "country": "Algeria",
+    "sovereign": "Algeria",
+    "access": "non_partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.896,
+    "shape_cosine": 0.9173,
+    "relief_ratio": 0.931,
+    "relief_mismatch_oct": 0.104,
+    "polarity_mismatch": 0.055,
+    "scale_mismatch_oct": -0.04,
+    "terrain_properties_pct": 0.9152,
+    "judge_p_good": 0.9009,
+    "f2s_rank": 15
+   },
+   "environment": {
+    "t_mean_c": 18.5,
+    "precip_mm": 149.0,
+    "aridity_index": 0.0702,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "Algeria (33.97, 3.92): shape similarity 0.92 (close); relief 0.9x the target; landform mix at 3 km: flat 51%, footslope 16% (target flat 25%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "roughness",
+     "raised vs incised",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/496742.png",
+     "target_url": "/api/v1/images/target/mars/Jezero.png"
+    }
+   ]
+  },
+  {
+   "target_id": "Jezero",
+   "purpose": "rover_mobility",
+   "site_id": "earth_cell_502103",
+   "rank": 5,
+   "fidelity": {
+    "score": 0.836,
+    "percentile_earth": 0.9999,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.985,
+     "percentile_earth": 0.985,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.935,
+     "percentile_earth": 0.935,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.878,
+     "percentile_earth": 0.878,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.974,
+     "percentile_earth": 0.974,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.642,
+     "percentile_earth": 0.642,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.604,
+     "percentile_earth": 0.604,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 33.775,
+    "lon": 4.225,
+    "elevation_m": 630.0,
+    "country": "Algeria",
+    "sovereign": "Algeria",
+    "access": "non_partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.8934,
+    "shape_cosine": 0.9182,
+    "relief_ratio": 0.89,
+    "relief_mismatch_oct": 0.169,
+    "polarity_mismatch": 0.329,
+    "scale_mismatch_oct": -0.393,
+    "terrain_properties_pct": 0.9328,
+    "judge_p_good": 0.8908,
+    "f2s_rank": 19
+   },
+   "environment": {
+    "t_mean_c": 18.7,
+    "precip_mm": 134.0,
+    "aridity_index": 0.0637,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "Algeria (33.78, 4.22): shape similarity 0.92 (close); relief 0.9x the target; landform mix at 3 km: flat 49%, footslope 16% (target flat 25%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "roughness"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/502103.png",
+     "target_url": "/api/v1/images/target/mars/Jezero.png"
+    }
+   ]
+  }
+ ]
+}

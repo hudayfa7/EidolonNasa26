@@ -1,0 +1,609 @@
+{
+ "query": {
+  "target": {
+   "body": "mars",
+   "name": null,
+   "lat": -4.59,
+   "lon": 137.44
+  },
+  "purpose": "astrobiology",
+  "k": 5,
+  "filters": {}
+ },
+ "target": {
+  "target_id": "mars:-4.5900,137.4400",
+  "body": "mars",
+  "name": null,
+  "type": null,
+  "code": null,
+  "family": null,
+  "lat": -4.59,
+  "lon": 137.44,
+  "diameter_km": null,
+  "coordinate_source": "user",
+  "capability": null,
+  "image_url": null
+ },
+ "source": "remote",
+ "timing_ms": 5580.0,
+ "model": {
+  "api_version": "1.0.0",
+  "matcher": "F2s-200m-v1.1",
+  "judge": "PAIR1",
+  "engine_commit": "bc9477e"
+ },
+ "results": [
+  {
+   "target_id": "mars_-4.590_137.440",
+   "purpose": "astrobiology",
+   "site_id": "earth_cell_277433",
+   "rank": 1,
+   "fidelity": {
+    "score": 0.977,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.99,
+     "percentile_earth": 0.99,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.954,
+     "percentile_earth": 0.954,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.949,
+     "percentile_earth": 0.949,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.977,
+     "percentile_earth": 0.977,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.994,
+     "percentile_earth": 0.994,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.998,
+     "percentile_earth": 0.998,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 43.575,
+    "lon": 92.425,
+    "elevation_m": 1900.0,
+    "country": "China",
+    "sovereign": "China",
+    "access": "non_partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.7999,
+    "shape_cosine": 0.9306,
+    "relief_ratio": 0.849,
+    "relief_mismatch_oct": 0.236,
+    "polarity_mismatch": -0.031,
+    "scale_mismatch_oct": 0.013,
+    "terrain_properties_pct": 0.8239,
+    "judge_p_good": 0.4345,
+    "f2s_rank": 6
+   },
+   "environment": {
+    "t_mean_c": 2.1,
+    "precip_mm": 180.0,
+    "aridity_index": 0.1412,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "China (43.58, 92.43): shape similarity 0.93 (close); relief 0.8x the target; landform mix at 3 km: slope 49%, hollow 12% (target slope 50%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope",
+     "roughness",
+     "raised vs incised",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/277433.png"
+    }
+   ]
+  },
+  {
+   "target_id": "mars_-4.590_137.440",
+   "purpose": "astrobiology",
+   "site_id": "earth_cell_952360",
+   "rank": 2,
+   "fidelity": {
+    "score": 0.885,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.995,
+     "percentile_earth": 0.995,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.972,
+     "percentile_earth": 0.972,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.954,
+     "percentile_earth": 0.954,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.622,
+     "percentile_earth": 0.622,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.821,
+     "percentile_earth": 0.821,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.949,
+     "percentile_earth": 0.949,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 19.675,
+    "lon": -155.775,
+    "elevation_m": 1547.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.8082,
+    "shape_cosine": 0.9427,
+    "relief_ratio": 0.907,
+    "relief_mismatch_oct": 0.141,
+    "polarity_mismatch": 0.771,
+    "scale_mismatch_oct": 0.418,
+    "terrain_properties_pct": 0.877,
+    "judge_p_good": 0.3739,
+    "f2s_rank": 3
+   },
+   "environment": {
+    "t_mean_c": 15.8,
+    "precip_mm": 1223.0,
+    "aridity_index": 0.709,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (19.67, -155.77): shape similarity 0.94 (close); relief 0.9x the target; landform mix at 3 km: slope 73%, spur 11% (target slope 50%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/952360.png"
+    }
+   ]
+  },
+  {
+   "target_id": "mars_-4.590_137.440",
+   "purpose": "astrobiology",
+   "site_id": "earth_cell_190795",
+   "rank": 3,
+   "fidelity": {
+    "score": 0.953,
+    "percentile_earth": 0.9999,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.979,
+     "percentile_earth": 0.979,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.952,
+     "percentile_earth": 0.952,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.967,
+     "percentile_earth": 0.967,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.904,
+     "percentile_earth": 0.904,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.932,
+     "percentile_earth": 0.932,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.981,
+     "percentile_earth": 0.981,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 48.875,
+    "lon": 91.325,
+    "elevation_m": 1374.0,
+    "country": "Mongolia",
+    "sovereign": "Mongolia",
+    "access": "non_partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.7719,
+    "shape_cosine": 0.9099,
+    "relief_ratio": 0.842,
+    "relief_mismatch_oct": 0.249,
+    "polarity_mismatch": 0.348,
+    "scale_mismatch_oct": 0.179,
+    "terrain_properties_pct": 0.8198,
+    "judge_p_good": 0.3231,
+    "f2s_rank": 17
+   },
+   "environment": {
+    "t_mean_c": 0.3,
+    "precip_mm": 118.0,
+    "aridity_index": 0.1559,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "Mongolia (48.88, 91.32): shape similarity 0.91 (close); relief 0.8x the target; landform mix at 3 km: slope 47%, hollow 14% (target slope 50%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope",
+     "roughness",
+     "raised vs incised",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/190795.png"
+    }
+   ]
+  },
+  {
+   "target_id": "mars_-4.590_137.440",
+   "purpose": "astrobiology",
+   "site_id": "earth_cell_381440",
+   "rank": 4,
+   "fidelity": {
+    "score": 0.944,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.993,
+     "percentile_earth": 0.993,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.962,
+     "percentile_earth": 0.962,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.994,
+     "percentile_earth": 0.994,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.778,
+     "percentile_earth": 0.778,
+     "weight": 1.0,
+     "status": "partial",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.945,
+     "percentile_earth": 0.945,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.993,
+     "percentile_earth": 0.993,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 38.675,
+    "lon": -114.075,
+    "elevation_m": 1703.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.7877,
+    "shape_cosine": 0.9386,
+    "relief_ratio": 0.873,
+    "relief_mismatch_oct": 0.196,
+    "polarity_mismatch": -0.284,
+    "scale_mismatch_oct": 0.057,
+    "terrain_properties_pct": 0.8109,
+    "judge_p_good": 0.2996,
+    "f2s_rank": 9
+   },
+   "environment": {
+    "t_mean_c": 9.6,
+    "precip_mm": 236.0,
+    "aridity_index": 0.1377,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (38.67, -114.07): shape similarity 0.94 (close); relief 0.9x the target; landform mix at 3 km: slope 47%, flat 24% (target slope 50%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope",
+     "raised vs incised",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/381440.png"
+    }
+   ]
+  },
+  {
+   "target_id": "mars_-4.590_137.440",
+   "purpose": "astrobiology",
+   "site_id": "earth_cell_349337",
+   "rank": 5,
+   "fidelity": {
+    "score": 0.953,
+    "percentile_earth": 1.0,
+    "matcher": "F2s-200m-v1.1",
+    "confidence": "high"
+   },
+   "properties": [
+    {
+     "key": "terrain_form",
+     "label": "Landform shape",
+     "score": 0.987,
+     "percentile_earth": 0.987,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "relief",
+     "label": "Relief",
+     "score": 0.964,
+     "percentile_earth": 0.964,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "slope",
+     "label": "Slope",
+     "score": 0.956,
+     "percentile_earth": 0.956,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "roughness",
+     "label": "Roughness",
+     "score": 0.9,
+     "percentile_earth": 0.9,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_polarity",
+     "label": "Raised vs incised",
+     "score": 0.919,
+     "percentile_earth": 0.919,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    },
+    {
+     "key": "landform_scale",
+     "label": "Landform size",
+     "score": 0.99,
+     "percentile_earth": 0.99,
+     "weight": 1.0,
+     "status": "match",
+     "baseline_m": 200.0
+    }
+   ],
+   "location": {
+    "lat": 40.075,
+    "lon": -115.475,
+    "elevation_m": 1823.0,
+    "country": "United States of America",
+    "sovereign": "United States of America",
+    "access": "partner",
+    "surface": "barren"
+   },
+   "raw": {
+    "ranking_score": 1.7834,
+    "shape_cosine": 0.9232,
+    "relief_ratio": 0.88,
+    "relief_mismatch_oct": 0.184,
+    "polarity_mismatch": 0.406,
+    "scale_mismatch_oct": -0.083,
+    "terrain_properties_pct": 0.8192,
+    "judge_p_good": 0.2358,
+    "f2s_rank": 12
+   },
+   "environment": {
+    "t_mean_c": 8.7,
+    "precip_mm": 309.0,
+    "aridity_index": 0.1881,
+    "source": "WorldClim 2.1 BIO1/BIO12 (5'), Global Aridity Index v3.1 (30''), ETOPO 2022 (60''); site centre point"
+   },
+   "explanation": {
+    "summary": "United States of America (40.08, -115.47): shape similarity 0.92 (close); relief 0.9x the target; landform mix at 3 km: slope 32%, flat 29% (target slope 50%).",
+    "strengths": [
+     "landform shape",
+     "relief",
+     "slope",
+     "roughness",
+     "raised vs incised",
+     "landform size"
+    ],
+    "gaps": [],
+    "caveats": [
+     "Copernicus GLO-30 is a surface model: in vegetated or built-up areas canopy/buildings add texture.",
+     "Terrain form only, matched at 200 m: features narrower than ~600 m are not resolvable."
+    ]
+   },
+   "terrain_twins": [
+    {
+     "earth_url": "/api/v1/images/site/349337.png"
+    }
+   ]
+  }
+ ]
+}

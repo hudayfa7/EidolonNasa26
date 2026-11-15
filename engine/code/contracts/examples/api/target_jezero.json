@@ -1,0 +1,25 @@
+{
+ "target_id": "mars:Jezero",
+ "body": "mars",
+ "name": "Jezero",
+ "type": "Crater",
+ "code": "AA",
+ "family": "depression",
+ "lat": 18.4082,
+ "lon": 77.6873,
+ "diameter_km": 47.5212,
+ "coordinate_source": "IAU Gazetteer of Planetary Nomenclature (center point)",
+ "capability": {
+  "tier": "fair",
+  "p_target_top3": 0.53,
+  "n_targets": 17,
+  "landform_class": "crater"
+ },
+ "image_url": "/api/v1/images/target/mars/Jezero.png",
+ "relief_sd_m": 44.2,
+ "window": {
+  "size_px": 94,
+  "pixel_m": 200.0,
+  "extent_km": 18.8
+ }
+}

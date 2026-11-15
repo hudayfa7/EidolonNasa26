@@ -1,0 +1,40 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://eidolon.local/contracts/api/error.json",
+ "title": "Error body (FastAPI 'detail')",
+ "type": "object",
+ "properties": {
+  "detail": {
+   "oneOf": [
+    {
+     "type": "object",
+     "properties": {
+      "code": {
+       "enum": [
+        "warming_up",
+        "unknown_target",
+        "unsupported_purpose",
+        "unknown_purpose",
+        "no_dem",
+        "no_image"
+       ]
+      },
+      "message": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "code"
+     ]
+    },
+    {
+     "type": "array",
+     "description": "422 request-validation errors (FastAPI/pydantic format)"
+    }
+   ]
+  }
+ },
+ "required": [
+  "detail"
+ ]
+}

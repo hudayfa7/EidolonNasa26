@@ -1,0 +1,20 @@
+{
+  "target_id": "mars-jezero",
+  "purpose": "rover_mobility",
+  "site_id": "earth-38.871--110.230",
+  "rank": 1,
+  "fidelity": {"score": 0.71, "percentile_earth": 0.97, "matcher": "handcrafted-200m-v1", "confidence": "medium"},
+  "properties": [
+    {"key": "slope", "label": "Slope distribution", "score": 0.82, "percentile_earth": 0.97, "weight": 3, "status": "match", "baseline_m": 200, "note": "FAKE"},
+    {"key": "roughness", "label": "Roughness", "score": 0.74, "percentile_earth": 0.91, "weight": 3, "status": "match", "baseline_m": 200, "note": "FAKE"},
+    {"key": "lithology", "label": "Rock type", "score": 0.55, "percentile_earth": 0.70, "weight": 1, "status": "partial", "baseline_m": null, "note": "FAKE"},
+    {"key": "ground_ice", "label": "Ground ice", "score": null, "percentile_earth": null, "weight": 1, "status": "gap", "baseline_m": null, "note": "No permafrost at this site"},
+    {"key": "rock_abundance", "label": "Hazard-scale rocks", "score": null, "percentile_earth": null, "weight": 3, "status": "not_measurable", "baseline_m": null, "note": "Below global data resolution; needs lidar/HiRISE zoom-in"}
+  ],
+  "explanation": {
+    "summary": "FAKE EXAMPLE: Matches Jezero on slope (top 3% of Earth) and roughness; partial on rock type; no ground ice.",
+    "strengths": ["Slope distribution", "Roughness"],
+    "gaps": ["Ground ice"],
+    "caveats": ["Hazard-scale rocks are not resolvable from global data."]
+  }
+}
