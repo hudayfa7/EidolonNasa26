@@ -91,7 +91,9 @@ licence and fetch date into the files they make.
 
 ## Licence
 
-Eidolon is released under the MIT License ([`LICENSE`](LICENSE)). The open-source software it uses, with each licence,
+Eidolon is released under the Apache License 2.0 ([`LICENSE`](LICENSE)). It covers the team's own code and
+documentation; data, imagery and fonts from other sources keep their own licences, listed in
+[`web/docs/credits.md`](web/docs/credits.md). The open-source software it uses, with each licence,
 is in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md); GSAP, the animation library, is free under its own Standard
 License rather than an OSI licence, as stated there.
 

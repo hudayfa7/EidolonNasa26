@@ -250,7 +250,7 @@ source be cited. How this folder meets that:
   key of `textures/manifest.json` as a texture) and `src/data/surface.gen.json`.
 - **WorldClim 2.1 is not shown.** It states no licence, so the climate's temperature and rainfall come from NASA POWER
   (How the climate fit works, above).
-- **Software.** Eidolon is MIT-licensed (`../LICENSE`); the packages it uses and their licences are in
+- **Software.** Eidolon is licensed under the Apache License 2.0 (`../LICENSE`); the packages it uses and their licences are in
   `../THIRD_PARTY_NOTICES.md`. GSAP is the one non-OSI package, under its free Standard License, stated there.
 - **The prototype**, `reference/eidolon.html`, is not in git: its textures have no recorded provenance.
 
