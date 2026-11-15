@@ -62,9 +62,9 @@ On the live search engine:
 1. **Its data** (2.6 GB, not in git): `index/`, `grid/`, `weights/`, `judge/` and `targets/` in `engine/`.
    `sh engine/fetch_data.sh` downloads them from this repo's public GitHub release and checks each file's sha256 (it
    needs `curl` and `sha256sum` or `shasum`, no login; on Windows, run it from Git Bash).
-2. **A Python environment**: `conda env create -f engine/code/environment.yml` (or only what the server imports: numpy,
-   scipy, pandas, matplotlib, pillow, gdal, rasterio, torch, torchvision, fastapi, uvicorn, pydantic), then
-   `pip install -e engine/code`.
+2. **A Python environment**: `conda env create -f engine/code/environment.yml`, then `conda activate eidolon` (or only
+   what the server imports: numpy, scipy, pandas, matplotlib, pillow, gdal, rasterio, torch, torchvision, fastapi,
+   uvicorn, pydantic), then `pip install -e engine/code`.
 3. **Start it**: `sh engine/run_server.sh` (Windows: `engine\run_server.bat`).
    `http://127.0.0.1:8000/api/v1/health` says `ready` after about 35–75 s; it holds about 4.4 GB of RAM.
 4. **Run the frontend on it**: `cd web && VITE_DATA=engine npm run dev`. `npm run test:live` checks the frontend against
