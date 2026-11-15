@@ -57,6 +57,60 @@
    "NASA, USGS, South Dakota State University, NASA Earth Observatory, via NASA GIBS"
   ]
  },
+ "provenance": {
+  "fetched": "2026-11-14",
+  "sources": {
+   "blend": {
+    "name": "Mars MGS MOLA – MEX HRSC Blended DEM Global 200 m v2",
+    "provider": "USGS Astrogeology Science Center (NASA PDS, MOLA; ESA/DLR/FU Berlin, HRSC)",
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/Mars/HRSC_MOLA_Blend/",
+    "licence": "Public domain (USGS; US Government work)",
+    "citation": "Fergason, R.L., Hare, T.M. and Laura, J. (2018), HRSC and MOLA Blended Digital Elevation Model at 200 m v2, USGS Astrogeology Science Center"
+   },
+   "sldem": {
+    "name": "SLDEM2015, LOLA and SELENE Kaguya TC merge",
+    "provider": "NASA GSFC; JAXA (SELENE); USGS Astrogeology mirror",
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/LolaKaguya_Topo/",
+    "licence": "Public domain (NASA; US Government work)",
+    "citation": "Barker, M.K. et al. (2016), A new lunar digital elevation model from the Lunar Orbiter Laser Altimeter and SELENE Terrain Camera, Icarus 273, 346–355, doi:10.1016/j.icarus.2015.07.039"
+   },
+   "lola": {
+    "name": "LRO LOLA LDEM_16 and LDEM_75S_240M",
+    "provider": "NASA/GSFC LOLA Science Team (NASA PDS Geosciences Node)",
+    "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/",
+    "licence": "NASA PDS open data: any use without permission, credit requested",
+    "citation": "Smith, D.E. et al. (2010), The Lunar Orbiter Laser Altimeter investigation on the Lunar Reconnaissance Orbiter mission, Space Sci. Rev. 150, 209–241; NASA PDS"
+   },
+   "glo30": {
+    "name": "Copernicus DEM GLO-30",
+    "provider": "ESA and the European Union (Copernicus); DLR, Airbus; AWS Registry of Open Data",
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/",
+    "licence": "Copernicus DEM licence: free use with attribution",
+    "citation": "© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+   },
+   "mdim": {
+    "name": "Viking MDIM 2.1 colourised global mosaic",
+    "provider": "USGS Astrogeology Science Center; NASA Ames",
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/wms_basemaps/Mars/MDIM21_AMESColor/",
+    "licence": "Public domain (USGS; US Government work)",
+    "citation": "NASA/JPL Viking Orbiters; USGS Astrogeology Science Center (MDIM 2.1); colour by NASA Ames Research Center"
+   },
+   "wac": {
+    "name": "LROC WAC global and south polar morphologic mosaics",
+    "provider": "NASA/GSFC/Arizona State University (NASA PDS)",
+    "url": "https://pds.lroc.asu.edu/data/LRO-L-LROC-5-RDR-V1.0/LROLRC_2001/DATA/BDR/WAC_GLOBAL/",
+    "licence": "NASA PDS open data: any use without permission, credit requested",
+    "citation": "Robinson, M.S. et al. (2010), Lunar Reconnaissance Orbiter Camera (LROC) instrument overview, Space Sci. Rev. 150, 81–124; NASA PDS"
+   },
+   "gibs": {
+    "name": "NASA GIBS WMS: Blue Marble (shaded relief, Next Generation), Black Marble 2016, MODIS water mask, Landsat WELD 1999",
+    "provider": "NASA Global Imagery Browse Services (NASA Earth Observatory, NASA LP DAAC, USGS/NASA Landsat, South Dakota State University WELD)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/",
+    "licence": "Public domain (NASA; USGS/NASA Landsat; WELD, NASA MEaSUREs, no restrictions)",
+    "citation": "NASA Earth Observatory (Blue Marble, Reto Stöckli; Black Marble); NASA LP DAAC (MODIS MOD44W); NASA/USGS Landsat and Roy, D.P. et al., Web-Enabled Landsat Data (WELD); served by NASA GIBS"
+   }
+  }
+ },
  "patches": [
   {
    "body": "mars",

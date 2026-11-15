@@ -1,4 +1,4 @@
-# MoonBnb search API: front-end integration spec (v1.0.0)
+# Eidolon search API: front-end integration spec (v1.0.0)
 
 **Who this is for:** Hudayfa (front end) and Isaam (backend). It covers everything needed to build the UI against the
 Eidolon search engine without reading the ML code.

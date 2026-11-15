@@ -15,10 +15,19 @@ import sharp from 'sharp';
 import { CAP_S, capToLL, clamp, localToLL, wrap180 } from '../src/coords.ts';
 import { BEYOND, PHOTOS } from '../src/data/photos.ts';
 import { DEMO_CELLS, EARTH, ELEV, MADE_UP_CELLS, PIN_KM, PINS, RADIUS, TARGETS } from '../src/data/real-sites.ts';
+import { provenance } from './sources.mjs';
 
 const ROOT = new URL('../', import.meta.url), CACHE = new URL('.cache/real-data/', ROOT);
 const TEXDIR = new URL('public/textures/', ROOT), SITEDIR = new URL('public/sites/', ROOT), PHOTODIR = new URL('public/photos/', ROOT);
 const only = process.argv.find(a => a.startsWith('--only='))?.slice(7);
+// Provenance (scripts/sources.mjs): each output records the sources it was made from, their URLs, licences and citations,
+// and the date of the run. `--only=provenance` rewrites just those records, downloading nothing, with `--fetched=YYYY-MM-DD`
+// for data fetched before (default today). The textures' record is a file of its own (public/textures/provenance.json):
+// the app loads every key of textures/manifest.json as a texture.
+const FETCHED = process.argv.find(a => a.startsWith('--fetched='))?.slice(10) ?? new Date().toISOString().slice(0, 10);
+const FETCHED_GLOBES = process.argv.find(a => a.startsWith('--fetched-globes='))?.slice(17) ?? FETCHED;   // the textures', when they were fetched on another day
+const GLOBE_SOURCES = ['mdim', 'tes', 'mola', 'clem', 'wac', 'lola', 'gibs', 'clouds', 'etopo1', 'nasaImages'];
+const SITE_SOURCES = ['blend', 'sldem', 'lola', 'glo30', 'mdim', 'wac', 'gibs'];
 const D2R = Math.PI / 180;
 const WIN = 94 * 200 / 1000;   // the engine's comparison window, km (src/terrain/procedural.ts WINDOW_KM)
 
@@ -548,7 +557,7 @@ async function sitesData() {
     return { body: 'earth', id: `cell-${lat}_${lon}`.replace(/\./g, 'p'), lat, lon, ext: WIN }; });
   for (const t of [...TARGETS, ...EARTH.map(e => ({ ...e, body: 'earth' })), ...cellSites]) for (const km of [t.ext * 12, t.ext * 3.5]) crops.push(await retry(() => crop(t, km, 240)));   // context and regional (src/ui/panel.ts strip)
   crops.push(...await drapes());
-  writeFileSync(new URL('manifest.json', SITEDIR), JSON.stringify({ credits: CREDIT, patches: out, crops }, null, 1) + '\n');
+  writeFileSync(new URL('manifest.json', SITEDIR), JSON.stringify({ credits: CREDIT, provenance: provenance(SITE_SOURCES, FETCHED), patches: out, crops }, null, 1) + '\n');
   console.log(`  patches/ ${(out.reduce((s, p) => s + p.n * p.n * 2, 0) / 1024).toFixed(0)} KB, ${out.length} patches; ${crops.length} crops`);
 }
 
@@ -598,7 +607,7 @@ const drapes = () => pool([...TARGETS, ...EARTH.map(e => ({ ...e, body: 'earth' 
 // --only=drape: the drapes alone, into the manifest as it stands (sitesData writes them with the rest).
 async function drapeOnly() {
   const m = JSON.parse(readFileSync(new URL('manifest.json', SITEDIR), 'utf8')), d = await drapes(), files = new Set(d.map(c => c.file));
-  m.crops = [...m.crops.filter(c => !files.has(c.file)), ...d];
+  m.crops = [...m.crops.filter(c => !files.has(c.file)), ...d]; m.provenance = provenance(SITE_SOURCES, FETCHED);
   writeFileSync(new URL('manifest.json', SITEDIR), JSON.stringify(m, null, 1) + '\n');
 }
 
@@ -686,3 +695,11 @@ if (only === 'clouds') { console.log('Clouds'); await clouds(); writeFileSync(ne
 if (only === 'normals') { console.log('Normal maps'); await normals(); writeFileSync(new URL('manifest.json', TEXDIR), JSON.stringify(manifest, null, 2) + '\n'); }
 if (!only || only === 'photos') await photos();
 if (!only || only === 'beyond') { await beyond(); writeFileSync(new URL('manifest.json', TEXDIR), JSON.stringify(manifest, null, 2) + '\n'); }
+// The textures' provenance after any step that wrote them; --only=provenance also rewrites the site manifest's.
+if (!only || ['globes', 'cap', 'clouds', 'normals', 'photos', 'beyond', 'provenance'].includes(only))
+  writeFileSync(new URL('provenance.json', TEXDIR), JSON.stringify(provenance(GLOBE_SOURCES, FETCHED_GLOBES), null, 1) + '\n');
+if (only === 'provenance') {
+  const m = JSON.parse(readFileSync(new URL('manifest.json', SITEDIR), 'utf8'));
+  writeFileSync(new URL('manifest.json', SITEDIR), JSON.stringify({ credits: m.credits, provenance: provenance(SITE_SOURCES, FETCHED), patches: m.patches, crops: m.crops }, null, 1) + '\n');
+  console.log(`provenance: sites/manifest.json fetched ${FETCHED}, textures/provenance.json fetched ${FETCHED_GLOBES}`);
+}

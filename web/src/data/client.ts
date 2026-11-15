@@ -8,19 +8,19 @@ import { clock } from '../motion';
 import { needPatch, patchFor } from '../terrain/dem';
 import { genTerrain, heights, prunePins, WINDOW_KM, type Terrain } from '../terrain/procedural';
 import { fromElevation, windowZ } from '../terrain/tiles';
-import { EngineError, type Elevation, type ElevationOf, type Purpose } from './api';
+import { EngineError, type Elevation, type ElevationOf, type Engine, type Purpose } from './api';
 import { hillshade } from './hillshade';
 import { API, httpEngine } from './http';
 import { listing } from './listing';
-import { mockEngine } from './mock';
 import { cellOf, customSite, noteCells } from './pins';
 import { SITES, type Site } from './sites';
 import type { SearchRequest, SearchResponse } from './types.gen';
 
-export const MOCK = import.meta.env.VITE_DATA !== 'engine';
 // ?mock=slow,empty,fail,warming,noimage,asengine, before or after the hash (like ?capture).
 const param = (q?: string) => new URLSearchParams(q ?? '').get('mock') ?? '';
 const modes = new Set(`${param(location.search)},${param(location.hash.split('?')[1])}`.split(','));
+// An engine build falls back to the sample data with ?mock=on.
+export const MOCK = import.meta.env.VITE_DATA !== 'engine' || modes.has('on');
 /** The engine's own windows and hillshades: their copy says so. ?mock=asengine labels the mock's that way, to see it. */
 export const AS_ENGINE = !MOCK || modes.has('asengine');
 // The mock's elevation is the frontend's own terrain of the same window: the featured site there (by its IAU name or
@@ -32,7 +32,19 @@ const frontZ = (body: Body, lat: number, lon: number, name?: string) => needPatc
   windowZ(heights(body, SITES[body].find(x => name ? x.iau === name : x.lat === lat && x.lon === lon) ?? customSite(body, pinId(lat, lon))!, WINDOW_KM, 94, { lat, lon })));
 // App-clock seconds (GSAP's), so ?capture seeks drive the mock's latencies and the retries like any animation.
 const wait = (s: number) => new Promise<void>(r => { gsap.delayedCall(s, r); });
-const mock = MOCK ? mockEngine(modes, { wait, now: clock }, frontZ) : null;
+/**
+ * The mock engine and its example responses (about 10 KB gzip) load after the start, not with it: the title asks for
+ * no engine data. `loadMock` loads it (app.ts: once the poster gives way; under ?capture, before ready, so the captures'
+ * timing is as before); a call before then loads it itself. Once loaded, every call goes straight to it, synchronously.
+ */
+let mockE: Engine | undefined, mockP: Promise<Engine> | undefined;
+export const loadMock = (): Promise<Engine> => mockP ??= import('./mock').then(m => mockE = m.mockEngine(modes, { wait, now: clock }, frontZ));
+const KEYS = ['health', 'purposes', 'sovereigns', 'targets', 'target', 'search', 'elevation'] as const satisfies readonly (keyof Engine)[];
+const lazyMock = Object.fromEntries(KEYS.map(k => [k, (...a: unknown[]) => {
+  const call = (e: Engine) => (e[k] as (...x: unknown[]) => Promise<unknown>)(...a);
+  return mockE ? call(mockE) : loadMock().then(call);
+}])) as unknown as Engine;
+const mock = MOCK ? lazyMock : null;
 export const data = { ...(mock ?? httpEngine), listing };
 
 /**
@@ -90,6 +102,8 @@ export function doublesOf(body: Body, s: Site, again = false, k?: number): Doubl
   }).catch(async (e: unknown) => {
     if (stop.signal.aborted) { d.err = new EngineError(0, 'aborted', 'A newer search by coordinates replaced it.'); return; }
     let err = e instanceof EngineError ? e : new EngineError(0, 'bad_response', String(e));
+    // A coordinate search answered no_dem where the body has data (an offline remote read) isn't "no data": say network.
+    if (err.code === 'no_dem' && !s.iau && !noDemAt(body, s.lat)) err = new EngineError(0, 'network', 'The elevation read failed; the network may be offline.');
     // Still warming after a failed warm-up: the engine answers warming_up for good (server.py); /health says error.
     // Else its uptime says how far the warm-up has got.
     if (err.code === 'warming_up') {
@@ -116,12 +130,13 @@ export const cellsOf = (res: SearchResponse) => res.results.flatMap(r => {
 
 // The raw elevation of an engine window (spec §3.7), asked once per window and kept: the compare's 3D terrain, maps and
 // table are built from it, and the mock's hillshades drawn. `settled` resolves when it lands or fails for good: warming_up
-// and a network failure are asked again every 3 s (spec §6: 2–5 s) for a minute (the engine warms up in 30–40 s, §1),
-// as the search's warming is; any other failure (no_dem, no_image, unknown_target) is kept.
+// and a network failure are asked again every 3 s (spec §6: 2–5 s) for 90 s (spec §1 says the engine warms up in 30–40 s;
+// measured at the merge, 35 s warm and 56–74 s from a cold disk), as the search's warming is; any other failure (no_dem,
+// no_image, unknown_target) is kept.
 // shortcut: kept for the session (~70 KB each); prune like the pin searches if sessions grow long.
 interface Win { p: Promise<Elevation>; settled: Promise<void>; done: boolean; e?: Elevation; T?: Terrain | null }
 const wins = new Map<string, Win>();
-const ask = (of: ElevationOf, n = 20): Promise<Elevation> => ('lat' in of && noDemAt(of.body, of.lat) ? noDem() : data.elevation(of)).catch((e: unknown) =>
+const ask = (of: ElevationOf, n = 30): Promise<Elevation> => ('lat' in of && noDemAt(of.body, of.lat) ? noDem() : data.elevation(of)).catch((e: unknown) =>
   n > 0 && e instanceof EngineError && (e.code === 'warming_up' || e.code === 'network') ? wait(3).then(() => ask(of, n - 1)) : Promise.reject(e));
 function elevationOf(of: ElevationOf): Win {
   const key = JSON.stringify(of); let w = wins.get(key);

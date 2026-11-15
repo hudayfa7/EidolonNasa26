@@ -133,7 +133,7 @@ export const STATES = [
 
   // System, info sheet (scroll down), sheet closed (scroll up), Beyond (scroll sideways).
   { name: 'system', seq: 'system', route: '#/system', steps: [{ seek: 2.5 }], check: 'Three worlds, sun at the left edge, labels clear of the heading on phone; labels "Artemis base regions", "Landing sites, pin anywhere", "14 established analog sites"' },
-  { name: 'info-sheet', seq: 'system', steps: [{ wheel: { dx: 0, dy: 400 }, at: '#gl' }, { seek: 4 }], check: 'Info sheet up: "Read its terrain" (terrain form of an 18.8 km window at 200 m, nothing under about 600 m, no surface brightness), the tested line and the 60° Moon note under Find its doubles' },
+  { name: 'info-sheet', seq: 'system', steps: [{ wheel: { dx: 0, dy: 400 }, at: '#gl' }, { seek: 4 }], check: 'Info sheet up: "Read its terrain" (terrain form of an 18.8 km window at 200 m, nothing under about 600 m, no surface brightness), the tested line and the 59.5° Moon note under Find its doubles' },
   { name: 'info-closed', seq: 'system', steps: [{ wheel: { dx: 0, dy: -400 }, at: '#sysinfo' }, { seek: 5.5 }], check: 'Sheet closes on scroll up' },
   { name: 'beyond', seq: 'system', steps: [{ wheel: { dx: 400, dy: 0 }, at: '#gl' }, { seek: 11 }], check: 'Beyond drawn and holding still; lead "… Eidolon starts with the Moon and Mars."; the cards\' worlds in the footer\'s dots, each in its own ink (Venus, Mercury, Callisto, Titan from Mariner 10, MESSENGER, Galileo, Cassini), its mission (linked) and credit on a line under the image' },
   { name: 'beyond-held', seq: 'system', steps: [{ seek: 40 }], check: 'The same pixels as beyond but the top bar\'s clocks (sim time runs): once drawn, Beyond holds still' },
@@ -149,7 +149,7 @@ export const STATES = [
   // Body views.
   { name: 'body-mars', seq: 'mars', route: '#/mars', steps: [{ seek: 2.5 }], check: 'HUD, graticule labels' },
   { name: 'body-mars-zoomed', seq: 'mars', steps: [{ wheel: { dx: 0, dy: -500 }, at: '#gl' }, { seek: 4 }], check: '10° grid when zoomed; the HUD\'s brackets clamped inside the viewport, the tape below the top bar, a side\'s readouts gone where they have no room; the graticule labels inside the brackets, none on the hint or the tape' },
-  { name: 'body-moon', route: '#/moon', steps: [{ seek: 2.5 }, { expect: '#hud:not(:has(dd[style*="--fl: 0."]))' }], check: 'HUD (its readouts white: the sub-observer\'s and sub-solar\'s ~1.1 s ticks at ×600 are drift, never flashed), graticule labels; the lede: "Matching reaches 60° from the equator, so the south-pole base regions list their established analog sites, unscored, for now."' },
+  { name: 'body-moon', route: '#/moon', steps: [{ seek: 2.5 }, { expect: '#hud:not(:has(dd[style*="--fl: 0."]))' }], check: 'HUD (its readouts white: the sub-observer\'s and sub-solar\'s ~1.1 s ticks at ×600 are drift, never flashed), graticule labels; the lede: "Matching reaches 59.5° from the equator, so the south-pole base regions list their established analog sites, unscored, for now."' },
   { name: 'body-earth', route: '#/earth', steps: [{ seek: 2.5 }], check: 'Earth lede "The 14 established analog sites, and the worlds they stand in for." over "Established analog sites"' },
   // A world whose colour map hasn't landed (outside ?capture the maps after the route's load after start; both its tiers
   // blocked here, so neither lands): it draws in its map's mean colour until the map turns it over .9 s (app.ts
@@ -270,7 +270,8 @@ export const STATES = [
   { name: 'site-sun-drape', seq: 'sun', refNA: true, steps: [{ tap: '[data-drape]' }, { until: '#tui0.draped' }, { seek: 5.5 }],
     check: 'The image draped at midnight: dark but for the summit the sun still reaches, not the image\'s own daylight' },
   // By the keyboard: the slider takes the arrows (a quarter hour each), keeps its focus, says the sun as it moves.
-  { name: 'site-sun-kb', seq: 'sunkb', route: '#/mars/jezero', refNA: true, steps: [{ seek: 3 }, { eval: "document.querySelector('#sun-on').click()" }, { scroll: '#panel', to: '[data-sun]' },
+  // The tools sit in the View tools window (ui/vtools.ts), collapsed until opened: open it first, as a user would.
+  { name: 'site-sun-kb', seq: 'sunkb', route: '#/mars/jezero', refNA: true, steps: [{ seek: 3 }, { tap: '#vtools summary' }, { eval: "document.querySelector('#sun-on').click()" },
     { eval: "document.querySelector('#sun-h').focus()" }, { press: 'ArrowRight' }, { press: 'ArrowRight' }, { press: 'ArrowRight' }, { press: 'ArrowRight' }, { seek: 3.5 },
     { eval: "{ const h = document.querySelector('#sun-h'); if (document.activeElement !== h || h.value !== '10' || document.querySelector('.srange output').textContent !== '10:00') throw new Error(`slider ${h.value}, focus on ${document.activeElement?.id}`); }" }],
     check: 'Jezero, the control on at 09:00 (now), four arrows on: 10:00, the slider focused with its ring (asserted), the sun higher in the east, Season Ls on Mars' },
@@ -387,11 +388,11 @@ export const STATES = [
 
   // The landing ellipse (Stretch 4): a mission's ellipse at its true size round the site's centre on the block and the
   // map, its long axis turned, the share of it over 15° in the panel. `ellT` asserts the panel's text.
-  { name: 'site-ellipse-jezero', seq: 'ellipse', route: '#/mars/jezero', refNA: true, steps: [{ seek: 3 }, { eval: "document.querySelector('#ell-on').click()" }, { scroll: '#panel', to: '.map' }, { seek: 3.5 },
+  { name: 'site-ellipse-jezero', seq: 'ellipse', route: '#/mars/jezero', refNA: true, steps: [{ seek: 3 }, { tap: '#vtools summary' }, { eval: "document.querySelector('#ell-on').click()" }, { scroll: '#panel', to: '.map' }, { seek: 3.5 },
     { expect: '#cap0 .s.ell' }, { expect: 'canvas[data-map][aria-label$="with the Perseverance landing ellipse"]' }, { expect: '#ell-m' }, { expect: '#ell-az[aria-valuetext="90°, east–west"]' },
     { eval: ellT('The size of Perseverance’s ellipse', nb('7.7 × 6.6 km'), '39.9', `Not where it landed: Perseverance came down ${nb('8 km')} north-west of the crosshair, at Octavia E. Butler Landing`) }],
     check: 'Jezero: Perseverance\'s 7.7 × 6.6 km ellipse, long axis east–west, coral on its dark casing round the crater floor\'s centre on block and map alike; the caption "Perseverance, 7.7 × 6.6 km" after the outline glyph (asserted); the facts (size, 39.9 km², over 15°, 90° east–west), the source line citing the size only and, its own site, where it really landed, 8 km north-west (asserted)' },
-  { name: 'site-ellipse-turn', seq: 'ellipse', refNA: true, steps: [{ scroll: '#panel', to: '[data-ell]' }, { eval: "document.querySelector('#ell-az').focus()" },
+  { name: 'site-ellipse-turn', seq: 'ellipse', refNA: true, steps: [{ eval: "document.querySelector('#ell-az').focus()" },
     ...Array(9).fill({ press: 'ArrowLeft' }), { seek: 4 }, { expect: '#ell-az:focus[aria-valuetext="45°, north-east–south-west"]' },
     { eval: "{ const o = document.querySelector('.ell .srange output').textContent; if (o !== '45°') throw new Error(o); }" }],
     check: 'Nine arrows left: the long axis at 45°, north-east–south-west, on block and map; the slider focused with its ring, its value and the Long axis fact in step (asserted)' },
@@ -599,7 +600,7 @@ export const STATES = [
   // doubles from each site's search (by name at once; by coordinates 6 s each, one at a time: all in by 42 s).
   { name: 'no-webgl', seq: 'nogl', route: '#/system', noWebGL: true, steps: [{ seek: 1 }], check: 'The title as a poster: the title shot under its lockup, wordmark and blurb; the reason first (white), what Eidolon does (Moon bases and Mars first), Featured sites; desktop: the meta row "Scroll for featured sites"' },
   // The Featured sites button (a real wait: its scroll is smooth).
-  { name: 'no-webgl-list', seq: 'nogl', refNA: true, steps: [{ tap: '[data-fb-sites]' }, { wait: 1500 }, { seek: 1.5 }], check: 'Featured sites, its heading 40 px below the top: purpose, the tested line, sample results; the Moon then Mars (desktop: two columns); the south-pole regions\' established sites under "reads Moon terrain only within 60° of the equator"; a named site\'s three closest doubles linked (country, point, shape match, summary), the IAU feature and Jezero\'s banner, the notes all three share once; Mars\'s first search by coordinates "Reading Mars terrain…", the rest "Waiting its turn…"' },
+  { name: 'no-webgl-list', seq: 'nogl', refNA: true, steps: [{ tap: '[data-fb-sites]' }, { wait: 1500 }, { seek: 1.5 }], check: 'Featured sites, its heading 40 px below the top: purpose, the tested line, sample results; the Moon then Mars (desktop: two columns); the south-pole regions\' established sites under "reads Moon terrain only within 59.5° of the equator"; a named site\'s three closest doubles linked (country, point, shape match, summary), the IAU feature and Jezero\'s banner, the notes all three share once; Mars\'s first search by coordinates "Reading Mars terrain…", the rest "Waiting its turn…"' },
   { name: 'no-webgl-done', seq: 'nogl', refNA: true, steps: [{ seek: 45 }, { scroll: '#gl-fail', to: '#fb-mars-arcadia' }], check: 'Every search in: Mars\'s sites searched by coordinates (Arcadia, then Utopia by name, Meridiani) with their three doubles each, no IAU note or banner on those by coordinates' },
   // A slow engine (every answer 10 s), so the search above Gale's entry (Jezero's) lands after the landing.
   { name: 'no-webgl-deeplink', seq: 'nogl-deep', route: '#/mars/gale/compare/atacama', query: 'mock=slow', noWebGL: true, refNA: true, steps: [{ seek: 1 }], check: 'A deep link without WebGL lands on its site: Gale Crater\'s entry as high as the page scrolls yet (nothing has landed), highlighted (the selected row\'s surface), "The 3D view can’t open here. This view needs WebGL…" under its name; Jezero above it still searching' },
@@ -623,11 +624,11 @@ export const STATES = [
   // page's own, one at a time, aren't called off and every site fills in (the two called each other off for good).
   { name: 'context-lost-pin', seq: 'lost-pin', route: '#/mars/@10.0000,20.0000', refNA: true, steps: [{ seek: 2 }, { eval: LOSE }, { until: '#gl-fail .big' }, { seek: 2.5 }],
     check: 'The page, its reason first; the tab doesn\'t freeze' },
-  { name: 'context-lost-pin-done', seq: 'lost-pin', refNA: true, steps: [{ seek: 48 }, { expect: '#gl-fail:not(:has([aria-busy="true"]))' }, { scroll: '#gl-fail', to: '#fb-mars-arcadia' }],
+  { name: 'context-lost-pin-done', seq: 'lost-pin', refNA: true, steps: [{ seek: 48 }, { until: '#gl-fail:not(:has([aria-busy="true"]))' }, { scroll: '#gl-fail', to: '#fb-mars-arcadia' }],
     check: 'Every search in (asserted: no box busy): Arcadia, Meridiani and Elysium (searched by coordinates) with their three doubles each, none "Reading…" or "Waiting its turn"' },
   // The same with a pin clicked on the globe, its search holding the detection frame there (views/site.ts waits on it).
   { name: 'context-lost-pin-held', route: '#/mars', refNA: true, steps: [{ seek: 2.5 }, { route: '#/mars/@18.3800,77.5800' }, { seek: 3 }, { expect: '#sc3h .pbar' },
-    { eval: LOSE }, { until: '#gl-fail .big' }, { seek: 50 }, { expect: '#gl-fail:not(:has([aria-busy="true"]))' }, { scroll: '#gl-fail', to: '#fb-mars-arcadia' }],
+    { eval: LOSE }, { until: '#gl-fail .big' }, { seek: 50 }, { until: '#gl-fail:not(:has([aria-busy="true"]))' }, { scroll: '#gl-fail', to: '#fb-mars-arcadia' }],
     check: 'As context-lost-pin-done: every search in (asserted), Arcadia, Meridiani and Elysium with their doubles' },
   // The link preview's image (`npm run poster` makes public/og.jpg from it): the title at 1200 × 630, device scale 2,
   // without its buttons and scroll hint, which a picture can't offer, and the blurb's first paragraph, which at this
@@ -643,14 +644,15 @@ export const STATES = [
   // Engine states, the panel scrolled to its foot, where the doubles are. Warming: the mock answers 503 warming_up for
   // its first 35 s (the panel asks again every 3 s), then the doubles.
   { name: 'engine-warming-note', seq: 'warming', route: '#/mars/jezero', query: 'mock=warming', refNA: true, steps: [{ seek: 2.5 }], check: 'Warming screen: "Search engine starting up…" in the status bar (phone: one line above the sheet), from /health polled at boot' },
-  { name: 'engine-warming', seq: 'warming', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel' }], check: 'Warming state: "Starting up…" with its bar (the engine\'s uptime) and the 30 to 40 seconds' },
+  { name: 'engine-warming', seq: 'warming', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel' }], check: 'Warming state: "Starting up…" with its bar (the engine\'s uptime, over 90 s) and "up to about a minute and a half"' },
   { name: 'engine-warming-done', seq: 'warming', refNA: true, steps: [{ seek: 40 }, { scroll: '#panel', to: '[data-doubles]' }], check: 'Warmed up: the five cards, asked again by themselves' },
   { name: 'engine-moon-pin-85S', seq: 'nodem', route: '#/moon', query: 'mock=nodem', refNA: true, steps: [{ seek: 2.5 }, { route: '#/moon/@-85.0000,30.0000' }, { seek: 3 }, { scroll: '#panel' }], check: 'No-data state: frame "No elevation data", the panel\'s no-elevation box under "Earth doubles" (no "closest")' },
   { name: 'engine-moon-pin-85S-terrain', seq: 'nodem', refNA: true, steps: [{ seek: 5 }], check: 'The frame gone: the terrain\'s note "No elevation data here: … Illustrative terrain." (viewports 520 px and wider)' },
   // Mock pin latency is 6 s: mid-search the frame holds on the globe with its bar; then the dive, terrain and doubles.
   { name: 'engine-mars-pin-6s', seq: 'pin', route: '#/mars', refNA: true, steps: [{ seek: 2.5 }, { route: '#/mars/@18.3800,77.5800' }, { seek: 3 }, { scroll: '#panel' }], check: 'Detection frame holds on the globe with progress ("Reading Mars terrain" and its bar), the panel\'s "Reading Mars terrain…" box, status bar "Click the surface to search another point instead."' },
-  { name: 'engine-mars-pin-lands', seq: 'pin', refNA: true, steps: [{ seek: 6.2 }, { expect: '#sc3[style*="--fl: 0."]' }], check: 'The answer just landed (6 s): the frame\'s Matching line "Earth sites" coral, easing back (the telemetry flash), the bar gone; the globe starting to turn for the dive' },
-  { name: 'engine-mars-pin-done', seq: 'pin', refNA: true, steps: [{ seek: 10 }, { scroll: '#panel', to: '[data-doubles]' }], check: 'The search answered: dived to the terrain, five cards' },
+  { name: 'engine-mars-pin-lands', seq: 'pin', refNA: true, mockOnly: true, steps: [{ seek: 6.2 }, { expect: '#sc3[style*="--fl: 0."]' }], check: 'The answer just landed (6 s): the frame\'s Matching line "Earth sites" coral, easing back (the telemetry flash), the bar gone; the globe starting to turn for the dive' },
+  // The answer's cards first (real time: the live engine answers when it does; the mock's has landed at 6.2 s), then on.
+  { name: 'engine-mars-pin-done', seq: 'pin', refNA: true, steps: [{ until: '[data-doubles] .result' }, { seek: 10 }, { scroll: '#panel', to: '[data-doubles]' }], check: 'The search answered: dived to the terrain, five cards' },
   // A pin moved on the site view (a map click) swaps to terrain at once, the panel back at its top: the status bar
   // (on a phone, one line above the sheet) says its search is running, 3 s in.
   { name: 'engine-pin-moved', route: '#/mars/@18.3800,77.5800', refNA: true, steps: [{ seek: 7 }, { scroll: '#panel', to: '.map' }, { tap: '[data-map]', fx: .7, fy: .35 }, { seek: 10 },
@@ -664,13 +666,14 @@ export const STATES = [
   // to its foot: its stand-in doubles). Cards under the capability banner, "show more" to 20, then a result's detail on
   // the compare view (the Jezero example's first cell; Rima Hadley's first card, tapped).
   { name: 'results-jezero', seq: 'res-jezero', route: '#/mars/jezero', steps: [{ seek: 3.5 }, { scroll: '#panel', to: '[data-doubles]' }], check: 'Capability banner (crater, 9 of 17, no percentage); cards: rank, country, coordinates, shape match, notes, summary, chips, hillshade' },
-  { name: 'results-jezero-foot', seq: 'res-jezero', refNA: true, steps: [{ scroll: '#panel' }, { seek: 3.6 }], check: 'Under the five cards: Show more, then "Typically 2 of 3 searches find a good terrain analog in the first five results. These are sample results. Run Eidolon with the real model (a link to the repo)."' },
+  { name: 'results-jezero-foot', seq: 'res-jezero', refNA: true, steps: [{ scroll: '#panel' }, { seek: 3.6 }], check: 'Under the five cards: Show more, then "Typically 2 of 3 searches find a good terrain analog in the first five results. Sample results until the search engine is connected."' },
   { name: 'results-jezero-more', seq: 'res-jezero', refNA: true, steps: [{ scroll: '#panel', to: '[data-more]' }, { tap: '[data-more]' }, { seek: 6 }, { scroll: '#panel' }], check: 'Show more: 20 cards with their hillshades, no Show more left' },
   { name: 'results-rima-hadley', seq: 'res-hadley', route: '#/moon/hadley', steps: [{ seek: 3.5 }, { scroll: '#panel', to: '[data-doubles]' }], check: 'Capability banner (rille, 9 of 16); cards with no percentages' },
   { name: 'results-rima-hadley-detail', seq: 'res-hadley', refNA: true, steps: [{ tap: '[data-doubles] li:first-child .result' }, { seek: 6.5 }, { scroll: '#panel', to: '.res' }], check: 'Detail of the first card: shape match, score, likelihood bar, summary, six properties with status' },
-  { name: 'results-jezero-detail', seq: 'res-detail', route: '#/mars/jezero/compare/@34.6750,-105.0750', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel', to: '.res' }], check: 'Shape match High, score, rough likelihood bar, surface badge, summary, six properties with status, matches and differs' },
-  { name: 'results-jezero-notes', seq: 'res-detail', refNA: true, steps: [{ scroll: '#panel', to: 'h3:has(+ .notes)' }, { seek: 3.2 }], check: 'Every caveat, climate (°C, mm/yr, aridity band), location with access and surface' },
-  { name: 'results-jezero-engine', seq: 'res-detail', refNA: true, steps: [{ scroll: '#panel', to: '.res .drawer' }, { tap: '.res .drawer summary' }, { seek: 3.4 }], check: 'Expert drawer open: raw values (no judge number) and the engine build' },
+  // With the recorded feeds (wx=feed: the climatology is this cell's), so the climate reads NASA POWER's (data/climate.ts powerClimate).
+  { name: 'results-jezero-detail', seq: 'res-detail', route: '#/mars/jezero/compare/@34.6750,-105.0750', query: 'wx=feed', serve: WX, refNA: true, steps: [{ seek: 3 }, { wait: 300 }, { seek: 3.05 }, { scroll: '#panel', to: '.res' }], check: 'Shape match High, score, rough likelihood bar, surface badge, summary, six properties with status, matches and differs' },
+  { name: 'results-jezero-notes', seq: 'res-detail', refNA: true, steps: [{ scroll: '#panel', to: 'h3:has(+ .notes)' }, { seek: 3.2 }], check: 'Every caveat, climate (°C and mm/yr from NASA POWER, the aridity band; its source line names NASA POWER and the Global Aridity Index, not WorldClim), location with access and surface' },
+  { name: 'results-jezero-engine', seq: 'res-detail', refNA: true, steps: [{ scroll: '#panel', to: '.res [data-engine]' }, { tap: '.res [data-engine] summary' }, { seek: 3.4 }], check: 'Expert drawer open: raw values (no judge number) and the engine build' },
   { name: 'results-jezero-list', seq: 'res-detail', refNA: true, steps: [{ scroll: '#panel', to: '[data-jump]' }, { tap: '[data-jump]' }, { seek: 3.6 }], check: 'Other doubles: the list from its head, card 01 selected' },
   // Another card picked from that list: a new double starts its compare from the top, focus on the Comparison heading.
   { name: 'results-jezero-pick', seq: 'res-detail', refNA: true, steps: [{ scroll: '#panel', to: '[data-doubles] li:nth-child(3)' }, { tap: '[data-doubles] li:nth-child(3) .result' }, { seek: 5 }], check: 'Card 03 picked: the panel back at the top on the new pair and maps, its detail under them' },
@@ -693,7 +696,7 @@ export const STATES = [
   { name: 'ask-hadley-detail', seq: 'ask-hadley', refNA: true, steps: [{ tap: '[data-doubles] li:first-child .result' }, { seek: 8.5 }, { scroll: '#panel', to: '.res' }], check: 'The example\'s first cell: purpose eva_training, its gap, notes and climate' },
   // Education searches all land: a rugged, likely vegetated cell (the mock's New Zealand one) among the results.
   { name: 'ask-education', seq: 'ask-education', route: '#/mars/gale', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel', to: '[data-ask]' }, { select: '#purpose', value: 'education' }, { tap: '.filt summary' }, { seek: 3.5 }, { scroll: '#panel', to: '[data-ask]' }], check: 'Education and outreach and its description, no "barren land only"; Filters open, the surface box offers "Barren land only" (education already searches any land)' },
-  { name: 'ask-education-rugged', seq: 'ask-education', refNA: true, steps: [{ scroll: '#panel', to: '[data-doubles]' }, { tap: '[data-doubles] .result:has-text("New Zealand")' }, { seek: 6 }, { scroll: '#panel', to: '.res' }], check: 'The rugged cell\'s detail: badge "Rugged, likely vegetated" and "Terrain form matches; the surface is likely vegetated."' },
+  { name: 'ask-education-rugged', seq: 'ask-education', refNA: true, mockOnly: true, steps: [{ scroll: '#panel', to: '[data-doubles]' }, { tap: '[data-doubles] .result:has-text("New Zealand")' }, { seek: 6 }, { scroll: '#panel', to: '.res' }], check: 'The rugged cell\'s detail: badge "Rugged, likely vegetated" and "Terrain form matches; the surface is likely vegetated."' },
   // Named-feature search on the body view: three matches for "jez" (the engine's targets_jez example), the first active;
   // the second picked by keyboard opens Jezero Mons, a named target searched by its IAU name.
   { name: 'targets-jez', seq: 'targets', route: '#/mars', refNA: true, steps: [{ seek: 2.5 }, { fill: '#tq', text: 'jez' }, { seek: 2.8 }, { wait: 1500 }, { seek: 3.2 }], check: 'Jezero (Featured: Jezero Crater), Jezero Mons, Jezza with type, coordinates and size; the first active; "3 named features"' },
@@ -704,7 +707,7 @@ export const STATES = [
   // The Moon's south pole: the engine lists Moon features only within 60°. A featured south-pole site by name, then a
   // polar feature the search can't find, with the limit stated.
   { name: 'targets-polar', seq: 'targets-moon', route: '#/moon', refNA: true, steps: [{ seek: 2.5 }, { fill: '#tq', text: 'malapert' }, { seek: 2.8 }, { wait: 1500 }, { seek: 3.2 }], check: 'Malapert Massif, "Featured site · 86.0000° S, 0.0000° E", active; "1 named feature"' },
-  { name: 'targets-nomatch', seq: 'targets-moon', refNA: true, steps: [{ fill: '#tq', text: 'Shackleton' }, { seek: 3.6 }], check: '"No named feature on Moon matches “Shackleton”. The search engine lists Moon features only within 60° of the equator; the south-pole sites are under Featured sites."' },
+  { name: 'targets-nomatch', seq: 'targets-moon', refNA: true, steps: [{ fill: '#tq', text: 'Shackleton' }, { seek: 3.6 }], check: '"No named feature on Moon matches “Shackleton”. The search engine lists Moon features only within 59.5° of the equator; the south-pole sites are under Featured sites."' },
   // The field's failure copy: the engine down, then warming up.
   { name: 'targets-fail', route: '#/mars', query: 'mock=fail', refNA: true, steps: [{ seek: 2.5 }, { fill: '#tq', text: 'jez' }, { seek: 2.8 }, { wait: 1500 }, { seek: 3.2 }], check: '"Named features couldn’t be loaded: the search engine could not be reached." No list' },
   { name: 'targets-warming', route: '#/mars', query: 'mock=warming', refNA: true, steps: [{ seek: 2.5 }, { fill: '#tq', text: 'jez' }, { seek: 2.8 }, { wait: 1500 }, { seek: 3.2 }], check: '"The search engine is starting up. Try again in a moment." No list' },
@@ -726,7 +729,7 @@ export const STATES = [
   { name: 'ask-purpose-same', route: '#/mars/jezero', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel', to: '[data-ask]' }, { select: '#purpose', value: 'drill_isru' },
     { seek: 3.5 }, { scroll: '#panel', to: '[data-doubles]' }], check: 'Drilling and ISRU: the same five as rover mobility: United States, Australia twice, Algeria twice' },
   { name: 'compare-filter-keep', route: '#/mars/jezero/compare/@34.6750,-105.0750', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel', to: '[data-ask]' }, { tap: '.filt summary' }, { tap: '#f-polar' },
-    { seek: 3.6 }, { expect: '#f-polar:focus' }, { expect: '[data-cmp] .res' }, { expect: '[data-doubles] .is-sel' }],
+    { seek: 3.6 }, { expect: '#f-polar:focus' }, { expect: '[data-cmp] .res' }, { until: '[data-doubles] .is-sel' }],
     check: 'Filters "1 on", Exclude polar checked and focused, the form at the panel\'s top as before; asserted: the detail kept, the compared pin selected among the results' },
   // Filters no cell passes (Algeria is no Artemis Accords partner): said so, with Clear filters.
   { name: 'ask-empty', route: '#/mars/jezero', refNA: true, steps: [{ seek: 3 }, { scroll: '#panel', to: '[data-ask]' }, { tap: '.filt summary' }, { select: '#country', value: 'Algeria' }, { tap: '#f-partner' },
@@ -885,7 +888,7 @@ export const STATES = [
   { name: 'grid-wait', route: '#/mars/sites', refNA: true, steps: [{ seek: 3 }, { scroll: '#grid', to: '[aria-labelledby="gn-meridiani"]' }, { seek: 3.1 }],
     check: 'Meridiani and Elysium "Waiting its turn: searches by coordinates run one at a time." over their skeleton rows; Utopia\'s doubles' },
   { name: 'grid-moon', route: '#/moon/sites', refNA: true, steps: [{ seek: 3 }],
-    check: 'The four south-pole regions with their established analog sites (unscored, hillshades from Eidolon\'s own elevation); Hadley–Apennine "Searched as the IAU feature Rima Hadley", the rille banner, and Taurus–Littrow with their doubles; the 60° line once, in the grid\'s lede' },
+    check: 'The four south-pole regions with their established analog sites (unscored, hillshades from Eidolon\'s own elevation); Hadley–Apennine "Searched as the IAU feature Rima Hadley", the rille banner, and Taurus–Littrow with their doubles; the 59.5° line once, in the grid\'s lede' },
   { name: 'grid-open', seq: 'grid-open', route: '#/mars', refNA: true, steps: [{ seek: 2.5 }, { tap: '#pin [data-go="mars/sites"]' }, { seek: 2.8 }, { expect: '#grid h2:focus' }],
     check: 'From the link under the body panel\'s lede: the grid fading in over the globe, the cards rising' },
   { name: 'grid-dive', seq: 'grid-open', refNA: true, steps: [{ seek: 4 }, { tap: '#grid .gt[data-go="mars/jezero"]' }, { seek: 4.3 }],

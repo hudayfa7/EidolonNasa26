@@ -1,5 +1,54 @@
 {
- "fetched": "2026-11-14",
+ "fetched": "2026-11-15",
+ "provenance": {
+  "diviner": {
+   "name": "LRO Diviner global high-resolution mosaics",
+   "provider": "NASA LRO Diviner Science Team (UCLA); NASA PDS Geosciences Node",
+   "url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/",
+   "licence": "NASA PDS open data: any use without permission, credit requested",
+   "citation": "Williams, J.-P. et al. (2017), The global surface temperatures of the Moon as measured by the Diviner Lunar Radiometer Experiment, Icarus 283, 300–325; NASA PDS"
+  },
+  "themis": {
+   "name": "THEMIS-derived global thermal inertia mosaic (quantitative, 100 m)",
+   "provider": "USGS Astrogeology Science Center; ASU Mars Space Flight Facility",
+   "url": [
+    "https://asc-astropedia.s3.us-west-2.amazonaws.com/Mars/Odyssey/THEMIS-Global-Thermal-Inertia-Mosaic/",
+    "https://astrogeology.usgs.gov/search/map/mars-themis-derived-global-thermal-inertia-mosaic"
+   ],
+   "licence": "Public domain (USGS; US Government work)",
+   "citation": "Fergason, R.L., Christensen, P.R. and Kieffer, H.H. (2006), JGR 111, E12004, doi:10.1029/2006JE002735"
+  },
+  "caves": {
+   "name": "Mars Global Cave Candidate Catalog v1",
+   "provider": "USGS Astrogeology Science Center (NASA PDS)",
+   "url": [
+    "https://astrogeology.usgs.gov/ckan/dataset/",
+    "https://astrogeology.usgs.gov/search/map/mars_global_cave_candidate_catalog_v1_cushing"
+   ],
+   "licence": "Public domain (USGS; US Government work)",
+   "citation": "Cushing, G.E. (2012), Candidate cave entrances on Mars, J. Cave and Karst Studies 74, 33–47, doi:10.4311/2010PA0161"
+  },
+  "pits": {
+   "name": "Lunar Pit Atlas (LUNAR_PIT_LOCATIONS)",
+   "provider": "LROC Science Team, Arizona State University (NASA PDS)",
+   "url": [
+    "https://pds.lroc.im-ldi.com/data/LRO-L-LROC-5-RDR-V1.0/",
+    "https://data.lroc.im-ldi.com/lroc/view_rdr/"
+   ],
+   "licence": "NASA PDS open data: any use without permission, credit requested",
+   "citation": "Wagner, R.V. and Robinson, M.S. (2021), LPSC 52, abstract 2530; NASA PDS"
+  },
+  "grs": {
+   "name": "Mars Odyssey GRS element concentrations",
+   "provider": "NASA 2001 Mars Odyssey GRS Science Team (University of Arizona); NASA PDS Geosciences Node",
+   "url": [
+    "https://pds-geosciences.wustl.edu/ody/ody-m-grs-5-elements-v1/",
+    "https://pds-geosciences.wustl.edu/missions/odyssey/grs_elements.html"
+   ],
+   "licence": "NASA PDS open data: any use without permission, credit requested",
+   "citation": "Boynton, W.V. et al. (2007), Concentration of H, Si, Cl, K, Fe, and Th in the low- and mid-latitude regions of Mars, JGR 112, E12S99, doi:10.1029/2007JE002887"
+  }
+ },
  "sources": {
   "moon": {
    "dataset": "LRO Diviner global high-resolution mosaics (GHRM), 70°S–70°N, about 237 m/px",

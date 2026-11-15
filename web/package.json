@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173 --strictPort",
-    "build": "tsc --noEmit && vite build && node scripts/check-copy.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/check-copy.mjs && node scripts/check-credits.mjs",
+    "check:credits": "node scripts/check-credits.mjs",
     "preview": "vite preview --port 4173 --strictPort",
     "test": "vitest run --passWithNoTests",
+    "test:live": "vitest run --mode live --testTimeout=90000 src/data/live.test.ts",
     "typecheck": "tsc --noEmit",
     "types": "node scripts/gen-types.mjs",
     "capture": "node scripts/capture.mjs --target=build",

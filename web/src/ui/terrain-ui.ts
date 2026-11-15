@@ -29,7 +29,7 @@ export const redoCaptions = () => { capFor[0] = capFor[1] = ''; };
 // The target's terrain where its search answered no_dem (plan, Gaps for the merge 2: the south-pole sites).
 const noDem = (i: number) => i === 0 && state.body !== 'earth' && doublesOf(state.body!, siteOf(state.body, state.site!)!).err?.code === 'no_dem';
 // Where the terrain comes from; the overlay's note says whose (ui/results.ts terrainNote).
-const note = (Ts: Terrain[], i: number) => (noDem(i) && !Ts[0].engine ? 'No elevation data here for the search engine: it reads Moon terrain only within 60° of the equator. ' : '')
+const note = (Ts: Terrain[], i: number) => (noDem(i) && !Ts[0].engine ? 'No elevation data here for the search engine: it reads Moon terrain only within 59.5° of the equator. ' : '')
   + terrainNote(Ts.map(T => T.engine ? ENGINE_SRC : esc(creditName(T.src))), [BODIES[state.body!].name, BODIES.earth.name]);
 /* ---------- The draped orbital image (the site view's block only) ---------- */
 // The site's image over exactly its block (scripts/fetch-real-data.mjs drapes), where the block is real terrain: on

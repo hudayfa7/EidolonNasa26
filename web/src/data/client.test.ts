@@ -1,4 +1,4 @@
-// The data seam's search state per site, on an engine stub: one search per site, failures kept until asked again (no
+﻿// The data seam's search state per site, on an engine stub: one search per site, failures kept until asked again (no
 // retry storm), a failed warm-up told apart from warming, bodies off the contract caught, pins pruned to 12.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { EngineError } from './api';
@@ -35,7 +35,7 @@ describe('doublesOf', () => {
     await doublesOf('mars', pin(-4.5)).done;
     expect(engine.search.mock.calls[1][0].target).toEqual({ body: 'mars', lat: -4.5, lon: 10 });
   });
-  it('refuses a Moon site beyond 59.5° at once, as the engine would after its retries, with nothing sent', async () => {
+  it('refuses a Moon site beyond 59.5Â° at once, as the engine would after its retries, with nothing sent', async () => {
     const d = doublesOf('moon', { ...pin(-59.6), iau: undefined }); await d.done;
     expect(d.err?.code).toBe('no_dem'); expect(engine.search).not.toHaveBeenCalled();
     engine.search.mockResolvedValue(res); await doublesOf('moon', pin(59.5)).done; expect(engine.search).toHaveBeenCalledTimes(1);
@@ -88,7 +88,7 @@ describe('doublesOf', () => {
     const d = doublesOf('mars', site()); await d.done;
     expect([d.res, d.err?.code]).toEqual([undefined, 'bad_response']); expect(log).toHaveBeenCalledTimes(1);
   });
-  it('logs the requests the engine refuses as malformed (spec §6: a front-end bug), not engine errors', async () => {
+  it('logs the requests the engine refuses as malformed (spec Â§6: a front-end bug), not engine errors', async () => {
     const log = vi.spyOn(console, 'error').mockImplementation(() => {});
     engine.search.mockRejectedValueOnce(new EngineError(422, 'invalid_request')).mockRejectedValueOnce(new EngineError(422, 'no_dem'));
     await doublesOf('moon', site()).done; expect(log).toHaveBeenCalledTimes(1);
@@ -167,14 +167,31 @@ describe('the query: purpose and filters', () => {
 describe('knownOf', () => {
   it('a featured site without elevation data falls back to its curated analog sites; pins and other outcomes to none', async () => {
     engine.search.mockRejectedValue(new EngineError(422, 'no_dem'));
-    const s = { ...site(), iau: undefined, doubles: ['haughton', 'maunakea'] }, d = doublesOf('moon', s); await d.done;
+    const s = { ...site(), iau: undefined, lat: -85, doubles: ['haughton', 'maunakea'] }, d = doublesOf('moon', s); await d.done;
     expect(knownOf(s, d)).toEqual(['haughton', 'maunakea']);
     const p = pin(-85), dp = doublesOf('moon', p); await dp.done;
     expect(knownOf(p, dp)).toEqual([]);
     engine.search.mockReset(); engine.search.mockRejectedValue(new EngineError(0, 'network'));
-    const f = { ...s, id: `t${n++}` }, df = doublesOf('moon', f); await df.done;
+    const f = { ...s, lat: 18.38, id: `t${n++}` }, df = doublesOf('moon', f); await df.done;
     expect(knownOf(f, df)).toEqual([]);
     expect(knownOf(s, { k: 5, busy: true, done: Promise.resolve(), t0: 0 })).toEqual([]);   // still searching
+  });
+});
+
+describe('no_dem where the body has data', () => {
+  it('a coordinate search answered no_dem inside the Moon\'s coverage, or on Mars, is a network failure', async () => {
+    engine.search.mockRejectedValue(new EngineError(422, 'no_dem'));
+    const moon = pin(31.7), dm = doublesOf('moon', moon); await dm.done;
+    expect(dm.err).toMatchObject({ code: 'network' });
+    const mars = pin(12.3), dr = doublesOf('mars', mars); await dr.done;
+    expect(dr.err).toMatchObject({ code: 'network' });
+  });
+  it('beyond 59.5Â° on the Moon it stays no_dem, and a named target keeps the engine\'s answer', async () => {
+    engine.search.mockRejectedValue(new EngineError(422, 'no_dem'));
+    const polar = pin(-86.2), dp = doublesOf('moon', polar); await dp.done;
+    expect(dp.err).toMatchObject({ code: 'no_dem' });
+    const named = site(), dn = doublesOf('moon', named); await dn.done;
+    expect(dn.err).toMatchObject({ code: 'no_dem' });
   });
 });
 
@@ -233,18 +250,18 @@ describe('terrainOf (the compare\'s windows)', () => {
     expect(terrainOf('moon', s)).toEqual({ T: genTerrain('moon', s, WINDOW_KM) });
     const p = pin(3 + n++), b = terrainOf('mars', p); await b.wait;
     expect(terrainOf('mars', p)).toEqual({ T: genTerrain('mars', p, WINDOW_KM) }); expect(engine.elevation).toHaveBeenCalledTimes(2);
-    const q = { ...site(), iau: undefined, lat: -86 + n++ / 1000 }; await terrainOf('moon', q).wait;   // past 59.5°: refused unasked
+    const q = { ...site(), iau: undefined, lat: -86 + n++ / 1000 }; await terrainOf('moon', q).wait;   // past 59.5Â°: refused unasked
     expect(terrainOf('moon', q)).toEqual({ T: genTerrain('moon', q, WINDOW_KM) }); expect(engine.elevation).toHaveBeenCalledTimes(2);
   });
-  it('warming_up and a network failure are asked again every 3 s, for a minute, until the window lands', async () => {
+  it('warming_up and a network failure are asked again every 3 s, for 90 s, until the window lands', async () => {
     engine.elevation.mockRejectedValueOnce(new EngineError(503, 'warming_up')).mockRejectedValueOnce(new EngineError(0, 'network')).mockResolvedValueOnce(flat(5));
     const s = { ...site(), iau: undefined, lat: 30 + n++ / 1000 }, a = terrainOf('mars', s);
     await vi.advanceTimersByTimeAsync(2999); expect(engine.elevation).toHaveBeenCalledTimes(1); expect(terrainOf('mars', s).wait).toBe(a.wait);
     await vi.advanceTimersByTimeAsync(3001); await a.wait;
     expect(engine.elevation).toHaveBeenCalledTimes(3); expect(terrainOf('mars', s).T.min).toBe(5);
     engine.elevation.mockReset().mockRejectedValue(new EngineError(503, 'warming_up'));
-    const b = terrainOf('mars', pin(40 + n++)); await vi.advanceTimersByTimeAsync(120_000); await b.wait;
-    expect(engine.elevation).toHaveBeenCalledTimes(21);   // the first ask and 20 more, then kept as failed
+    const b = terrainOf('mars', pin(40 + n++)); await vi.advanceTimersByTimeAsync(150_000); await b.wait;
+    expect(engine.elevation).toHaveBeenCalledTimes(31);   // the first ask and 30 more, then kept as failed
   });
   it('Earth: a pin by the cell its search placed there; an established site has no engine window', async () => {
     const r = { ...res.results[0], location: { ...res.results[0].location!, lat: 12.5, lon: -3.25 } }, id = '@12.5000,-3.2500';

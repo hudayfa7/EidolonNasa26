@@ -1,4 +1,4 @@
-# MoonBnb search engine: how to use it (for backend and front end)
+# Eidolon search engine: how to use it (for backend and front end)
 
 **What it does:** given a Mars or Moon location, it ranks Earth sites by terrain similarity using the **F2s v1.0 fingerprint**. Results come back as `match_result` objects (`contracts/match_result.json`).
 

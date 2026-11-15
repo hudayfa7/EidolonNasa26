@@ -20,6 +20,7 @@ import { listingBody, listingLede, months, permits, usd } from './listing';
 import { failed, redrawWx, refreshPanel, strip } from './panel';
 import { shadowOf } from '../terrain/shadowfit';
 import { backBtn, bookingFit, box, fact, purposeLabel, reading, text } from './results';
+import { powerClimate } from '../data/climate';
 import { barH, dayText, lc, limitsText, marks, monthsSrc, noMonths, srcText } from './weather';
 
 interface Ctx { id: Body; s: Site; d: Site; e: Doubles; hit?: MatchResult; key: string }
@@ -72,7 +73,9 @@ const season = (L: SiteListing, p: Plan) => !offSeason(L, p) ? ''
 
 // The mission fit for the campaign's purpose (ui/results.ts bookingFit): terrain and climate from the search result when the double is one,
 // the workable months and the shadow fit from the site's weather and both windows. A warning, never a block.
-const fitHTML = (c: Ctx, L: SiteListing, purpose: string) => bookingFit({ r: c.hit, purpose, label: purposeName(purpose), body: c.id, months: bestMonths(placeOf(L), purpose),
+// The result's climate is NASA POWER's (data/climate.ts powerClimate), not the engine's WorldClim values.
+const hitClimate = (c: Ctx, L: SiteListing) => c.hit && { ...c.hit, environment: powerClimate(c.hit.environment, wxAt(placeOf(L)).cl.v) };
+const fitHTML = (c: Ctx, L: SiteListing, purpose: string) => bookingFit({ r: hitClimate(c, L), purpose, label: purposeName(purpose), body: c.id, months: bestMonths(placeOf(L), purpose),
   busy: wxAt(placeOf(L)).cl.busy, shadow: shadowOf(terrainOf(c.id, c.s).T, BODIES[c.id].R, terrainOf('earth', c.d).T) });
 
 function listingHTML(c: Ctx, L: SiteListing) {
@@ -82,7 +85,7 @@ function listingHTML(c: Ctx, L: SiteListing) {
     ${fitHTML(c, L, planNow(c).purpose)}
     <div class="actions">${btn(at('plan'), 'Plan a campaign here', true)}</div>
     ${st.html}${st.credit ? `<p class="fine credit">${st.credit}</p>` : ''}
-    ${listingBody(L, srcOf(c).location, c.hit?.environment, !!c.hit, `Best months for ${purposeIn(planNow(c).purpose)}`, wxAt(placeOf(L)).cl.busy)}`;
+    ${listingBody(L, srcOf(c).location, hitClimate(c, L)?.environment, !!c.hit, `Best months for ${purposeIn(planNow(c).purpose)}`, wxAt(placeOf(L)).cl.busy)}`;
 }
 
 // The weather window as day buttons (the dates are picked on it): a click starts the campaign, a later one ends it.

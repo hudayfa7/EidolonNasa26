@@ -2,9 +2,11 @@
 // real-data script and the app use (scripts/fetch-surface.mjs lists its own sites).
 import { describe, expect, it } from 'vitest';
 import surface from './surface.gen.json';
-import { ARID, climateFit, COLD_C, COOL_C, kmBetween, measuredAt, NEAR_KM, SEMI_ARID } from './climate';
+import { ARID, CLIMATE_SRC, climateFit, COLD_C, COOL_C, kmBetween, measuredAt, NEAR_KM, powerClimate, SEMI_ARID } from './climate';
 import { TARGETS } from './real-sites';
 import type { MatchResult } from './types.gen';
+import { parseClimate } from './weather';
+import cl from '../../scripts/fixtures/power-climatology.json';
 
 const env = (t: number, ai: number) => ({ t_mean_c: t, precip_mm: 100, aridity_index: ai, source: 'x' }) as MatchResult['environment'];
 
@@ -29,6 +31,22 @@ describe('climateFit', () => {
     expect(climateFit(undefined)).toBeNull();
     expect(climateFit({ t_mean_c: null, aridity_index: .1 } as unknown as MatchResult['environment'])).toBeNull();
     expect(climateFit({ t_mean_c: 5, aridity_index: NaN } as unknown as MatchResult['environment'])).toBeNull();
+  });
+});
+
+describe('powerClimate (NASA POWER in place of the engine\'s WorldClim values)', () => {
+  const wc = { t_mean_c: 99, precip_mm: 9999, aridity_index: .12, source: 'WorldClim 2.1 BIO1/BIO12 (5\')' } as MatchResult['environment'];
+  it('temperature and precipitation from the climatology\'s months, aridity kept, the source NASA POWER\'s', () => {
+    // The recorded climatology at 34.675° N, 105.075° W: POWER's own annual figures there are T2M 13.98 °C and 0.98 mm/day.
+    const e = powerClimate(wc, parseClimate(cl))!;
+    expect(e.t_mean_c).toBeCloseTo(13.98, 0); expect(e.precip_mm! / 365.25).toBeCloseTo(.98, 1);
+    expect(e.aridity_index).toBe(.12); expect(e.source).toBe(CLIMATE_SRC); expect(e.source).not.toContain('WorldClim');
+  });
+  it('until the climatology lands (or without it) no temperature or precipitation, so no fit; no environment stays none', () => {
+    for (const m of [undefined, [], parseClimate(cl).map((x, i) => i === 3 ? { ...x, hi: NaN } : x)]) {
+      const e = powerClimate(wc, m)!; expect([e.t_mean_c, e.precip_mm]).toEqual([null, null]); expect(climateFit(e)).toBeNull();
+    }
+    expect(powerClimate(null, parseClimate(cl))).toBeNull(); expect(powerClimate(undefined, parseClimate(cl))).toBeUndefined();
   });
 });
 
