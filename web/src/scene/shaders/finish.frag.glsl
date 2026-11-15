@@ -24,9 +24,10 @@ vec3 ground(vec2 uv){
 vec3 lensFlare(vec2 uv){
   vec2 asp=vec2(resolution.x/resolution.y,1.0), d=(uv-sunUV)*asp, ax=vec2(0.5)-sunUV;
   vec3 f=vec3(1.0,0.84,0.74)*exp(-abs(d.y)*900.0)*exp(-abs(d.x)*2.2)*streak;
-  f+=vec3(1.0,0.8,0.6)*smoothstep(0.12,0.0,length((uv-sunUV-ax*0.3)*asp))*0.008;
-  f+=vec3(0.55,0.75,1.0)*smoothstep(0.035,0.02,length((uv-sunUV-ax*0.55)*asp))*0.012;
-  f+=vec3(0.6,0.9,0.8)*smoothstep(0.02,0.012,length((uv-sunUV-ax*0.75)*asp))*0.01;
+  // Falling edges as 1 - smoothstep: smoothstep with edge0 > edge1 is undefined in GLSL, and a NaN blacks out the frame.
+  f+=vec3(1.0,0.8,0.6)*(1.0-smoothstep(0.0,0.12,length((uv-sunUV-ax*0.3)*asp)))*0.008;
+  f+=vec3(0.55,0.75,1.0)*(1.0-smoothstep(0.02,0.035,length((uv-sunUV-ax*0.55)*asp)))*0.012;
+  f+=vec3(0.6,0.9,0.8)*(1.0-smoothstep(0.012,0.02,length((uv-sunUV-ax*0.75)*asp)))*0.01;
   return f*flare;
 }
 void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor){

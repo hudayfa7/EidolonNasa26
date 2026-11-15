@@ -10,7 +10,7 @@ import { landing, missionOf, ringed } from '../ellipse';
 import { fmtDist, gcAt, gcKm, type LL } from '../profile';
 import { go, state } from '../router';
 import { token } from '../scene/layout';
-import { sharpest, tex } from '../scene/renderer';
+import { image, sharpest } from '../scene/renderer';
 import { contourSegs, hazard, ramp, slopeOf, sunENU, sunOf, TWIN_AZ, type Sun } from '../terrain/mesh';
 import { genTerrain, STEEP, type Terrain } from '../terrain/procedural';
 
@@ -131,7 +131,7 @@ export function drawCrop(cv: HTMLCanvasElement, bodyId: Body, lat: number, lon: 
     if (im.complete && im.naturalWidth) { g.drawImage(im, 0, 0, S, S); outline(); return; }
     if (!im.complete) { pending.set(im, () => drawCrop(cv, bodyId, lat, lon, km, foot, url)); return; }   // failed: complete, no width, so the cut below
   }
-  const b = BODIES[bodyId], img = tex(b.tex).image as HTMLImageElement | undefined;
+  const b = BODIES[bodyId], img = image(b.tex);
   if (!img?.width || !sharpest(b.tex)) return;
   const W = img.width, H = img.height, half = km / 2;
   // Only the rows the crop can reach (its corners lie half·√2 away), full width: a polar crop wraps every longitude.

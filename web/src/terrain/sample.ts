@@ -2,7 +2,7 @@
 // the footer's dithered globe, sampled by latitude and longitude.
 import { clamp, lon360, type Body } from '../coords';
 import { BODIES, ORDER, type BodyInfo } from '../data/bodies';
-import { tex, TEX } from '../scene/renderer';
+import { image, TEX } from '../scene/renderer';
 
 export interface GMap { w: number; h: number; d: Uint8Array }
 export const BUMP: Partial<Record<Body, GMap>> = {}, ALB: Partial<Record<Body, GMap>> = {};
@@ -26,7 +26,7 @@ function readMap(img: CanvasImageSource, w: number, h: number, lum: boolean): GM
 // (512 px) read from a colour map's low tier stays when its full map replaces it.
 export function prepareMaps() {
   for (const id of ORDER) {
-    const b = BODIES[id], bump = tex(b.bump).image as HTMLImageElement | undefined, col = tex(b.tex).image as HTMLImageElement | undefined;
+    const b = BODIES[id], bump = image(b.bump), col = image(b.tex);
     if (bump?.width && !BUMP[id]) BUMP[id] = readMap(bump, TEX[b.bump].w, TEX[b.bump].h, false);
     if (col?.width && !ALB[id]) ALB[id] = readMap(col, 512, 256, true);
   }

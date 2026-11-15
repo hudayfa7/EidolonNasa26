@@ -14,7 +14,7 @@ import { bestMonths, wxAt } from '../data/weather';
 import { $, $$, esc } from '../dom';
 import { ic } from './icons';
 import { wallNow } from '../motion';
-import { go, routeOf, state } from '../router';
+import { goKeep, routeOf, state } from '../router';
 import { siteName } from '../routes';
 import { listingBody, listingLede, months, permits, usd } from './listing';
 import { failed, redrawWx, refreshPanel, strip } from './panel';
@@ -29,7 +29,7 @@ function ctx(): Ctx {
   const id = state.body!, s = siteOf(id, state.site!)!, d = siteOf('earth', state.dbl!)!, e = doublesOf(id, s);
   return { id, s, d, e, hit: e.res ? cellsOf(e.res).find(x => x.id === d.id)?.r : undefined, key: `${id}/${s.id}|${d.id}` };
 }
-const at = (step: Step | null) => routeOf({ ...state, book: step });
+const at = (step: Step | null) => routeOf({ ...state, globe: false, overlay: false, book: step });   // the view: router.ts goKeep
 // What the listing is derived from: the search result, or an established site's own facts (data/sites.ts: the engine's
 // country and access there; the height at its window's centre where that terrain is real; Decisions 70).
 const srcOf = (c: Ctx) => c.hit ?? { site_id: c.d.id, location: { lat: c.d.lat, lon: c.d.lon, country: c.d.country, sovereign: c.d.country, access: c.d.access, elevation_m: centreM(c.d) } };
@@ -228,7 +228,7 @@ pin.addEventListener('click', e => {
     $('#b-dates-s', pin).innerHTML = datesLine(listed(c), p);
     fixed(c, p);
   } else if (t.closest('[data-request]')) {
-    const c = ctx(); request(c.key, planNow(c), wallNow(), { name: c.d.name, place: placeOfL(listed(c)), target: siteName(c.id, c.s) }); go(at('done'));
+    const c = ctx(); request(c.key, planNow(c), wallNow(), { name: c.d.name, place: placeOfL(listed(c)), target: siteName(c.id, c.s) }); goKeep(at('done'));
   }
 });
 // Review: checked here; what is wrong shows under each field and the first one takes the focus (its error is in its
@@ -237,7 +237,7 @@ pin.addEventListener('submit', e => {
   if (!(e.target as Element).closest('[data-plan]')) return;
   e.preventDefault();
   const c = ctx(), p = planNow(c), er = validate(p, offered(p)), first = Object.keys(er)[0];
-  if (!first) { delete errs[c.key]; go(at('review')); return; }
+  if (!first) { delete errs[c.key]; goKeep(at('review')); return; }
   errs[c.key] = er; tries++; refreshPanel();
   $(first === 'dates' ? '[data-day]' : `#b-${first}`, pin).focus();
 });

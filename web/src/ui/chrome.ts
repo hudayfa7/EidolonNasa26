@@ -8,7 +8,7 @@ import { BODIES, PICKABLE } from '../data/bodies';
 import { campaigns, STEP_NAME } from '../data/booking';
 import { centreOf, doublesOf, engine, noDemAt, query, searched } from '../data/client';
 import { SITES, siteOf } from '../data/sites';
-import { $, $$, esc, setHTML, setStyle, setText } from '../dom';
+import { $, $$, esc, setClass, setHTML, setStyle, setText } from '../dom';
 import { onUpdate, simNow, TOUCH } from '../motion';
 import { routeOf, state } from '../router';
 import { mapsOf, siteName, titleOf } from '../routes';
@@ -56,7 +56,7 @@ export function chrome() {
   const mode = s.globe ? 'globe' : s.overlay ? 'overlay' : 'terrain';
   $$('#toggle [data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === mode)));
   scaleBtn.hidden = !(on && s.globe); scaleBtn.setAttribute('aria-pressed', String(sameScale()));
-  const mixOn = !!(on && s.overlay);
+  const mixOn = !!(on && s.overlay); setClass(panel, 'ov', mixOn);   // the twins overlaid (panel.css)
   if (mix.hidden === mixOn) { mix.hidden = !mixOn; if (sheet() && SH.snap === 0) setSnap(0); }   // peek takes in (or gives back) the slider's row (layout.ts)
   if (on && s.overlay) {
     const a = siteOf(s.body, s.site!)!, d = siteOf('earth', s.dbl!)!, b = BODIES[s.body!];

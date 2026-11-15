@@ -139,18 +139,18 @@ export function card(r: MatchResult, go: string, sel: boolean) {
  * The twin hillshades (spec §4 `terrain_twins`: the most persuasive view), the target's window beside the site's, drawn
  * here from the two windows' elevation (ui/panel.ts thumbs; `shade`: the target's body|site, the site's is its Earth pin),
  * so the pair shares one lighting and stretch in every mode. The engine's own PNGs (1×, not stretched) stay on the
- * cards. `engine`: the engine's elevation, not the mock's; `real`: the mock's windows are both real elevation (terrain/dem.ts);
- * `ov`: the overlay compare, the site's window over the target's in one tile, at the overlay slider's mix (panel.css).
+ * cards. `engine`: the engine's elevation, not the mock's; `real`: the mock's windows are both real elevation (terrain/dem.ts).
  */
-export function twins(r: MatchResult, target: string, shade: string, engine: boolean, real = false, ov = false) {
+export function twins(r: MatchResult, target: string, shade: string, engine: boolean, real = false) {
   const l = r.location, earth = l && ok(l.lat) && ok(l.lon) ? `earth|${pinId(l.lat, l.lon)}` : '';
-  // Overlaid, each figure carries its world's colour (the token named by the body in `at`): a dot by its name, as on the
-  // slider, and a light tint on its hillshade (panel.css), so the ghost tells the two reliefs apart.
-  const fig = (at: string, name: string) => `<figure${ov ? ` style="--c:var(--${at.split('|')[0] || 'earth'})"` : ''}>${at ? `<span class="th"><img alt="Hillshade of the ${name} window" data-shade="${esc(at)}"></span>` : NO_SHADE}<figcaption>${ov ? '<i></i>' : ''}${name}</figcaption></figure>`;
+  // Overlaid (#panel.ov, panel.css), each figure shows its world's colour (the token named by the body in `at`): a dot by
+  // its name, as on the slider, and a light tint on its hillshade, so the ghost tells the two reliefs apart. The markup is
+  // the same on every compare view, so the toggle leaves the panel, its hillshades and maps, as they are.
+  const fig = (at: string, name: string) => `<figure style="--c:var(--${at.split('|')[0] || 'earth'})">${at ? `<span class="th"><img alt="Hillshade of the ${name} window" data-shade="${esc(at)}"></span>` : NO_SHADE}<figcaption><i></i>${name}</figcaption></figure>`;
   const note = engine ? 'Hillshades of the two 18.8 km windows the search compared, drawn from the engine’s elevation, lit from the north-west, each at its own contrast.'
     : `Hillshades of the two 18.8 km windows, lit from the north-west, each at its own contrast. Drawn from ${real ? 'the elevation models the engine reads' : 'sample terrain'}.`;
-  return `<h3 class="sec">Terrain twins</h3><div class="imgs twins${ov ? ' ov' : ''}">${fig(shade, esc(target))}${fig(earth, text(l?.country ?? 'Unnamed area'))}</div>
-    <p class="fine">${note}${ov ? '<span class="ov"> Overlaid: the overlay slider sets how much of each shows.</span>' : ''}</p>`;
+  return `<h3 class="sec">Terrain twins</h3><div class="imgs twins">${fig(shade, esc(target))}${fig(earth, text(l?.country ?? 'Unnamed area'))}</div>
+    <p class="fine">${note}<span class="ov"> Overlaid: the overlay slider sets how much of each shows.</span></p>`;
 }
 /** The search engine's window as a terrain block's source (ui/terrain-ui.ts). */
 export const ENGINE_SRC = 'search engine’s elevation of the window it compared, 200 m samples';

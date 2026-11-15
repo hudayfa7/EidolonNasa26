@@ -33,7 +33,7 @@ export function initRenderer() {
 // The pipeline's buffers take ~51 MB per million pixels: at 2 a 1280 × 800 window's take 208 MB, over the 300 MB GPU
 // budget beside the three worlds' maps (docs/progress.md, Performance). So 1.56 there, 2 on a phone; never under 1.
 const MAX_PX = 2.5e6;
-let dprCap = 2, skip = 60, frames = 0, acc = 0, good = 0;
+let dprCap = 2, slow = Infinity, skip = 60, frames = 0, acc = 0, good = 0;   // slow: the lowest ratio that ran slow
 export const pixelRatio = () => Math.min(devicePixelRatio || 1, CAPTURE ? 2 : dprCap, Math.max(1, Math.sqrt(MAX_PX / (innerWidth * innerHeight))));
 let paused = false;
 /** The graphics context was lost once: the scene never draws again (no map is uploaded again behind the page). */
@@ -48,8 +48,11 @@ export function measure(dtMs: number) {
   if (frames < 120) return;
   const avg = acc / frames; frames = acc = 0;
   good = avg < 18 ? good + 1 : 0;
-  // shortcut: steps up after 5 smooth windows (~10 s) and may step down again on a borderline GPU; GPU timer queries would settle it
-  const next = avg > 34 ? 1 : avg > 24 ? Math.max(1, renderer.getPixelRatio() - .5) : good >= 5 ? Math.min(2, dprCap + .5) : dprCap;
+  // Steps up after 5 smooth windows (~10 s), but never back to a ratio that ran slow: on a borderline GPU it flipped
+  // every 10 s, each flip a new canvas and composer buffers.
+  const pr = renderer.getPixelRatio(), up = Math.min(2, dprCap + .5);
+  if (avg > 24) slow = Math.min(slow, pr);
+  const next = avg > 34 ? 1 : avg > 24 ? Math.max(1, pr - .5) : good >= 5 && up < slow ? up : dprCap;
   if (next === dprCap) return;
   dprCap = next; good = 0; skip = 30;
   renderer.setPixelRatio(pixelRatio());
@@ -81,13 +84,17 @@ function made(k: string, t = new THREE.Texture()) {
   return t;
 }
 // The texture, empty until loadTextures fetches its image (three binds its black placeholder, like `blank`, till then),
-// then holding the best tier landed.
-export function tex(k: string) {
+// then holding the best tier landed. `gl`: a material samples it, so each tier goes to the GPU as it lands.
+export function tex(k: string, gl = true) {
   if (!texCache[k]) { if (!TEX[k]) throw new Error(`unknown texture ${k}`); texCache[k] = made(k); }
+  if (gl) texCache[k].userData.gl = true;
   return texCache[k];
 }
+/** The image a texture holds, for a 2D reader: uploaded only if a material samples it (the height maps and Beyond's
+ *  cards are read in 2D alone). */
+export const image = (k: string) => tex(k, false).image as HTMLImageElement | undefined;
 /** The texture's image has landed (one that failed never does). */
-export const landed = (k: string) => !!tex(k).image;
+export const landed = (k: string) => !!image(k);
 const done = new Set<string>();
 /** Nothing sharper is coming for the texture: its full map has landed or failed, or it has one tier only. */
 export const sharpest = (k: string) => !TEX[k].lo || done.has(k);
@@ -101,10 +108,13 @@ function fetchTier(k: string, file: string, isFull: boolean) {
     // ImageBitmaps decoded from the fetched blob would about halve it, at the cost of flipping V in the planet shader and
     // a second copy for the 2D readers: do it if that stutter shows on stage.
     await img.decode().catch(() => {});
-    const t = tex(k);
+    const t = tex(k, false);
     if (!isFull && t.userData.full) return res();   // the full map was first
     if (isFull && t.image) { (fading[k] = made(k, new THREE.Texture(t.image))).needsUpdate = true; t.dispose(); }   // a new size needs new GPU storage
-    t.image = img; t.userData.full = isFull; t.needsUpdate = true; if (isFull) done.add(k); res(); late?.(k);
+    t.image = img; t.userData.full = isFull; t.needsUpdate = true; if (isFull) done.add(k);
+    // Uploaded now, not on the first frame that draws it: that was mid-move (a slingshot, the Globe toggle), frozen.
+    if (t.userData.gl) renderer.initTexture(t);
+    res(); late?.(k);
   }, undefined, () => { console.warn(`texture ${k} (${file}) failed to load`); res(); if (isFull) { done.add(k); late?.(k); } }));
 }
 // Each texture's first tier (the low one where there is one, else its only file) fetched once; resolves when all of

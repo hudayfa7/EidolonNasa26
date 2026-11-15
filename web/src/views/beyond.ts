@@ -9,7 +9,7 @@ import { RM, T_ } from '../motion';
 import { setTerrain, state, type Route } from '../router';
 import { bodies } from '../scene/bodies';
 import { layoutKey } from '../scene/layout';
-import { loadTextures, tex } from '../scene/renderer';
+import { image, loadTextures } from '../scene/renderer';
 import { LAY, overviewPose, setRig, slingshot, VPS } from '../scene/rig';
 import { BAYER } from '../ui/carousel';
 
@@ -121,7 +121,7 @@ addEventListener('resize', () => { if (state.view === 'beyond') { fitLabels(); d
 const scenes = () => $$<HTMLCanvasElement>('#beyond canvas.scene');
 const grid = document.createElement('canvas'), gg = grid.getContext('2d', { willReadFrequently: true })!;
 function paintOne(cv: HTMLCanvasElement) {
-  const k = cv.dataset.scene!, im = tex(k).image as HTMLImageElement | undefined, w = cv.clientWidth, h = cv.clientHeight, dpr = Math.min(devicePixelRatio || 1, 2);
+  const k = cv.dataset.scene!, im = image(k), w = cv.clientWidth, h = cv.clientHeight, dpr = Math.min(devicePixelRatio || 1, 2);
   cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);   // also clears it
   if (!im?.width || !w) return;   // not landed (redrawScenes draws it when it does) or not laid out
   cv.removeAttribute('aria-hidden');   // drawn: its words now describe what shows

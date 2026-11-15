@@ -320,7 +320,7 @@ describe('twins', () => {
     const html = twins(r0, 'Jezero Crater', 'mars|jezero', true), l = r0.location!;
     expect(html).toContain('<img alt="Hillshade of the Jezero Crater window" data-shade="mars|jezero">');
     expect(html).toContain(`<img alt="Hillshade of the United States of America window" data-shade="earth|@${l.lat!.toFixed(4)},${l.lon!.toFixed(4)}">`);
-    expect(html).toContain('<figcaption>United States of America</figcaption>');
+    expect(html).toContain('<figcaption><i></i>United States of America</figcaption>');
     expect(html).not.toContain('data-thumb');   // the engine's PNGs are the cards' only
   });
   it('a result without a location is the placeholder, not an empty tile', () => {
@@ -329,23 +329,20 @@ describe('twins', () => {
   });
   it('says whose elevation they are drawn from: the engine\'s, or sample terrain', () => {
     expect(twins(r0, 'X', 'mars|x', true)).toContain('drawn from the engine’s elevation, lit from the north-west, each at its own contrast.');
-    expect(twins(r0, 'X', 'mars|x', false)).toMatch(/each at its own contrast\. Drawn from sample terrain\.<\/p>$/);
+    expect(twins(r0, 'X', 'mars|x', false)).toMatch(/each at its own contrast\. Drawn from sample terrain\.<span/);
     expect(twins(r0, 'X', 'mars|x', false)).not.toContain('engine’s');
-    expect(twins(r0, 'X', 'mars|x', false, true)).toMatch(/Drawn from the elevation models the engine reads\.<\/p>$/);
+    expect(twins(r0, 'X', 'mars|x', false, true)).toMatch(/Drawn from the elevation models the engine reads\.<span/);
   });
   it('escapes every engine string', () => {
     const html = twins(evil(r0), EVIL, `mars|${EVIL}`, true);
     expect(html).not.toContain('<img src=x');
   });
-  it('overlaid on the overlay compare: one tile (the class), both windows in it, the note says the slider mixes them', () => {
-    const html = twins(r0, 'Jezero Crater', 'mars|jezero', false, false, true);
-    expect(html).toContain('<div class="imgs twins ov">'); expect(html.match(/data-shade=/g)).toHaveLength(2);
+  it('carries what the overlay compare shows (panel.css #panel.ov): the slider note, each figure\'s world colour and dot', () => {
+    const html = twins(r0, 'Jezero Crater', 'mars|jezero', false);
+    expect(html).toContain('<div class="imgs twins">'); expect(html.match(/data-shade=/g)).toHaveLength(2);
     expect(html).toMatch(/<span class="ov"> Overlaid: the overlay slider sets how much of each shows\.<\/span><\/p>$/);
-    // Each figure in its world's colour, a dot by its name (as on the slider's ends).
     expect(html).toContain('<figure style="--c:var(--mars)">'); expect(html).toContain('<figure style="--c:var(--earth)">');
     expect(html.match(/<figcaption><i><\/i>/g)).toHaveLength(2);
-    const side = twins(r0, 'X', 'mars|x', false);
-    expect(side).not.toContain('twins ov'); expect(side).not.toContain('--c:'); expect(side).not.toContain('<figcaption><i>');
   });
 });
 
