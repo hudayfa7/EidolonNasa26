@@ -33,7 +33,7 @@ export function initRenderer() {
 // The pipeline's buffers take ~51 MB per million pixels: at 2 a 1280 × 800 window's take 208 MB, over the 300 MB GPU
 // budget beside the three worlds' maps (docs/progress.md, Performance). So 1.56 there, 2 on a phone; never under 1.
 const MAX_PX = 2.5e6;
-let dprCap = 2, skip = 60, frames = 0, acc = 0, good = 0;
+let dprCap = 2, slow = Infinity, skip = 60, frames = 0, acc = 0, good = 0;   // slow: the lowest ratio that ran slow
 export const pixelRatio = () => Math.min(devicePixelRatio || 1, CAPTURE ? 2 : dprCap, Math.max(1, Math.sqrt(MAX_PX / (innerWidth * innerHeight))));
 let paused = false;
 /** The graphics context was lost once: the scene never draws again (no map is uploaded again behind the page). */
@@ -48,8 +48,11 @@ export function measure(dtMs: number) {
   if (frames < 120) return;
   const avg = acc / frames; frames = acc = 0;
   good = avg < 18 ? good + 1 : 0;
-  // shortcut: steps up after 5 smooth windows (~10 s) and may step down again on a borderline GPU; GPU timer queries would settle it
-  const next = avg > 34 ? 1 : avg > 24 ? Math.max(1, renderer.getPixelRatio() - .5) : good >= 5 ? Math.min(2, dprCap + .5) : dprCap;
+  // Steps up after 5 smooth windows (~10 s), but never back to a ratio that ran slow: on a borderline GPU it flipped
+  // every 10 s, each flip a new canvas and composer buffers.
+  const pr = renderer.getPixelRatio(), up = Math.min(2, dprCap + .5);
+  if (avg > 24) slow = Math.min(slow, pr);
+  const next = avg > 34 ? 1 : avg > 24 ? Math.max(1, pr - .5) : good >= 5 && up < slow ? up : dprCap;
   if (next === dprCap) return;
   dprCap = next; good = 0; skip = 30;
   renderer.setPixelRatio(pixelRatio());
