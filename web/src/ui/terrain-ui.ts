@@ -64,7 +64,7 @@ export function buildTUI() {
     const bar = (t: Terrain, j: number) => ov
       ? `<div class="lw" style="--c:${BODIES[ids[j]].color}"><i></i><span class="w">${BODIES[ids[j]].name}</span><span class="ramp" style="background:linear-gradient(90deg,${ramp(t.pal).join(',')})"></span><span class="lv">${fmtM(t.min)} to ${fmtM(t.max)}</span></div>`
       : `<div class="ramp" style="background:linear-gradient(90deg,${ramp(t.pal).join(',')})"></div><div class="lr"><span>${fmtM(t.min)}</span><span>${fmtM(t.max)}</span></div>`;
-    const m = both.map(t => `${t.minor.toLocaleString('en-GB')} m`);
+    const m = both.map(t => `${t.minor.toLocaleString('en-GB')}&nbsp;m`);
     const contours = ov && m[0] !== m[1] ? m.map((x, j) => `${x} (${BODIES[ids[j]].name})`).join(' and ') : m[0];
     // The image's toggle where the block has one; its source in the note while it shows (both set by showDrape).
     const dr = !i && dc ? '<button class="drape" type="button" data-drape aria-pressed="false">Orbital image</button>' : '';
@@ -73,7 +73,7 @@ export function buildTUI() {
     el.innerHTML = `<div class="north" title="North"><svg viewBox="0 0 14 20"><path d="M7 1 L12 15 L7 12 L2 15 Z" fill="#E7E9EC"/><text x="7" y="20" font-size="5" text-anchor="middle" fill="#A0A6AE">N</text></svg></div>${dr}
       ${ov ? '' : terrScenes[i].marks.map(m => `<span class="cl" aria-hidden="true">${fmtM(m.lv)}</span>`).join('')}
       <div class="legend">Elevation${both.map(bar).join('')}${sk ? `<div class="sk"><i></i>Slopes over ${STEEP}°</div>` : ''}
-      <div class="ct" style="margin-top:6px">Contours every ${contours}. Vertical exaggeration ${exag}×.</div></div>
+      <div class="ct" style="margin-top:6px">Contours every ${contours}. Vertical exaggeration&nbsp;${exag}×.</div></div>
       <div class="note">${note(both, i)}${dr ? '<span class="dimg"></span>' : ''}</div>`;
     el.classList.add('on'); el.classList.toggle('ov', ov); el.classList.toggle('steep', sk); north[i] = el.querySelector('svg'); labels[i] = $$('.cl', el);
   });
