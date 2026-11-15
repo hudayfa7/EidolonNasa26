@@ -1,0 +1,50 @@
+/* ---------- Stage ---------- */
+#stage{ position:fixed; inset:0; background:var(--bg); overflow:hidden; }
+/* The stage's grounds (its glows, the title's, the dive's sky), the grain and the sun's flare are drawn in the scene
+   (scene/shaders/finish.frag.glsl); the canvas is opaque. */
+#gl{ position:absolute; inset:0; z-index:1; width:100%; height:100%; display:block; touch-action:none; }
+#ui{ z-index:2; }
+#scan{ position:absolute; left:0; top:0; z-index:3; opacity:0; pointer-events:none; overflow:hidden; --sa:#3B2A3D; --sb:#D9714A; --sc:#FBB884; }
+#scan .pinw{ position:absolute; left:0; top:0; width:0; height:0; will-change:transform; }
+#scan .dot{ position:absolute; left:-22px; top:-22px; width:44px; height:44px; border-radius:50%; background:radial-gradient(circle at 45% 40%, #FFFDF8, #F4EEE6 70%, #E2D8CC); box-shadow:0 0 34px 10px rgba(255,248,236,.42); }
+#scan .ring{ position:absolute; left:-46px; top:-46px; width:92px; height:92px; border-radius:50%; border:1px solid var(--sc); }
+#scan .t,#scan .scan-row div{ font:10.5px/1.6 var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+/* Over a block's lit ground (a polar site's snow) too: the graticule labels' dark edge */
+#scan .t1{ position:absolute; right:62px; top:-16px; text-align:right; white-space:nowrap; color:var(--sc);
+  text-shadow:-1px -1px 0 #06070A,0 -1px 0 #06070A,1px -1px 0 #06070A,-1px 0 0 #06070A,1px 0 0 #06070A,-1px 1px 0 #06070A,0 1px 0 #06070A,1px 1px 0 #06070A; }
+#scan .t1.r{ right:auto; left:62px; text-align:left; }   /* the dot too near the viewport's left edge (ui/detection.ts) */
+/* No readout row in a viewport too short for it under the dot (a phone's stacked compare), nor in compare at all: it ran
+   under the centred view toggle, and its "Matching" line is the site view's while compare already shows the double. */
+#scan.short .scan-row,body[data-view="compare"] #scan .scan-row{ display:none; }
+#scan .scan-row{ position:absolute; left:6%; right:6%; bottom:9%; display:flex; gap:9%; }
+#scan .scan-row div{ color:var(--sc); }
+#scan .scan-row div::before{ content:""; display:block; width:10px; height:2px; margin-bottom:10px; background:var(--sb); }
+#scan .scan-row span{ display:block; opacity:.62; }
+/* Telemetry flash (motion.ts setReading): at full strength too, or coral barely parts from Mars's peach --sc at .62. */
+#scan #sc3{ color:color-mix(in srgb, var(--coral) calc(var(--fl, 0) * 100%), currentColor); opacity:calc(.62 + .38 * var(--fl, 0)); }
+#scan .scan-row .pbar{ max-width:150px; margin-top:8px; opacity:1; background:rgba(255,255,255,.14); } #scan .pbar i{ background:var(--sb); }
+#scan .top{ position:absolute; left:6%; top:8%; display:flex; gap:9%; width:40%; } #scan .top i{ width:10px; height:2px; background:var(--sb); }
+#ui{ position:absolute; inset:0; pointer-events:none; }
+#intro-ov{ position:absolute; left:28px; top:calc(var(--top) + 26px); max-width:440px; opacity:0; }
+#intro-ov h1{ margin:0; font:300 34px/1.1 var(--serif); letter-spacing:-.01em; }
+#intro-ov p{ margin:10px 0 0; color:var(--text-2); font-size:14px; line-height:1.55; max-width:42ch; }
+.olabel{ position:absolute; left:0; top:0; pointer-events:auto; background:none; border:0; padding:4px 6px; cursor:pointer; white-space:nowrap; will-change:transform,opacity; visibility:hidden; }
+.olabel .n{ display:block; font:400 19px/1.15 var(--serif); color:var(--text); }
+.olabel .s{ display:block; margin-top:3px; font-size:12px; color:var(--text-3); }
+.olabel .l{ display:block; margin-top:2px; font:11.5px/1.3 var(--mono); color:var(--text-2); opacity:0; transition:opacity .2s; }
+.olabel.on .l{ opacity:1; }
+#ring{ position:absolute; left:0; top:0; border:1px solid rgba(255,255,255,.55); border-radius:50%; opacity:0; transition:opacity .2s; }
+#ring.on{ opacity:1; }
+
+.marker{ position:absolute; left:0; top:0; width:22px; height:22px; margin:-11px 0 0 -11px; padding:0; background:none; border:0; cursor:pointer; pointer-events:auto; will-change:transform; transition:opacity .25s; }
+.marker::before{ content:""; position:absolute; left:50%; top:50%; width:9px; height:9px; margin:-4.5px 0 0 -4.5px; border-radius:50%; border:1.5px solid #fff; background:rgba(6,7,10,.45); box-shadow:0 0 0 1px rgba(0,0,0,.35); }
+.marker.is-sel::before{ background:var(--coral); border-color:var(--coral); }
+.marker.away{ opacity:0 !important; pointer-events:none; visibility:hidden; transition:opacity .25s,visibility 0s .25s; }   /* out of the Tab order once faded */
+.marker .ml{ position:absolute; left:11px; top:11px; font-size:12px; line-height:1; white-space:nowrap; color:var(--text); background:rgba(13,15,18,.88); border:1px solid var(--line); border-radius:6px; padding:5px 7px; opacity:0; transition:opacity .15s; pointer-events:none; }
+.marker:hover .ml,.marker:focus-visible .ml,.marker.is-sel .ml{ opacity:1; }
+.marker:hover,.marker:focus-visible,.marker.is-sel{ z-index:1; }   /* a shown label over the markers drawn after it */
+.marker.fp::before{ border-radius:1.5px; }   /* an Earth pin: its square footprint */
+.marker.tagged::after{ content:""; position:absolute; left:50%; top:50%; width:15px; height:15px; margin:-7.5px 0 0 -7.5px; border-radius:50%; border:1px solid rgba(255,255,255,.8); }   /* inside an established analog site (their circles) */
+.marker.est::before{ width:7px; height:7px; margin:-3.5px 0 0 -3.5px; border-width:1px; border-color:rgba(255,255,255,.45); background:none; box-shadow:none; }   /* the established sites, under the doubles */
+.marker .ml i{ display:block; margin-top:4px; font:normal 11px/1 var(--sans); color:var(--text-2); }
+

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" color="#E7E9EC">
+  <!-- Eidolon mark, in-house stand-in until the logo chat delivers: the one source for the favicon, the top bar, the
+       title lockup, the info sheet and the footer art (src/brand/brand.ts). Swap this file for the final mark.
+       currentColor takes each placement's text colour (light on the dark UI); coral parts dither as coral dots.
+       A world (disc, r 12) and its double (ring, r 12, 5 wide) offset 19 at 32° behind it, parted by a 2.5 gap. -->
+  <path fill="#F2885F" d="M30.33 17.16A12 12 0 1 1 20.63 32.69A14.5 14.5 0 0 0 25.15 30.17A7 7 0 1 0 30.05 22.33A14.5 14.5 0 0 0 30.33 17.16Z"/>
+  <circle cx="15.94" cy="18.97" r="12" fill="currentColor"/>
+</svg>

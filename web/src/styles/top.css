@@ -1,0 +1,36 @@
+/* ---------- Top bar ---------- */
+#top{ position:fixed; z-index:12; top:0; left:0; right:0; height:calc(var(--top) + env(safe-area-inset-top,0px));
+  padding:env(safe-area-inset-top,0px) 18px 0; display:flex; align-items:center; gap:20px;
+  background:rgba(6,7,10,.9); border-bottom:1px solid var(--line); transition:transform .6s cubic-bezier(.2,.7,.2,1),visibility 0s; }
+/* Hidden once it has slid off (the intro and title), or Tab would land on it */
+body[data-view="title"] #top,body[data-view="intro"] #top{ transform:translateY(-110%); visibility:hidden; transition:transform .6s cubic-bezier(.2,.7,.2,1),visibility 0s .6s; }
+.brand{ display:flex; align-items:center; gap:9px; background:none; border:0; padding:0; cursor:pointer; color:var(--text); }
+.logo{ width:26px; height:26px; flex:none; }
+.brand span{ font:400 21px/1 var(--serif); }
+#crumbs{ display:flex; align-items:center; gap:8px; min-width:0; margin:-4px; padding:4px; font-size:13px; color:var(--text-3); overflow:hidden; white-space:nowrap; }   /* the padding: room for the focus ring */
+#crumbs button{ background:none; border:0; padding:4px 2px; color:var(--text-2); cursor:pointer; }
+#crumbs button:hover{ color:var(--text); }
+#crumbs [aria-current]{ color:var(--text); }
+/* Short of room, the site's and double's names (ui/chrome.ts .lg) give way, ellipsized; the rest and the current step stay whole */
+#crumbs > *{ flex:none; }
+#crumbs .lg{ flex-shrink:1; min-width:0; overflow:hidden; text-overflow:ellipsis; }
+#crumbs .lg + .sep + .lg{ flex-shrink:4; }   /* the double's ("Compared with …") before the site's */
+/* Narrower (the icon's range), "Solar system" goes when a world follows it: the brand leads there too. On a tablet in
+   portrait the site's and double's go too unless current: a few pixels of each would only read as specks */
+@media (max-width:1099px){ #crumbs > :first-child:not(:last-child),#crumbs > :first-child:not(:last-child) + .sep{ display:none; } }
+@media (max-width:879px){ #crumbs button.lg,#crumbs button.lg + .sep{ display:none; } }
+.tright{ margin-left:auto; display:flex; align-items:center; gap:16px; }
+/* My campaigns (ui/campaigns.ts): words beside the rate buttons, an icon below 1,100 px; the count once there are any
+   (a badge on the icon on a narrow phone: responsive.css) */
+#camps-btn{ display:flex; align-items:center; gap:6px; height:30px; padding:0 10px; border:1px solid var(--line-2); border-radius:8px; background:none; color:var(--text-2); font-size:12px; cursor:pointer; white-space:nowrap; }
+#camps-btn:hover{ color:var(--text); }
+#camps-btn .ic{ display:none; }
+#camps-btn .n{ font-family:var(--mono); color:var(--text); font-variant-numeric:tabular-nums; }
+#camps-btn .n:empty{ display:none; }
+/* Where the crumbs need the room (tablets, phones): the icon, the words for screen readers (.sr) and the tooltip */
+@media (max-width:1099px){ #camps-btn{ padding:0 8px; } #camps-btn .ic{ display:block; } #camps-btn .t{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); } }
+#rate{ display:flex; padding:2px; gap:2px; border:1px solid var(--line-2); border-radius:8px; }
+#rate button{ height:24px; padding:0 9px; border:0; border-radius:6px; background:none; color:var(--text-2); font-size:12px; cursor:pointer; white-space:nowrap; }
+#rate button[aria-pressed="true"]{ background:var(--surface-3); color:var(--text); }
+#clocks{ display:flex; gap:16px; font:12px/1 var(--mono); color:var(--text-2); font-variant-numeric:tabular-nums; white-space:nowrap; }
+#clocks b{ font-weight:400; color:var(--text-3); margin-right:7px; font-family:var(--sans); }

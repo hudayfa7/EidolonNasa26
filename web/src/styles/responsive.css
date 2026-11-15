@@ -1,0 +1,104 @@
+/* Phone: keep 759px in step with --bp (src/tokens.css); media queries cannot read custom properties. */
+@media (max-width:759px){
+  #top{ gap:12px; padding-left:14px; padding-right:14px; }
+  #crumbs,#clocks .mtc{ display:none; }
+  /* My campaigns as a sheet: up as the info sheet comes (0.85 s, power3.out), down as it goes (0.7 s, power3.inOut) */
+  #camps{ inset:auto 0 0 0; width:auto; max-width:none; max-height:80%; border-width:1px 0 0; border-radius:14px 14px 0 0;
+    opacity:1; translate:0 100%; transition:translate .7s cubic-bezier(.645,.045,.355,1), overlay .7s allow-discrete, display .7s allow-discrete; }
+  #camps[open]{ translate:none; transition:translate .85s cubic-bezier(.215,.61,.355,1), overlay .85s allow-discrete, display .85s allow-discrete; }
+  @starting-style{ #camps[open]{ opacity:1; translate:0 100%; } }
+  #camps .pin{ padding:16px 18px calc(env(safe-area-inset-bottom,0px) + 18px); }
+  #rate button{ padding:0 7px; }
+  /* The bottom sheet: scene/frame.ts sets its height (its snap, or where its grip is dragged; ui/sheet.ts). What it
+     scrolls to lands under its grip. */
+  #panel{ top:auto; width:auto; right:0; height:var(--sheet); border-right:0; border-top:1px solid var(--line); border-radius:14px 14px 0 0; scroll-padding-top:36px; }
+  #grip{ display:block; position:sticky; z-index:3; top:0; width:100%; height:24px; padding:0; border:0; background:var(--surface); cursor:grab; touch-action:none; }
+  #grip::before{ content:""; position:absolute; left:50%; top:10px; width:36px; height:4px; margin-left:-18px; border-radius:2px; background:var(--text-3); }
+  #grip:hover::before,#grip:active::before{ background:var(--text-2); } #grip:active{ cursor:grabbing; }
+  #grip:focus-visible{ outline:none; } #grip:focus-visible::before{ outline:1.5px solid #fff; outline-offset:3px; }
+  /* The stage's gestures (the status bar's hint, which a phone hides), at the sheet's top edge under the grip: what the
+     status bar is to the desktop stage. In the peek (layout.ts snapF). */
+  #shint{ display:block; height:16px; margin:-2px 18px 2px; font-size:11.5px; line-height:16px; color:var(--text-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #shint:empty,#panel[data-snap="2"] #shint{ display:none; }   /* at full the stage is covered: no gestures to hint */
+  /* At peek the content drags the sheet (ui/sheet.ts) instead of scrolling. */
+  #panel[data-snap="0"]{ overflow:hidden; touch-action:none; }
+  .pin{ padding:4px 18px calc(env(safe-area-inset-bottom,0px) + 28px); }
+  .title{ font-size:28px; }
+  #intro-ov{ left:18px; right:18px; top:calc(var(--top) + 18px); }
+  #intro-ov h1{ font-size:28px; }
+  #hud dl,#hud .hb{ display:none; }
+  /* It sits over the terrain block here (bright on snow): the north arrow's plate behind it. */
+  .tui .legend{ width:132px; bottom:28px; padding:7px 9px 8px; border:1px solid var(--line-2); border-radius:9px; background:rgba(13,15,18,.6); }
+  /* Compare's stacked pair: each legend at its viewport's lower left, by the block's near corner, unplated (a plate
+     there would cover it). The overlay's one viewport is the site view's: its plate stays. */
+  body[data-view="compare"] .tui:not(.ov) .legend{ left:18px; right:auto; bottom:10px; padding:0; border:0; background:none; }
+  /* The overlay's rows without their names (the captions above name each dot); in compare the contour and exaggeration
+     line for screen readers only, so a legend is two or three short rows (frame.ts frames the overlay's block up-left
+     of its plate). */
+  .tui.ov .legend{ width:210px; }
+  body[data-view="compare"] .tui .legend .ct{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  body[data-view="compare"] .cap .vx{ display:inline; }   /* the exaggeration they share, on each caption's line instead */
+  .tui .lw .w{ display:none; }
+  .tui .note{ display:none; }
+  /* The compare toggle moves into the bottom sheet (ui/chrome.ts): below the stage it would sit under the sheet. */
+  #panel > #toggle{ position:static; width:max-content; margin:4px 0 0 18px; transform:none; }
+  #panel > #toggle[hidden]{ display:none; }
+  /* With the overlay's slider: the sheet's width, and it stays at the top of the sheet as the sheet scrolls (to the
+     overlaid twins it also drives), on the sheet's ground; what the sheet scrolls to lands below it. */
+  #panel > #toggle:has(#mix:not([hidden])){ position:sticky; z-index:2; top:28px; bottom:auto; width:auto; margin-right:18px; background:var(--surface); box-shadow:0 -22px 0 0 var(--surface); }
+  #panel:has(> #toggle #mix:not([hidden])){ scroll-padding-top:106px; }
+  #divider{ bottom:auto; left:0; right:0; width:auto; height:1px; }   /* between the stacked pair (ui/chrome.ts) */
+  #status{ display:none; }
+  #status:has(.eng){ display:flex; }   /* a pin's search, the engine warming up: one line on the sheet (ui/chrome.ts) */
+  #status:has(.eng) #st-r{ display:none; }
+  body:has(#status .eng) .tui .legend{ bottom:calc(28px + var(--status)); }   /* clear of that line */
+  /* Slope-tinted, the key's row makes the plate taller: lower by as much, so it stays clear of the block's near corner.
+     The overlay's wider plate has room for the key on its heading's line instead. */
+  .tui.steep:not(.ov) .legend{ bottom:14px; }
+  body:has(#status .eng) .tui.steep:not(.ov) .legend{ bottom:calc(14px + var(--status)); }
+  .tui.ov .sk{ position:absolute; top:7px; right:9px; margin:0; }
+  body[data-view="compare"]:has(#status .eng) #tui0:not(.ov) .legend{ bottom:10px; }   /* the upper of the pair is clear of it */
+  body[data-view="compare"]:has(#status .eng) #tui1 .legend{ bottom:calc(10px + var(--status)); }
+  /* The full maps loading (ui/chrome.ts mapsLine: globe views only, so never over a terrain's legend): that alone, unless
+     one of the two above shows; over the sheet's edge, so not on the system view, which has none */
+  body:not([data-view="overview"]) #status:has(#st-m.on){ display:flex; }
+  #status:has(#st-m.on) #st-l:not(:has(.eng)), #status:has(.eng) #st-m{ display:none; }
+  /* The frame's readouts sit on the globe's lower limb (a pin's search holds the frame there): a scrim in the sky's
+     shadow colour behind them. */
+  #scan .scan-row::before{ content:""; position:absolute; z-index:-1; left:-10%; right:-10%; top:-28px; bottom:-60px; background:linear-gradient(to top, var(--sa) 62%, transparent); }
+  /* Search this area: the magnifier alone, at the Earth viewport's lower left (ui/chrome.ts), its name for screen readers. */
+  #area{ padding:0 11px; transform:translate(0,-100%); }
+  #area .t{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  body:has(#st-m.on) #area, body:has(#status .eng) #area{ margin-top:calc(-1 * var(--status)); }   /* clear of the status line, as the legends */
+  #kf{ height:var(--kh); } body:has(#st-m.on) #kf, body:has(#status .eng) #kf{ height:calc(var(--kh) - var(--status)); }   /* the 3D view's focus frame, as #area */
+  .big{ bottom:calc(46vh + 10px); }
+  .blurb{ left:18px; right:18px; width:auto; bottom:64px; font-size:14px; }
+  .meta-row{ display:none; }
+  #tfoot{ grid-template-columns:1fr; }
+  .fbrand .logo{ width:64px; height:64px; } .fbrand span{ font-size:44px; }
+  .artcap{ position:static; margin-top:10px; }   /* below the short 16:9 art, not over its dots */
+}
+/* The overlay's slider on a row of its own under the view buttons, wherever the stage is narrower than the toggle on one
+   row (~470 px): the sheet on a phone, and the stage beside the panel up to ~880 px wide (an iPad in portrait). */
+@media (max-width:879px){
+  #toggle:has(#mix:not([hidden])){ flex-wrap:wrap; width:262px; }
+  #toggle #mix{ flex:1 0 100%; margin:2px 0 0; padding:0 8px; }
+  #toggle #mix::before{ display:none; }
+  #toggle #mix input{ flex:1; width:auto; }
+}
+@media (min-width:760px) and (max-width:879px){ .tui.ov .legend{ bottom:128px; } }   /* clear of that taller toggle */
+/* Narrow phones: the brand, My campaigns, the rate buttons and the clock's time fit the bar with its 14 px gutters. */
+@media (max-width:479px){ #clocks b,#c-utd{ display:none; } .tright{ gap:10px; } #rate button{ padding:0 6px; }
+  /* My campaigns' count as a badge on its icon's corner: it takes no room from the bar */
+  #camps-btn{ position:relative; }
+  #camps-btn .n{ position:absolute; top:-6px; right:-6px; min-width:16px; height:16px; padding:0 4px; border-radius:8px; background:#E9EBEE; color:#0B0C0E; font-size:10px; line-height:16px; text-align:center; } }
+@media (max-width:380px){ #top,.tright{ gap:8px; } #rate button{ padding:0 5px; } }   /* 360 px wide */
+@media (max-width:560px){ #more,#sites{ bottom:16px; } #intro .skip{ bottom:calc(env(safe-area-inset-bottom,0px) + 78px); } }
+@media (prefers-reduced-motion:reduce){ .olabel .l,.marker,.tui,#top,.drawer summary .chev{ transition:none; } #ppin i{ animation:none; }   /* moves stop; fades stay */
+  #camps,#camps[open]{ translate:none; } @starting-style{ #camps[open]{ translate:none; } } }
+/* ?capture: time only moves through window.__eidolon.seek, so CSS motion is off (docs/progress.md, ?capture contract). */
+[data-capture] *,[data-capture] *::before,[data-capture] *::after,[data-capture] *::backdrop{ transition:none !important; animation:none !important; }
+/* Phone: View tools sits at the stage's top right, above the sheet, narrower and shorter. */
+@media (max-width:759px){
+  #vtools{ top:calc(var(--top) + 8px); right:8px; width:min(290px, calc(100vw - 16px)); max-height:calc(100dvh - var(--top) - var(--sheet) - 24px); }
+}

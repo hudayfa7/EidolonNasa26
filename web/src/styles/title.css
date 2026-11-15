@@ -1,0 +1,45 @@
+/* ---------- Title ---------- */
+#title{ position:fixed; inset:0; z-index:14; overflow-y:auto; overflow-x:hidden; visibility:hidden; opacity:0; scrollbar-width:none; }
+#title::-webkit-scrollbar{ display:none; }
+.hero{ position:relative; height:100vh; height:100dvh; }
+#annot{ position:fixed; inset:0; width:100%; height:100%; pointer-events:none; opacity:0; }   /* held over the canvas, which doesn't scroll; it fades as the text scrolls (views/title.ts) */
+#annot text{ paint-order:stroke; stroke:#06070A; stroke-width:2px; stroke-linejoin:round; }   /* the HUD's dark edge: legible over the clouds */
+.big{ position:absolute; left:clamp(18px,4vw,60px); bottom:clamp(92px,15vh,168px); margin:0; display:flex; font:600 clamp(76px,13.5vw,212px)/.86 var(--sans); letter-spacing:-.05em; color:var(--coral); }
+.big .ch{ position:relative; display:inline-block; }
+.big .g{ opacity:0; }
+.big .bar{ position:absolute; left:-.015em; right:-.015em; top:.03em; bottom:-.03em; transform-origin:right center; visibility:hidden;
+  background:linear-gradient(90deg,#0E5458 0%,#2E8C86 22%,#F2885F 62%,#FFE3D2 100%); background-size:var(--bw) 100%; background-position:var(--bx) 0; }
+.lockup{ position:absolute; left:clamp(18px,4vw,60px); top:clamp(20px,4vh,36px); display:flex; align-items:center; gap:12px; color:#fff; opacity:0; }
+.lockup .logo{ width:46px; height:46px; }
+.lockup span{ font:400 26px/1 var(--serif); }
+.blurb{ position:absolute; right:clamp(18px,4vw,60px); bottom:clamp(96px,15vh,172px); width:min(430px,36vw); font:400 15px/1.6 var(--sans); color:#E9EDF0; opacity:0; isolation:isolate; }
+.blurb em{ font-style:normal; color:var(--coral); }
+/* The blurb's lines can cross the globe's lit clouds (or a desert) at its lower edge: the title's ground shades the
+   globe under them, fading out past the lines, so they read over whatever turns by. In the blurb's own layer
+   (isolation), so it lies over the poster on the no-WebGL page too. */
+.blurb::before{ content:''; position:absolute; inset:-6px -14px 52px; z-index:-1; pointer-events:none; border-radius:32px; background:rgba(4,16,18,.72); filter:blur(20px); }
+@media (max-aspect-ratio:4/5){ .blurb::before{ display:none; } }   /* the portrait title: the blurb sits below the globe */
+.tcta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; pointer-events:auto; }
+.btn.ghost{ border-color:rgba(255,255,255,.3); color:#fff; }
+/* Scrolled to the credits, the hero's foot passes over the fixed globe's clouds: the scrim's ground under the ghost
+   button and the meta row. */
+.hero .btn.ghost:not(:hover){ background:rgba(4,16,18,.5); }
+.meta-row{ position:absolute; left:clamp(18px,4vw,60px); right:clamp(18px,4vw,60px); bottom:28px; display:flex; justify-content:space-between; font:11px/1.4 var(--mono); color:rgba(233,237,240,.55); letter-spacing:.04em; text-shadow:0 0 1px #041012,0 0 1px #041012,0 0 3px rgba(4,16,18,.9),0 0 10px rgba(4,16,18,.8); opacity:0; }
+#tfoot{ position:relative; background:#030405; border-top:1px solid var(--line); display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:48px; align-items:center; padding:72px clamp(18px,4vw,60px) 56px; min-height:72vh; }
+.art{ position:relative; }
+#dither{ position:relative; display:block; width:100%; aspect-ratio:16 / 9; }   /* the lines, over the dots (ui/carousel.ts) */
+#dots{ position:absolute; left:0; top:0; width:100%; aspect-ratio:16 / 9; }
+.al{ position:absolute; left:0; top:0; font:11px/1.45 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:var(--text-2); white-space:nowrap; pointer-events:none; }
+.al b{ display:block; font-weight:400; color:var(--text-3); }
+.artcap{ position:absolute; left:0; bottom:0; font:11px/1.5 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--text-2); }
+.artcap span{ display:block; } #ac-s{ color:var(--text-3); }
+.steps{ position:absolute; right:0; bottom:8px; display:flex; gap:6px; } .steps i{ width:18px; height:2px; background:var(--line-2); transition:background .3s; } .steps i.on{ background:var(--coral); }
+.fbrand{ display:flex; align-items:center; gap:18px; }
+.fbrand .logo{ width:88px; height:88px; color:#fff; }
+.fbrand span{ font:300 58px/1 var(--serif); letter-spacing:-.01em; }
+#tfoot p{ color:var(--text-2); max-width:46ch; line-height:1.6; }
+#tfoot dl{ display:grid; grid-template-columns:auto 1fr; gap:10px 18px; margin:26px 0 0; font-size:13px; }
+#tfoot dt{ color:var(--text-3); }
+#tfoot dd{ margin:0; color:var(--text-2); }
+.stripes{ display:grid; gap:5px; width:150px; margin-top:28px; }
+.stripes i{ display:block; height:3px; background:#E7E9EC; justify-self:center; }

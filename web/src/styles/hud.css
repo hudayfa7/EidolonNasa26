@@ -1,0 +1,120 @@
+/* Globe HUD */
+#hud{ position:absolute; left:0; top:0; pointer-events:none; opacity:0; transition:opacity .4s; font:10.5px/1.6 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:rgba(231,233,236,.85); }
+#hud.on{ opacity:1; }
+#hud .b{ position:absolute; width:20px; height:20px; border:0 solid rgba(255,255,255,.5); }
+#hud .b1{ left:0; top:0; border-left-width:1px; border-top-width:1px; }
+#hud .b2{ right:0; top:0; border-right-width:1px; border-top-width:1px; }
+#hud .b3{ left:0; bottom:0; border-left-width:1px; border-bottom-width:1px; }
+#hud .b4{ right:0; bottom:0; border-right-width:1px; border-bottom-width:1px; }
+#hud dl{ position:absolute; top:50%; margin:0; transform:translateY(-50%); display:grid; grid-template-columns:auto auto; gap:1px 12px; white-space:nowrap; }
+#hud dt{ color:rgba(160,166,174,.9); }   /* 6:1 over the stage's ground (.75 was about 4.5:1) */
+#hud dd{ margin:0; font-variant-numeric:tabular-nums; }
+/* Telemetry flash (motion.ts setReading): coral as a reading changes, easing back with --fl. currentColor here is the inherited colour. */
+#hud dd{ color:color-mix(in srgb, var(--coral) calc(var(--fl, 0) * 100%), currentColor); }
+#hud .rl{ right:calc(100% + 22px); text-align:right; }
+#hud .rl dd{ text-align:left; }
+#hud .rr{ left:calc(100% + 22px); }
+#hud dl.off{ visibility:hidden; }   /* no room beside the box (ui/hud.ts): under the panel, off the stage */
+#hud .hb{ position:absolute; left:50%; top:calc(100% + 12px); transform:translateX(-50%); white-space:nowrap; color:rgba(231,233,236,.7); }
+#tape{ position:absolute; left:50%; bottom:calc(100% + 6px); transform:translateX(-50%); width:320px; height:34px; }
+/* The 3D view's keyboard focus (scene/input.ts): a frame round the viewports its keys move, placed by ui/chrome.ts; an
+   outline on the canvas would sit under the top bar and the panel */
+#gl:focus-visible{ outline:none; }
+#kf{ position:absolute; left:0; top:0; height:calc(var(--kh) - var(--status)); border:1.5px solid #fff; border-radius:10px; pointer-events:none; visibility:hidden; }   /* above the status bar */
+#gl:focus-visible ~ #ui #kf{ visibility:inherit; }
+#cursor{ position:absolute; left:0; top:0; width:30px; height:30px; margin:-15px 0 0 -15px; pointer-events:none; opacity:0; }
+#cursor.on{ opacity:1; }
+#cursor::before{ content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:rgba(255,255,255,.8); }
+#cursor::after{ content:""; position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(255,255,255,.8); }
+#cursor i{ position:absolute; inset:8px; border:1px solid var(--coral); border-radius:50%; }
+
+#toggle{ position:absolute; bottom:48px; left:0; width:max-content; display:flex; padding:3px; gap:2px; border-radius:9px; background:rgba(13,15,18,.9); border:1px solid var(--line-2); pointer-events:auto; opacity:0; visibility:hidden; transform:translateX(-50%); }
+#toggle button{ height:28px; padding:0 14px; border:0; border-radius:6px; background:none; color:var(--text-2); font-size:13px; cursor:pointer; }
+#toggle button[aria-pressed="true"]{ background:var(--surface-3); color:var(--text); }
+#toggle [data-scale]{ position:relative; margin-left:9px; }
+#toggle [data-scale]::before,#mix::before{ content:""; position:absolute; left:-6px; top:6px; bottom:6px; width:1px; background:var(--line-2); }
+/* The overlay's slider (ui/chrome.ts): the target's world at one end, Earth at the other. Its input's look is also the
+   sun-angle control's (ui/sun.ts, .srange). */
+#mix{ position:relative; display:flex; align-items:center; gap:10px; margin-left:9px; padding:0 10px 0 8px; font-size:13px; color:var(--text-2); }
+#mix[hidden]{ display:none; }
+#mix .mb{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+#mix .mb i{ width:7px; height:7px; border-radius:50%; background:var(--c); }
+#mix input,.srange input{ -webkit-appearance:none; appearance:none; width:120px; height:28px; margin:0; border-radius:6px; background:none; cursor:pointer; }
+#mix input::-webkit-slider-runnable-track,.srange input::-webkit-slider-runnable-track{ height:2px; border-radius:1px; background:var(--line-2); }
+#mix input::-webkit-slider-thumb,.srange input::-webkit-slider-thumb{ -webkit-appearance:none; width:12px; height:12px; margin-top:-5px; border:0; border-radius:50%; background:var(--coral); }
+#mix input::-moz-range-track,.srange input::-moz-range-track{ height:2px; border-radius:1px; background:var(--line-2); }
+#mix input::-moz-range-thumb,.srange input::-moz-range-thumb{ width:12px; height:12px; border:0; border-radius:50%; background:var(--coral); }
+/* Search this area (ui/chrome.ts places it in the Earth viewport's corner) */
+#area{ position:absolute; left:0; top:0; display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 14px; border:1px solid var(--line-2); border-radius:9px;
+  background:rgba(13,15,18,.9); color:var(--text); font-size:13px; cursor:pointer; pointer-events:auto; transform:translate(-100%,-100%); white-space:nowrap; }
+#area:hover{ background:var(--surface-2); }
+#area[data-on]{ border-color:var(--coral); }
+#area[data-on] .ic{ color:var(--coral); }
+#area[hidden]{ display:none; }
+#divider{ position:absolute; top:0; bottom:0; width:1px; background:var(--line-2); opacity:0; }
+.cap{ position:absolute; left:0; top:0; pointer-events:none; opacity:0; }
+.cap .n{ font:400 20px/1.15 var(--serif); }
+.cap .s{ margin-top:4px; font:11.5px/1.3 var(--mono); color:var(--text-2); }
+.cap .s i{ display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--c); margin-right:7px; }
+.cap .s.ell i{ width:11px; height:7px; margin:0 5px 0 -2px; border:1.5px solid var(--coral); background:none; box-sizing:border-box; }   /* the landing ellipse's outline (ui/ellipse.ts), centred under the dot, its text in line */
+.cap .s.ell.pale i{ border-color:#FFE3D2; }   /* as drawn over the slope tint's coral */
+.cap .vx{ display:none; }   /* a phone's compare only (responsive.css) */
+.cap .c2{ margin-top:12px; }   /* the overlay's Earth double, under its target */
+.tui{ position:absolute; left:0; top:0; pointer-events:none; opacity:0; transition:opacity .3s; }
+.tui.on{ opacity:var(--fade, 1); }
+/* Off its view, or faded out for the detection frame (ui/terrain-ui.ts): hidden once faded, so the toggle neither takes
+   clicks over the next view nor the Tab key */
+.tui:not(.on),.tui.hid{ visibility:hidden; transition:opacity .3s,visibility 0s .3s; }
+.tui .north{ position:absolute; right:18px; top:18px; width:34px; height:34px; border:1px solid var(--line-2); border-radius:50%; display:grid; place-items:center; background:rgba(13,15,18,.6); }
+.tui .north svg{ width:14px; height:20px; }
+.tui .legend{ position:absolute; right:18px; bottom:96px; width:170px; font-size:11.5px; color:var(--text-2); }
+.tui .ramp{ height:6px; border-radius:3px; margin:6px 0 4px; }
+.tui .lr{ display:flex; justify-content:space-between; font:11px/1.3 var(--mono); }
+.tui .note{ position:absolute; left:18px; bottom:96px; font-size:11.5px; color:var(--text-3); max-width:30ch; }
+/* The site's orbital image over its block (ui/terrain-ui.ts): its toggle under the north arrow */
+.tui .drape{ position:absolute; right:18px; top:62px; height:26px; padding:0 10px; border:1px solid var(--line-2); border-radius:8px; background:rgba(13,15,18,.6); color:var(--text-2); font:12px/1 var(--sans); cursor:pointer; pointer-events:auto; }
+.tui .drape:hover{ color:var(--text); }
+.tui .drape[aria-pressed="true"]{ border-color:var(--coral); color:var(--text); }
+.tui .drape[aria-disabled="true"]{ opacity:.5; cursor:default; }
+@media (pointer:coarse){ .tui .drape::before{ content:""; position:absolute; inset:-9px -4px; } }   /* a 44 px touch target */
+/* Draped or slope-tinted, the ramp's colours aren't the block's: the range and the contour line stay */
+.tui.draped .legend > .ramp,.tui.steep .legend > .ramp{ display:none; }
+.tui.steep .lw .ramp{ visibility:hidden; }   /* the overlay's rows: their columns kept */
+.tui.draped .lr,.tui.steep .lr{ margin-top:6px; }
+/* The slope hazard's key (ui/slope.ts): a coral square, as the block tints its steep ground */
+.tui .sk{ display:flex; align-items:center; gap:7px; margin-top:6px; }
+.tui .sk i{ flex:none; width:9px; height:9px; border-radius:2px; background:var(--coral); }
+/* The block's major contours, labelled on their lines (as the graticule's labels: a dark edge over any ground) */
+.tui .cl{ position:absolute; left:0; top:0; font:10px/1 var(--mono); letter-spacing:.03em; color:rgba(231,233,236,.85); white-space:nowrap;
+  text-shadow:-1px -1px 0 #06070A,0 -1px 0 #06070A,1px -1px 0 #06070A,-1px 0 0 #06070A,1px 0 0 #06070A,-1px 1px 0 #06070A,0 1px 0 #06070A,1px 1px 0 #06070A; }
+.tui.narrow .cl{ display:none; }
+.tui.narrow .note{ display:none; }
+.tui.narrow .legend{ width:140px; }
+/* The overlay's legend, a row per world: its dot and name, its ramp, its range. Fixed columns, so the two ramps line up (narrow
+   too: it fits a 400 px stage). */
+.tui.ov .legend{ width:240px; }
+.tui .lw{ display:flex; align-items:center; gap:6px; margin-top:7px; white-space:nowrap; }
+.tui .lw i{ flex:none; width:7px; height:7px; border-radius:50%; background:var(--c); }
+.tui .lw .w{ flex:none; width:36px; }
+.tui .lw .ramp{ flex:1; min-width:24px; margin:0; }
+.tui .lw .lv{ flex:none; min-width:20ch; text-align:right; font:11px/1.3 var(--mono); }
+#status{ position:absolute; left:0; bottom:0; height:var(--status); display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 18px; font-size:12px; color:var(--text-3); border-top:1px solid var(--line); background:rgba(6,7,10,.6); transition:opacity .4s; }
+#status .eng{ display:inline-flex; align-items:center; gap:8px; color:var(--text-2); }   /* a pin's search, the engine warming up (ui/chrome.ts) */
+#status .eng i{ width:6px; height:6px; border-radius:50%; background:var(--coral); animation:skel 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion:reduce){ #status .eng i{ animation:none; } }
+#status .v{ font-family:var(--mono); color:var(--text-2); font-variant-numeric:tabular-nums; }
+body[data-view="title"] #status,body[data-view="intro"] #status,body[data-view="beyond"] #status{ opacity:0; }
+/* The worlds' full-resolution maps on their way after the low tier (app.ts): HUD type, in the hints' place. Visual only,
+   so hidden from screen readers. */
+#st-m{ display:none; align-items:center; gap:8px; margin-left:auto; font:10.5px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:rgba(160,166,174,.9); white-space:nowrap; }
+#st-m.on{ display:inline-flex; }
+#st-m.on + #st-r{ display:none; }
+#st-m i{ width:5px; height:5px; border-radius:50%; background:currentColor; animation:skel 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion:reduce){ #st-m i{ animation:none; } }
+#more,#sites{ position:absolute; right:18px; bottom:50px; display:flex; align-items:center; gap:10px; height:34px; padding:0 14px 0 16px; border:1px solid var(--line-2); border-radius:999px; background:rgba(6,7,10,.6); color:var(--text-2); font-size:12.5px; cursor:pointer; pointer-events:auto; opacity:0; }
+#more:hover,#sites:hover{ color:var(--text); border-color:rgba(255,255,255,.3); }
+#cue{ position:absolute; left:50%; bottom:48px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; padding:6px 10px; border:0; background:none; color:var(--text-3); font-size:12px; cursor:pointer; pointer-events:auto; opacity:0; }
+#cue:hover{ color:var(--text-2); }
+#cue i{ width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); }
+#sites{ left:18px; right:auto; }   /* the system view's way to the site selector grid, opposite Beyond */
+#more i,#sites i{ width:7px; height:7px; border-right:1.5px solid currentColor; border-top:1.5px solid currentColor; transform:rotate(45deg); }
