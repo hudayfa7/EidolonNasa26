@@ -1,9 +1,15 @@
 # Eidolon
 
+![Eidolon reads terrain form at 200 m and finds the places on Earth that come closest.](web/public/og.jpg)
+
 NASA Space Apps Challenge 2026: *Identify Earth locations that analog the permanent Moon base locations and Mars.*
 
 Pick a site on the Moon or Mars and Eidolon ranks the places on Earth whose terrain form comes closest at 200 m, shows the
 two side by side in 3D, and helps plan a test campaign at one.
+
+**Live site: [eidolon-nasa26.vercel.app](https://eidolon-nasa26.vercel.app).** It shows sample results, built from
+answers the search engine saved; the real model runs on your own computer
+([Run it with the real model](#run-it-with-the-real-model)).
 
 ## Architecture
 
@@ -38,6 +44,8 @@ two side by side in 3D, and helps plan a test campaign at one.
 
 ## Setup
 
+### The frontend on sample data
+
 The frontend alone, on the mock (no engine needed):
 
 ```sh
@@ -47,7 +55,9 @@ npm run dev                         # http://localhost:5173/
 npx playwright install chromium     # only for npm run capture, a11y, perf and poster
 ```
 
-On the live search engine:
+### Run it with the real model
+
+On the live search engine, on your own computer:
 
 1. **Its data** (2.6 GB, not in git): `index/`, `grid/`, `weights/`, `judge/` and `targets/` in `engine/`.
    `sh engine/fetch_data.sh` downloads them from this repo's public GitHub release and checks each file's sha256 (it
@@ -70,7 +80,7 @@ without a licence); `pytest engine/code/tests` for the engine.
 | Mars terrain (search and 3D) | MGS MOLA – MEX HRSC Blended DEM, 200 m; Exploration Zone CTX DEMs | USGS Astrogeology, NASA PDS (MOLA); ESA/DLR (HRSC); UCLA, NASA PDS (CTX) |
 | Moon terrain (search and 3D) | SLDEM2015 (LOLA and SELENE TC); LRO LOLA LDEM_16 and south polar DEM | NASA GSFC; JAXA |
 | Globes and site imagery | Viking MDIM 2.1, MGS TES albedo; LROC WAC mosaics, Clementine 750 nm; Blue Marble, Black Marble, MODIS water mask, Landsat WELD (NASA GIBS) | USGS, NASA JPL, NASA Ames, ASU, NASA Earth Observatory |
-| Measured at the target | LRO Diviner temperatures and rock abundance; THEMIS thermal inertia; Odyssey GRS elements and water; Mars cave candidates; lunar pits | NASA PDS Geosciences Node, USGS, ASU |
+| Measured at the site | LRO Diviner temperatures and rock abundance; THEMIS thermal inertia; Odyssey GRS elements and water; Mars cave candidates; lunar pits | NASA PDS Geosciences Node, USGS, ASU |
 | Earth site climate and weather | NASA POWER climatology (air and skin temperature, rain, wind) | NASA Langley Research Center |
 | Photographs | Apollo, rover and lander images; NASA field photographs of Earth analog sites | NASA Image and Video Library, JPL Photojournal |
 

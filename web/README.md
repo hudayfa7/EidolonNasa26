@@ -16,8 +16,8 @@ npm ci                 # not npm install: it keeps package-lock.json from churni
 npm run dev            # http://localhost:5173/, on the mock
 ```
 
-On the live engine: start it first (the repo's `README.md`, Setup: its data, a conda environment, then
-`engine/run_server.bat` or `run_server.sh`, ready in about 35–75 s), then
+On the live engine: start it first (the repo's `README.md`, Run it with the real model: its data, a conda environment,
+then `engine/run_server.bat` or `run_server.sh`, ready in about 35–75 s), then
 
 ```sh
 VITE_DATA=engine npm run dev          # PowerShell: $env:VITE_DATA='engine'; npm run dev
@@ -126,7 +126,7 @@ sizes, and a11y and perf pass on the engine build. What the connection changed:
 
 ## How the climate fit works
 
-Each result's detail shows a **Climate fit** (a word: Close, Partial or Weak) beside the terrain match. It is separate from
+Each result's detail shows a **Climate fit** (a word: Match, Partial or Gap) beside the terrain match. It is separate from
 the terrain match and never blended into it: the ranking is terrain form at 200 m only, and the climate fit does not
 re-rank, filter or weight anything.
 
@@ -141,8 +141,8 @@ The engine also sends WorldClim 2.1 temperature and precipitation; Eidolon doesn
 licence, so it can't be shown to be "freely available without restriction", as the Space Apps participant terms require
 of non-NASA data. NASA POWER's climatology, which the app already asks for each site, takes their place.
 
-Match is 2 points, partial 1, gap 0. Both rows matching is **Close** (4 points), 2 or 3 points is **Partial**, fewer is
-**Weak**. A site with no climate (its climatology not loaded or unavailable) has no fit; it is never shown as a zero. The bands are fixed because the
+Match is 2 points, partial 1, gap 0. Both rows matching is **Match** (4 points), 2 or 3 points is **Partial**, fewer is
+**Gap**. A site with no climate (its climatology not loaded or unavailable) has no fit; it is never shown as a zero. The bands are fixed because the
 Moon and Mars are far below freezing on average (`src/data/bodies.ts`) and have no liquid surface water; the thresholds are
 our choice, set once at the top of `climate.ts`.
 
@@ -150,7 +150,7 @@ our choice, set once at the top of `climate.ts`.
 either that is comparable, so air is only roughly set against surface. It says nothing about rock type, subsurface, biology,
 gravity or radiation (the detail lists those as not assessed or as what Earth can't reproduce).
 
-**The NASA surface values** ("Measured at the target") describe the target and are *not* scored, because Earth has no
+**The NASA surface values** ("Measured at the site") describe the site and are *not* scored, because Earth has no
 like-for-like value in our data. `scripts/fetch-surface.mjs` (`npm run fetch:surface`, network, no login) reads them by HTTP
 range request, so nothing large is downloaded, and writes `src/data/surface.gen.json`:
 
@@ -201,7 +201,7 @@ engine's score, the order of the results, or which land is searched.
   training, habitation, thermal testing), which no field site can give, so the app then says to pair a facility with a field site.
 - **Scored today for a field site:** terrain (the engine's score), climate (the climate fit's band) and operations (workable months from NASA
   POWER; for rover mobility, EVA training and drilling also a **shadow fit**: the site view's own shadow march run on the target's and the Earth
-  double's windows at grazing sun heights of 1°, 2° and 4°, compared; a judgment score, `src/terrain/shadowfit.ts`). A provisional tier (S 85+ … F) needs the field site to reach at least 50 of the mission's weight and half of that to be assessed.
+  double's windows at grazing sun heights of 1°, 2° and 4°, compared; a judgment score, `src/terrain/shadowfit.ts`). A provisional tier (A 70+ … F) needs the field site to reach at least 50 of the mission's weight and half of that to be assessed.
 - **In the booking flow.** The listing, the plan and the review each show a compact **Mission fit** block for the campaign's own purpose
   (it follows the plan's purpose select): the tier and score, what was scored, a warning (never a block) when the fit is only marginal or
   worse, and, for missions that need what no field site gives, the best facility to pair with the site (`bookingFit` in `src/ui/results.ts`).
@@ -218,8 +218,8 @@ engine's score, the order of the results, or which land is searched.
 This is a deliberate departure from `docs/plan.md`'s rule never to blend terrain fidelity and practical suitability into one number: the terrain score stays on its own line beside it, and the fit shows every factor's own score.
 
 **The detail's layout.** The two answers first (Mission fit, Analog verdict), then one group each, named for whose values it holds:
-"Terrain: Earth site against the target", "Climate: Earth site against the target", "Target: measured on Mars" (or the Moon), and
-"Earth site: location and access".
+"Terrain: Earth double against the site", "Climate: Earth double against the site", "Site: measured on Mars" (or the Moon), and
+"Earth double: location and access".
 
 ## The analog verdict, listed analogs and Earth surface temperature
 
@@ -232,7 +232,7 @@ Three additions to the result detail and the cards, all derived from data we alr
 - **Not near a listed analog** (`placeTag`, `unlistedNote`): a card is tagged, and a line above the cards counts them, when its cell is
   neither inside nor within 150 km of any of the 14 established analog sites Eidolon lists (`src/data/sites.ts`). It is only against those 14,
   so it means "a candidate for a site not yet characterised here", never "undiscovered": the literature may know the place.
-- **Surface temperature** (`skinAt` in `src/data/weather.ts`, `skinBlock`): the Earth site's night-time and day-time *skin* temperature
+- **Surface temperature** (`skinAt` in `src/data/weather.ts`, `skinBlock`): the Earth double's night-time and day-time *skin* temperature
   from NASA POWER's climatology (TS_MIN and TS_MAX, 2001 to 2025, asked from the browser, no login), beside the Moon's local-midnight surface
   temperature from Diviner. The climate fit's temperature is air temperature, so this is the like-for-like of the two (surface, night-time).
   It is not part of the climate fit, and it is not asked under `?capture`; if the feed fails the block says "Not available".
