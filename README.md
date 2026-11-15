@@ -85,6 +85,13 @@ Eidolon is released under the MIT License ([`LICENSE`](LICENSE)). The open-sourc
 is in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md); GSAP, the animation library, is free under its own Standard
 License rather than an OSI licence, as stated there.
 
+## Team
+
+- **a_chamma**: the terrain search engine in `engine/` (features, models, search, judge and server).
+- **hudayfa_s**: the app and its 3D scene, the UI, and the data and assets in `web/`.
+- **isaam_s**: the analog scoring system (the mission fit in `web/src/data/analogs.ts`, the shadow fit in
+  `web/src/terrain/shadowfit.ts`, and its method in `web/docs/analog-weights.md`) and the docs.
+
 ## AI use
 
 We used Anthropic's Claude Code (an AI coding agent) to build Eidolon:
