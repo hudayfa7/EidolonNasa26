@@ -144,7 +144,7 @@ function doublesHTML(id: Body, s: Site, e: Doubles, sel?: string) {
   const best = knownAnalogs(query.purpose, id)[0]?.a.name;
   const head = sel ? `<h3 class="sec">Doubles for ${s.name}</h3>` : `<h3 class="dh" id="doubles">${known.length ? 'Established analog sites on Earth' : 'Earth doubles'}${
     known.length || e.err?.code === 'no_dem' || !best ? '' : `<span class="nf">best known analog: ${esc(best)}</span>`}</h3>`;
-  const to = (dbl: string) => routeOf({ body: id, site: s.id, dbl, globe: !!sel && state.globe, overlay: !!sel && state.overlay });
+  const to = (dbl: string) => routeOf({ body: id, site: s.id, dbl });
   const compare = (dbl: string) => sel ? '' : `<div class="actions"><button class="btn primary" data-go="${to(dbl)}">Compare with Earth doubles</button></div>`;
   if (e.err?.code === 'no_dem') return `${known.length ? compare(known[0]) : ''}${head}${noData(!!s.custom, known.length > 0, creditName(genTerrain(id, s).src))}
     ${known.length ? `<ul class="rows">${known.map(did => { const d = EARTH_BY[did];
@@ -449,8 +449,8 @@ function compareTop(id: Body, s: Site, d: Site) {
   return `<div class="pair"><div class="pa"><span class="dot" style="--c:${b.color}"></span><div><div class="pn">${s.name}</div><div class="ps">${b.name}, ${s.kind.toLowerCase()}</div></div></div>
       <div class="pa"><span class="dot" style="--c:${BODIES.earth.color}"></span><div><div class="pn">${esc(d.name)}</div>${d.place === d.name ? '' : `<div class="ps">${esc(d.place!)}</div>`}${d.custom ? placeTag(d.lat, d.lon) : ''}</div></div></div>
     <div class="minis">${map(id, s)}${map('earth', d)}</div>${sunSet.on ? '<p class="mcap">Both lit from the north-west, as the search engine’s hillshades are: the sun you set lights the site view only.</p>' : ''}
-    ${hit || !d.custom ? `<div class="jump"><button class="btn primary" data-go="${routeOf({ ...state, book: 'listing' })}">Plan a test campaign here</button>${hit ? '<button class="back" data-jump>Other doubles<span class="chev" aria-hidden="true"></span></button>' : ''}</div>` : ''}
-    ${hit ? `${twins(hit, s.name, `${id}|${s.id}`, AS_ENGINE, !!(terrainOf(id, s).T.src && terrainOf('earth', d).T.src), state.overlay)}${detail(hit, e.res!, hit.location && Number.isFinite(hit.location.lat) && Number.isFinite(hit.location.lon) ? skinAt({ lat: hit.location.lat!, lon: hit.location.lon! }) : undefined,
+    ${hit || !d.custom ? `<div class="jump"><button class="btn primary" data-go="${routeOf({ body: id, site: s.id, dbl: d.id, book: 'listing' })}">Plan a test campaign here</button>${hit ? '<button class="back" data-jump>Other doubles<span class="chev" aria-hidden="true"></span></button>' : ''}</div>` : ''}
+    ${hit ? `${twins(hit, s.name, `${id}|${s.id}`, AS_ENGINE, !!(terrainOf(id, s).T.src && terrainOf('earth', d).T.src))}${detail(hit, e.res!, hit.location && Number.isFinite(hit.location.lat) && Number.isFinite(hit.location.lon) ? skinAt({ lat: hit.location.lat!, lon: hit.location.lon! }) : undefined,
       { months: bestMonths(d, String(hit.purpose ?? query.purpose)), busy: wxAt(d).cl.busy, shadow: shadowOf(terrainOf(id, s).T, BODIES[id].R, terrainOf('earth', d).T) })}` : ''}
     <div data-terr="${winOf(id, s, d)}">${terrHTML(id, s, d)}</div>${cmpSlopeHTML()}`;
 }
@@ -490,6 +490,9 @@ export function renderPanel(prev: Route) {
   renderTools();
   if (state.view !== 'body' && state.view !== 'site' && state.view !== 'compare') return;
   const same = prev.body === state.body && prev.view === state.view && prev.site === state.site && prev.dbl === state.dbl && prev.book === state.book, top = panel.scrollTop;
+  // The compare's Terrain, Overlay and Globe toggle: nothing in the panel depends on it (its links leave the view to
+  // router.ts goKeep, the overlaid twins are panel.css's), so the panel stays: a rewrite blanked its hillshades and maps.
+  if (same && state.view === 'compare' && (prev.globe !== state.globe || prev.overlay !== state.overlay)) return;
   if (!same) openedQ = JSON.stringify(query);
   (same ? swap : setHTML)(pin, panelHTML());   // the same route keeps the focus where it was
   panel.scrollTop = same ? top : 0;

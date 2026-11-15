@@ -50,10 +50,16 @@ export function back() {
   if (s.view === 'site' || (s.view === 'body' && (s.site || s.grid))) return go(s.view === 'site' && s.fromGrid ? `${s.body}/sites` : s.body!);
   if (s.view === 'body') return go('system');
 }
+// The panel's links within a comparison (another double, a booking step) leave the stage's view out, so the Globe and
+// Overlay toggles leave the panel as it is (a rebuild blanked its hillshades and maps); following one keeps the view.
+export function goKeep(path: string) {
+  const r = parseHash(path);
+  go(state.view === 'compare' && r.view === 'compare' && r.body === state.body && r.site === state.site ? routeOf({ ...r, globe: state.globe, overlay: state.overlay }) : path);
+}
 addEventListener('hashchange', () => { if (state.ready) apply(parse()); });
 document.addEventListener('click', e => {
   const t = e.target as Element;
-  const b = t.closest<HTMLElement>('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go!); return; }
+  const b = t.closest<HTMLElement>('[data-go]'); if (b) { e.preventDefault(); goKeep(b.dataset.go!); return; }
   if (t.closest('[data-scale]')) { toggleScale(); return; }
   const v = t.closest<HTMLElement>('#toggle button'); if (v) { go(routeOf({ ...state, globe: v.dataset.view === 'globe', overlay: v.dataset.view === 'overlay' })); return; }
   const r = t.closest<HTMLElement>('#rate button'); if (r) { setRate(+r.dataset.rate!); return; }

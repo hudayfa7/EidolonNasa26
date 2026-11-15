@@ -215,18 +215,19 @@ button.row:hover{ background:var(--surface-2); }
 .minis .map{ margin-top:0; }
 .twins{ grid-template-columns:1fr 1fr; gap:8px; }
 .twins .th{ display:block; aspect-ratio:1; border-radius:6px; border:1px solid var(--line); background:var(--surface-2); overflow:hidden; }
-/* Overlay compare: both figures in one cell, the site's window over the target's at the overlay slider's mix (ui/chrome.ts
-   sets --mix on the panel); the two names at either end with their world's dot, as the slider's, and each hillshade
-   lightly tinted in its world's colour, so the ghost tells the reliefs apart. A twin without its hillshade (the
-   placeholder) isn't ghosted: the two stay side by side and the note drops its overlay line. */
-.twins.ov:not(:has(.ph)){ grid-template-columns:1fr; }
-.twins.ov:not(:has(.ph)) figure{ grid-area:1/1; }
-.twins.ov:not(:has(.ph)) figure + figure > :first-child{ opacity:var(--mix, .5); }
-.twins.ov:not(:has(.ph)) figure + figure figcaption{ text-align:right; }
-.twins.ov:has(.ph) + .fine .ov{ display:none; }
-.twins.ov figcaption i{ display:inline-block; width:7px; height:7px; margin-right:6px; border-radius:50%; background:var(--c); }
-.twins.ov .th{ position:relative; isolation:isolate; }
-.twins.ov .th::after{ content:""; position:absolute; inset:0; background:var(--c); mix-blend-mode:color; opacity:.35; }
+/* Overlay compare (ui/chrome.ts marks the panel .ov and sets --mix on it): both figures in one cell, the site's window
+   over the target's at the overlay slider's mix; the two names at either end with their world's dot, as the slider's,
+   and each hillshade lightly tinted in its world's colour, so the ghost tells the reliefs apart. A twin without its
+   hillshade (the placeholder) isn't ghosted: the two stay side by side and the note leaves out its overlay line. */
+#panel.ov .twins:not(:has(.ph)){ grid-template-columns:1fr; }
+#panel.ov .twins:not(:has(.ph)) figure{ grid-area:1/1; }
+#panel.ov .twins:not(:has(.ph)) figure + figure > :first-child{ opacity:var(--mix, .5); }
+#panel.ov .twins:not(:has(.ph)) figure + figure figcaption{ text-align:right; }
+.twins + .fine .ov{ display:none; }
+#panel.ov .twins:not(:has(.ph)) + .fine .ov{ display:inline; }
+#panel.ov .twins figcaption i{ display:inline-block; width:7px; height:7px; margin-right:6px; border-radius:50%; background:var(--c); }
+#panel.ov .twins .th{ position:relative; isolation:isolate; }
+#panel.ov .twins .th::after{ content:""; position:absolute; inset:0; background:var(--c); mix-blend-mode:color; opacity:.35; }
 .pair{ display:grid; gap:10px; margin-top:16px; }
 .pair .pa{ display:grid; grid-template-columns:10px 1fr; gap:12px; align-items:baseline; }
 .pair .dot{ width:8px; height:8px; border-radius:50%; background:var(--c); }
