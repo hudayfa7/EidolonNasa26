@@ -50,8 +50,8 @@ npx playwright install chromium     # only for npm run capture, a11y, perf and p
 On the live search engine:
 
 1. **Its data** (2.6 GB, not in git): `index/`, `grid/`, `weights/`, `judge/` and `targets/` in `engine/`.
-   `sh engine/fetch_data.sh` downloads them from a GitHub release and checks each file's sha256 (it needs the GitHub CLI
-   signed in with access to the release, and `sha256sum` or `shasum`).
+   `sh engine/fetch_data.sh` downloads them from this repo's public GitHub release and checks each file's sha256 (it
+   needs `curl` and `sha256sum` or `shasum`, no login; on Windows, run it from Git Bash).
 2. **A Python environment**: `conda env create -f engine/code/environment.yml` (or only what the server imports: numpy,
    scipy, pandas, matplotlib, pillow, gdal, rasterio, torch, torchvision, fastapi, uvicorn, pydantic), then
    `pip install -e engine/code`.
